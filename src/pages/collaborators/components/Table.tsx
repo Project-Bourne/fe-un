@@ -92,15 +92,15 @@ function  CustomTable({tableHeaderData, tableBodyData, rowsPerPage, usertype }) 
                                         <TableCell >
                                             <div className="flex gap-x-3 items-center">
                                                 <button className="bg-transparent text-xs p-0 text-[#9F9036]">Chat</button>
-                                                <button className="bg-transparent text-xs p-0 text-[#9F9036]">Block</button>
-                                                <button className="bg-transparent text-xs p-0 text-sirp-primary">Delete</button>
+                                                <button className="bg-transparent text-xs p-0 text-[#9F9036]">Call</button>
+                                                <button className="bg-transparent text-xs p-0 text-sirp-primary">Email</button>
                                             </div>
                                         </TableCell> :
                                         <TableCell>
                                             <div className="flex gap-x-3 items-center">
-                                                <button className="bg-transparent text-xs p-0 text-[#9F9036]">Approve</button>
-                                                <button className="bg-transparent text-xs p-0 text-[#9F9036]">View</button>
-                                                <button className="bg-transparent text-xs p-0 text-sirp-primary">Reject</button>
+                                                <button className="bg-transparent text-xs p-0 text-[#9F9036]">Chat</button>
+                                                <button className="bg-transparent text-xs p-0 text-[#9F9036]">Call</button>
+                                                <button className="bg-transparent text-xs p-0 text-sirp-primary">Email</button>
                                             </div>
                                         </TableCell>
                                     }
