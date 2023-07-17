@@ -62,8 +62,6 @@ function Input(props: InputModel) {
 
 
 
-
-
 // drop down component 
 function Dropdown(props: DropdownModel){
     const { data, onChange, className } = props;
@@ -80,9 +78,6 @@ function Dropdown(props: DropdownModel){
         </>
     )
 }
-
-
-
 
 
 
@@ -161,4 +156,41 @@ function DropdownWithFlag(props: DropdownModel) {
 
 
 
-export { Input, Dropdown, DropdownWithFlag};
+
+
+function SearchInput(props) {
+    const { handleClick, value, placeholder, onChange, classNameStyle  } = props;
+
+    return (
+        <div className="flex w-[90%] md:w-full">
+            <div
+                className="w-[15%] px-2 md:px-3 rounded-l-full border-y-2 border-l-2 border-r-0 border-y-gray-100 border-l-gray-100 bg-gray-100 focus:border-gray-100 outline-none flex justify-center"
+                onClick={handleClick}>
+                <Image
+                    src={require("../../assets/icons/search.svg")}
+                    alt="Filter"
+                    width={25}
+                    height={25}
+                    className=''
+                    priority
+                /> 
+            </div>
+            <input
+                className={`w-[80%] md:w-[90%] py-1 px-3 font-light rounded-r-full border-y-2 border-r-2 border-l-0 border-y-gray-100 border-r-gray-100 bg-gray-100 focus:border-gray-100 outline-none ${classNameStyle}`}
+                value={value}
+                placeholder={placeholder}
+                onChange={onChange}
+            /> 
+        </div>
+    )
+
+}
+
+
+
+
+
+
+export { Input, Dropdown, DropdownWithFlag, SearchInput };
+
+

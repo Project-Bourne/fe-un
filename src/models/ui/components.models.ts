@@ -36,3 +36,15 @@ export  interface TabModel {
     tabHeaderContents: any[],
     tabBodyContents?: any[]
 }
+
+
+export interface CustomCollabDashboardCardModel {
+    imgSrc: any,
+    imgSrc2?: any,
+    mainText: string,
+    mainText2?: string,
+    subText: string,
+    subText2?: string,
+    classes?: string,
+    layoutCount: number
+}
