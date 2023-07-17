@@ -16,7 +16,9 @@ function Button(props: ButtonModel) {
             className={`rounded-md ${classNameStyle} ${background}` }
             style={{ width: `${btnSize()}` }}
             type={type}
-            onClick={onClick}>{value}</button>
+            onClick={onClick}>
+                {value}
+        </button>
     )
 }
 

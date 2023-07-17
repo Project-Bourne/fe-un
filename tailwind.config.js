@@ -34,7 +34,8 @@ module.exports = {
           hoverbg: '#D1F1FA',
           counterbg:'#ECF2F9',
           listBg: '#F9FBFE',
-
+          offline: '#E9F1F9',
+          online: '#22C55E',
         },
       },
       screens: {
