@@ -37,6 +37,23 @@ export const NavBarContents = [
     },
 ]
 
+export const HomeSubData = [
+    {
+      name: 'History',
+      icon: 'history.svg',
+      selectedIcon: 'on.history.svg',
+      id: 1,
+      isClicked: true
+    },
+    {
+      name: 'Saved',
+      icon: 'star.svg',
+      selectedIcon: 'on.star.svg',
+      id: 2,
+      isClicked: false
+    }
+  ];
+
 export const SettingsData = [
     {
         name: "Profile",

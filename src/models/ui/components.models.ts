@@ -39,6 +39,13 @@ export  interface TabModel {
 
 
 export interface CustomCollabDashboardCardModel {
+    classes2?: string,
+    layoutCount: number,
+    children?: any // Added children prop to include additional content
+}
+
+
+export interface CustomCardModal {
     imgSrc: any,
     imgSrc2?: any,
     mainText: string,

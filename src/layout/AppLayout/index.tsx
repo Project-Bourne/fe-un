@@ -14,7 +14,7 @@ function AppLayout({children}) {
                 <Header/>
 
                 {/* wrapper childer */}
-                <div className='mt-[120px]'>
+                <div className='mt-[90px]'>
                     {children}
                 </div>
             </div>
