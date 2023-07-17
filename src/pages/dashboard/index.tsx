@@ -1,4 +1,7 @@
 import React from "react";
+import Card from "./components/Card";
+import RecentCard from "./components/RecentCard";
+import RecentDocument from "./components/RecentDocument";
 
 const index = () => {
   return (
@@ -6,9 +9,9 @@ const index = () => {
       <h1 className="text-black text-2xl pl-10 font-bold">
         Welcome Oluanrawaju
       </h1>
-
-      {/* the yellow navigation at the top of the dashboard page */}
-      
+      <Card/>
+      <RecentCard/>
+      <RecentDocument/>
     </div>
   );
 };

@@ -8,7 +8,7 @@ interface TabHeaderModel {
 export const TabHeaderData: TabHeaderModel[] = [
     { 
         id: 0,
-        title: 'Pending Users'
+        title: 'All collaborators'
     },
     { 
         id: 1,
@@ -16,15 +16,15 @@ export const TabHeaderData: TabHeaderModel[] = [
     },
     { 
         id: 2,
-        title: 'Station Officers'
+        title: 'Admins'
     },
     { 
         id: 3,
-        title: 'Desk Officers'
+        title: 'Station Officers'
     },
     { 
         id: 4,
-        title: 'Admin'
+        title: 'Desk Officers'
     },
     { 
         id: 5,
