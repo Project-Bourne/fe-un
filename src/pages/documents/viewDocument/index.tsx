@@ -86,7 +86,7 @@ function viewDocument() {
                 </div>
             </div>
             <Docs showComments={showComments} setShowComments={setShowComments} setShowChat={setShowChat} showChat={showChat} setShowShare={setShowShare} showShare={showShare}/>
-            {showCall && <CallModal setShowCall={setShowCall} showCall={showCall} />}
+            {showCall && <CallModal setShowCall={setShowCall}  />}
          
         </div>
     );

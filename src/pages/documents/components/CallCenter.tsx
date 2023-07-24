@@ -41,15 +41,15 @@ function CallCenter({ setshowCallScreen }) {
     switch (activeScreen) {
       case 'inCallChats':
         return (
-          <InCallChats />
+          <InCallChats setActiveScreen={setActiveScreen}/>
         )
       case 'inCallParticipants':
         return (
-          <InCallParticipants />
+          <InCallParticipants setActiveScreen={setActiveScreen}/>
         )
       case 'shareDetails':
         return (
-          <ShareDetails />
+          <ShareDetails setActiveScreen={setActiveScreen}/>
         )
     }
   }

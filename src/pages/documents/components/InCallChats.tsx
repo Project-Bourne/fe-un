@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-function InCallChats() {
+function InCallChats({setActiveScreen}) {
   return (
     <div>
       <div className='flex items-center justify-between h-[20px] border-b p-7'>

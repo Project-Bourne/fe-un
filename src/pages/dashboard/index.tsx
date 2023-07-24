@@ -5,7 +5,7 @@ import RecentDocument from "./components/RecentDocument";
 
 const index = () => {
   return (
-    <div className="h-full w-full">
+    <div className="h-[100vh] w-full overflow-y-auto pb-[8rem]">
       <h1>
         Welcome Oluanrawaju
       </h1>
