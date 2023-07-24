@@ -24,8 +24,8 @@ function NavBarItem({item, index}: NavBarItemType) {
         <div
             className={
                 !isSelected ? 
-                    'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 md:py-4 p-3 md:px-5 md:ml-[-20px]' 
-                    : 'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer bg-sirp-primaryLess2 md:py-4 p-3 md:px-5 border-l-4 border-sirp-primary md:ml-[-20px]'
+                    'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 md:py-4 p-1.5 md:px-5 md:ml-[-20px]' 
+                    : 'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer bg-sirp-primaryLess2 md:py-4 p-1.5 md:px-5 border-l-4 border-sirp-primary md:ml-[-20px]'
             }
             key={index}
         >

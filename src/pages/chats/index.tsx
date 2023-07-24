@@ -2,7 +2,7 @@ import { ChatsLayout } from '@/layout/index';
 import React, { useState } from 'react';
 import EmptyChat from './components/EmptyChat';
 import ChatItem from './components/ChatItem';
-import ChatDisplay from './components/ChatDisplay';
+import ChatSection from './components/ChatSection';
 
 
 const chatsData = [
@@ -37,7 +37,7 @@ const chatsData = [
     status: 'offline',
   },
   {
-    id: 0,
+    id: 3,
     name: 'Rebecca Onyebabnji',
     message: {
       type: 'string',
@@ -47,7 +47,7 @@ const chatsData = [
     status: 'online',
   },
   {
-    id: 1,
+    id: 4,
     name: 'Rebecca Onyebabnji',
     message: {
       type: 'string',
@@ -57,7 +57,7 @@ const chatsData = [
     status: 'offline',
   },
   {
-    id: 2,
+    id: 5,
     name: 'Rebecca Onyebabnji',
     message: {
       type: 'string',
@@ -67,7 +67,7 @@ const chatsData = [
     status: 'offline',
   },
   {
-    id: 0,
+    id: 6,
     name: 'Rebecca Onyebabnji',
     message: {
       type: 'string',
@@ -77,7 +77,7 @@ const chatsData = [
     status: 'online',
   },
   {
-    id: 1,
+    id: 7,
     name: 'Rebecca Onyebabnji',
     message: {
       type: 'string',
@@ -87,7 +87,7 @@ const chatsData = [
     status: 'offline',
   },
   {
-    id: 2,
+    id: 8,
     name: 'Rebecca Onyebabnji',
     message: {
       type: 'string',
@@ -179,7 +179,7 @@ function Index() {
             </div>
             {/* messaging display */}
             <div className={`${chatsMobileDisplay} md:block relative col-span-2 transition duration-500 ease-in-out`}>
-              <ChatDisplay messages={messages} />
+              <ChatSection messages={messages} />
             </div>
           </div>
           :

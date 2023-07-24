@@ -16,7 +16,7 @@ function ChatItem(props: ChatItemModel) {
                         <Image
                             src={require('../../../assets/images/user1.jpg')}
                             alt={'user'}
-                            className="rounded-full border-[4px] border-white h-[43px] w-[43px]" />
+                            className="rounded-full border-[2px] border-white h-[43px] w-[43px]" />
                     </div>
                 </div>
                 <div className="grid">
