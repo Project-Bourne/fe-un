@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 const View2 = () => {
   const router = useRouter();
 
+  const countries = require("@/utils/countries.json");
+
   const [country, setCountry] = useState(null);
   const [role, setRole] = useState("");
 
@@ -77,12 +79,12 @@ const View2 = () => {
           </label>
         </div>
 
-        {/* <DropdownWithFlag
-            data={countries}
-            selectItem={setCountry}
-            className='text-[12px] text-black border-[1.5px] rounded-md py-2 px-7  w-[38%]'
-            style={"w-[38%] mx-4"}
-        /> */}
+        <DropdownWithFlag
+          data={countries}
+          selectItem={setCountry}
+          className="text-[12px] text-black border-[1.5px] rounded-md py-2 px-7  w-[38%]"
+          style={"w-[38%] mx-4"}
+        />
       </div>
     </div>
   );
