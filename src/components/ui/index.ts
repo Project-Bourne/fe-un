@@ -9,17 +9,16 @@ import CustomEmoji from "./Emoji";
 import AudioRecorderComponent from "./AudioRecorderComponent";
 import BlinkingRedDot from "./BlinkingRedDot";
 
-
 export {
-    Input,
-    Dropdown,
-    DropdownWithFlag,
-    Button,
-    CustomSwitch,
-    Tab,
-    CustomModal,
-    Breadcrumbs,
-    CustomEmoji,
-    AudioRecorderComponent,
-    BlinkingRedDot
-}
+  Input,
+  Dropdown,
+  DropdownWithFlag,
+  Button,
+  CustomSwitch,
+  Tab,
+  CustomModal,
+  Breadcrumbs,
+  CustomEmoji,
+  AudioRecorderComponent,
+  BlinkingRedDot,
+};

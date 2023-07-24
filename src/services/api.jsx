@@ -21,8 +21,8 @@ export const requestHeader = {
  * @returns Response Data;
  */
 export async function request(url, method, payload, token, text, form) {
-  
-  requestHeader["Content-Type"] = form === true ? "multipart/form-data" : "application/json";
+  requestHeader["Content-Type"] =
+    form === true ? "multipart/form-data" : "application/json";
 
   if (method === "GET") {
     return fetch(API_USER_URL + url, {

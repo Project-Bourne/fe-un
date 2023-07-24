@@ -1,10 +1,17 @@
-import React from 'react'
-import { CustomModal } from '@/components/ui'
+import React from "react";
+import { CustomModal } from "@/components/ui";
 
-function ChatModal({setShowChat, showChat}) {
+function ChatModal({ setShowChat, showChat }) {
   return (
-    <CustomModal style="bg-white w-[50%]" closeModal={()=> {setShowChat(false)}}>ChatModal</CustomModal>
-  )
+    <CustomModal
+      style="bg-white w-[50%]"
+      closeModal={() => {
+        setShowChat(false);
+      }}
+    >
+      ChatModal
+    </CustomModal>
+  );
 }
 
-export default ChatModal
+export default ChatModal;

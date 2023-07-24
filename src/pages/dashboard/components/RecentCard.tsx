@@ -17,14 +17,14 @@ function RecentCard() {
           </div>
         </div>
         <div className=" px-5 py-5">
-            <h2 className="font-bold">Recent Collaborators</h2>
-            <Image
+          <h2 className="font-bold">Recent Collaborators</h2>
+          <Image
             src={require("../../../assets/icons/groupAvatar.svg")}
             alt="documents"
             className="cursor-pointer mt-5"
             width={300}
           />
-          </div>
+        </div>
       </div>
       <div className="border bg-sirp-secondary2 rounded-[1rem]">
         <div className="flex justify-start gap-5 items-center py-4 px-4 border-b-2 pb-8">
@@ -40,14 +40,14 @@ function RecentCard() {
           </div>
         </div>
         <div className=" px-5 py-5">
-            <h2 className="font-bold">Recent Chat</h2>
-            <Image
+          <h2 className="font-bold">Recent Chat</h2>
+          <Image
             src={require("../../../assets/icons/OnlineAvatar.svg")}
             alt="documents"
             className="cursor-pointer mt-5"
             width={90}
           />
-          </div>
+        </div>
       </div>
     </div>
   );

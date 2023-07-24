@@ -1,28 +1,34 @@
+# DEEP SOUL - UN
 
-## Project Bourne - UN
+## Getting started
 
-The UN project allows professionals collaborate on a subject; integrating various means of interaction, including audio and video call features, chat features and concurrent document modification features.
+To make it easy for you to get started with GitHub, here's a list of recommended next steps.
 
-## Getting Started
-First, run the development server:
+## How to render on DEV MODE
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- npm run dev.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build Project for PRODUCTION
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- npm run build.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Authors and acknowledgment
 
+Show your appreciation to those who have contributed to the project.
 
-## Deploy on Vercel
+-legacy.rexio@gmail.com
+https://github.com/legacy-rex0
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-https://github.com/okafohenry
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-https://github.com/Cabraham1
+
+-https://github.com/code-sensei
+
+## License
+
+For open source projects, say how it is licensed.
+
+## Project status
+
+---

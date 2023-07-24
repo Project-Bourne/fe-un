@@ -38,7 +38,7 @@ function Collaborate({ onHandleModal }) {
           };
         }
         return suggestion;
-      })
+      }),
     );
   };
 
