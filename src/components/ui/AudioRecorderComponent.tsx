@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { useState } from "react";
-import vmsg, { Recorder } from "vmsg";
+import { Recorder } from "vmsg";
 import BlinkingRedDot from "./BlinkingRedDot";
 
-const recorder = new Recorder({
-  wasmURL: "https://unpkg.com/vmsg@0.3.0/vmsg.wasm",
-});
+// const recorder = new Recorder({
+//   wasmURL: "https://unpkg.com/vmsg@0.3.0/vmsg.wasm",
+// });
 
 const AudioRecorderComponent = ({
   toggleAudio,
@@ -16,30 +16,30 @@ const AudioRecorderComponent = ({
   const [recording, setRecording] = useState<Blob | string>("");
 
   const startRecording = async () => {
-    try {
-      await recorder.initAudio();
-      await recorder.initWorker();
-      recorder.startRecording();
-      setIsRecording(true);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   await recorder.initAudio();
+    //   await recorder.initWorker();
+    //   recorder.startRecording();
+    //   setIsRecording(true);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const stopRecording = async () => {
-    const blob = await recorder.stopRecording();
-    setRecording(URL.createObjectURL(blob));
-    console.log(blob);
-    setIsRecording(false);
+    // const blob = await recorder.stopRecording();
+    // setRecording(URL.createObjectURL(blob));
+    // console.log(blob);
+    // setIsRecording(false);
   };
 
   const sendRecording = () => {
-    if (!recording) {
-      return;
-    }
-    handleRecordedAudio(recording);
-    setRecording(null);
-    setToggleAudio(false);
+    // if (!recording) {
+    //   return;
+    // }
+    // handleRecordedAudio(recording);
+    // setRecording(null);
+    // setToggleAudio(false);
     // console.log(recording)
   };
 
