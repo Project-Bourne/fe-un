@@ -44,7 +44,7 @@ export default function CustomEmoji({
 
   return (
     <div
-      className="fixed z-50 top-[10rem] md:top-[17.5rem] md:right-7 right-3 shadow-md"
+      className="fixed z-50 top-[10rem] md:top-[21.5rem] md:right-7 right-3 shadow-md"
       ref={emojiRef}
     >
       {/* <h2>Emoji Picker React 4 Demo</h2>

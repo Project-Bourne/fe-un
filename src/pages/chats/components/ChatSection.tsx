@@ -1,14 +1,4 @@
 import { useEffect, useState } from "react";
-import {
-  EmojiStyle,
-  //   SkinTones,
-  //   Theme,
-  //   Categories,
-  EmojiClickData,
-  Emoji,
-  //   SuggestionMode,
-  //   SkinTonePickerLocation
-} from "emoji-picker-react";
 import { Header } from "./ChatHeader";
 import { ChatInput } from "./ChatInput";
 import { MessagesDisplay } from "./MessagesDisplay";
