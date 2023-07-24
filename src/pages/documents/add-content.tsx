@@ -4,7 +4,7 @@ import Reader from './components/Reader'
 import HomeHistory from './components/history'
 import TabLayout from '@/layout/TabLayout'
 import { HomeSubData } from '@/utils/constants';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 const FileUpload = () => {
     const [formData, setFormData] = useState('');

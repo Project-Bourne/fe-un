@@ -15,7 +15,7 @@ function OverviewCard() {
     }
 
     return (
-        <div className="w-full h-full p-5">
+        <div className="w-full h-[100vh] p-5">
             {/* Authors */}
             <div className="flex flex-col gap-2">
                 <span className="text-[#6F7A82]">Title</span>

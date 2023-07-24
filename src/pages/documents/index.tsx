@@ -10,7 +10,7 @@ function Documents() {
     router.push('/documents/add-content')
   }
   return (
-    <div className="w-full h-[90vh] overflow-y-hidden  grid grid-cols-2">
+    <div className="w-full h-[100vh]  grid grid-cols-2">
       <div className="border-r overflow-y-auto border-gray-300 p-5">
         <h1 className="text-[#383E42] font-bold text-3xl">Documents</h1>
         <div className="grid my-5">
@@ -24,7 +24,7 @@ function Documents() {
           <DocCard />
         </div>
       </div>
-      <div className="w-full overflow-y-hidden">
+      <div className="w-full overflow-y-auto">
         <div className="border-b overflow-y-auto border-gray-300 flex items-center justify-end p-2">
           <div className="flex  items-center justify-center gap-3 mr-10">
             <span><Image src={require(`../../assets/icons/filter2.svg`)} alt="avatar" /></span>
@@ -37,7 +37,7 @@ function Documents() {
             <span className="ml-2 text-[#4582C4] font-bold cursor-pointer" onClick={redirect}>Add content</span></div>
         </div>
         <div>
-          <OverviewCard/>
+          <OverviewCard />
         </div>
       </div>
     </div>
