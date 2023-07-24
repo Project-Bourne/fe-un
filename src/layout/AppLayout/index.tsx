@@ -5,7 +5,7 @@ import { Header, NavBar } from '@/components/layouts';
 function AppLayout({children}) {
 
     return (
-        <div className='bg-white w-full h-[100vh] z-30 relative flex flex-row'>
+        <div className='bg-white w-full overflow-y-hidden h-[100vh] z-30 relative flex flex-row'>
             {/* Nav Bar Component */}
             <NavBar/>
 

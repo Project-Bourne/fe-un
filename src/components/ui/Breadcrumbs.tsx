@@ -6,7 +6,7 @@ function Breadcrumbs() {
   const pathSegments = router.asPath.split('/').filter(segment => segment !== '');
 
     return(
-        <div className="w-full border-b-[1px] py-3 pl-5 border-b-gray-100 flex gap-2 items-start">
+        <div className="w-full border-b-[1px] py-3 pl-5 flex gap-2 items-start">
         {pathSegments.map((crumb, i) => {
             // last route in the crumb trail exempts the current page route 
             const isLastItem = i === pathSegments.length - 1;

@@ -1,5 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
+import InviteByname from '../components/InviteByname'
+import InviteByPhone from '../components/InviteByPhone'
 
 type LayoutType = {
   children: ReactNode;
@@ -32,22 +34,16 @@ const TabLayout = ({ children, showTitle, data }: any) => {
             onClick={() => handleClick(item.id)}
             key={index}
           >
-            {item.icon && <Image
-              src={require(`../../assets/icons/${item?.icon}`)}
-              alt="settings tab"
-              width={18}
-              height={18}
-              style={{ marginRight: 15 }}
-              priority
-            />}
-
             <h2 className={selectedTab === item.id ? 'text-[12px] font-semibold text-sirp-primary' : 'text-[12px] font-semibold'}>
               {item.name}
             </h2>
           </div>
         ))}
       </div>
-      {children}
+       {/* Conditionally render children based on selectedTab */}
+       {selectedTab === 1 && <InviteByname />}
+      {selectedTab === 2 && <InviteByPhone />}
+      {/* Add more conditions for other tabs as needed */}
     </div>
   );
 };
