@@ -19,7 +19,7 @@ function NavBar() {
         </div>
         {/* items-center justify-center py-4 md:px-5 w-[100%] flex flex-row self-center */}
         <div 
-            className='flex py-4 px-0 md:px-3 lg:px-5 text-center justify-center border-[1.3px] border-sirp-primaryLess1 rounded-xl 
+            className='flex py-2.5 px-0 md:py-4 md:px-3 lg:px-5 text-center justify-center border-[1.3px] border-sirp-primaryLess1 rounded-xl 
                  cursor-pointer shadow-sm shadow-sirp-primaryLess1 hover:bg-blue-50'
         >
             <Image

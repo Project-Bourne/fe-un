@@ -53,5 +53,7 @@ export interface CustomCardModal {
     subText: string,
     subText2?: string,
     classes?: string,
+    classes2?: string,
+    children?: ReactNode,
     layoutCount: number
 }
