@@ -5,6 +5,9 @@ import Button from "./Button";
 import CustomSwitch from "./CustomSwitch";
 import CustomModal from "./CustomModal";
 import Breadcrumbs from "./Breadcrumbs";
+import CustomEmoji from "./Emoji";
+import AudioRecorderComponent from "./AudioRecorderComponent";
+import BlinkingRedDot from "./BlinkingRedDot";
 
 
 export {
@@ -15,5 +18,8 @@ export {
     CustomSwitch,
     Tab,
     CustomModal,
-    Breadcrumbs
+    Breadcrumbs,
+    CustomEmoji,
+    AudioRecorderComponent,
+    BlinkingRedDot
 }
