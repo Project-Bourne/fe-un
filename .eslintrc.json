@@ -1,22 +1,22 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": [
-        "airbnb",
-        "next",
-        "prettier"
-        // "prettier/react"
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "parser": "@babel/eslint-parser"
-    },
-    "rules": {
-        "react/no-unescaped-entities": "off",
-        "@next/next/no-page-custom-font": "off",
-        "no-use-before-define": ["off"],
-        "max-lines-per-function": ["off"]
-    }
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb",
+    "next",
+    "prettier"
+    // "prettier/react"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "parser": "@babel/eslint-parser"
+  },
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
+    "no-use-before-define": ["off"],
+    "max-lines-per-function": ["off"]
+  }
 }

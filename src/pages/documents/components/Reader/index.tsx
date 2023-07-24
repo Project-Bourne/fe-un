@@ -1,10 +1,10 @@
-import React from 'react'
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 export default function Reader() {
-    return (
-        <div className='relative'>
-            {/* <div className='m-5 grid grid-cols-2 gap-4 '>
+  return (
+    <div className="relative">
+      {/* <div className='m-5 grid grid-cols-2 gap-4 '>
                 <div className="row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] max-h-[60vh] overflow-y-scroll border-2 border-[#E5E7EB] bg-[#fff]">
                     <span className='font-light text-[#383E42]'>Content</span>
                     <p className='text-[#383E42] text-sm pt-3'> 本网站由 Web3D Media Incorporated 运营，该公司位于特拉华州，注册地址为 651 N Broad St, New Castle, Delaware United States。 （“公司”）。
@@ -97,6 +97,6 @@ export default function Reader() {
                     /></span>
                 </span>
             </div> */}
-        </div>
-    )
+    </div>
+  );
 }

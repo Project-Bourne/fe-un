@@ -1,10 +1,7 @@
-
 import { useState, useEffect } from "react";
 import RecordRTC, { RecordRTCPromisesHandler } from "recordrtc";
 
-function useRecorderPermission(
-  recordingType: RecordRTC.Options["type"]
-){
+function useRecorderPermission(recordingType: RecordRTC.Options["type"]) {
   const [recorder, setRecorder] = useState<any>();
   useEffect(() => {
     getPermissionInitializeRecorder();
@@ -20,6 +17,6 @@ function useRecorderPermission(
     setRecorder(recorder);
   };
   return recorder;
-};
+}
 
 export default useRecorderPermission;

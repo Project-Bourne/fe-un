@@ -12,7 +12,9 @@ function Card() {
         mainText2={"123444"}
         subText2={"Total import from IRP"}
         classes={"flex py-5 px-5 gap-5 cursor-pointer"}
-        classes2={"border-l-[1px] border-opacity-5 border-black flex py-5 px-5 gap-5 cursor-pointer"}
+        classes2={
+          "border-l-[1px] border-opacity-5 border-black flex py-5 px-5 gap-5 cursor-pointer"
+        }
         layoutCount={2}
       />
       <CustomCard
@@ -21,7 +23,9 @@ function Card() {
         subText={
           "Send a video/audio call request to collaborator(s), your call will start when the collaborator(s) accepts your call request"
         }
-        classes={"flex py-[0.86rem] px-5 gap-5 rounded-[1rem] bg-sirp-secondary2 border border-sirp-dashboard1 cursor-pointer"}
+        classes={
+          "flex py-[0.86rem] px-5 gap-5 rounded-[1rem] bg-sirp-secondary2 border border-sirp-dashboard1 cursor-pointer"
+        }
         layoutCount={1}
       />
     </div>

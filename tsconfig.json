@@ -1,16 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,  //oppose
-    "strict": false,  //oppose
-    "forceConsistentCasingInFileNames": false,  //oppose
-    "noEmit": false,  //oppose
+    "skipLibCheck": true, //oppose
+    "strict": false, //oppose
+    "forceConsistentCasingInFileNames": false, //oppose
+    "noEmit": false, //oppose
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -24,46 +20,19 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/pages": [
-        "./src/pages/*"
-      ],
-      "@/utils": [
-        "./src/utils/*"
-      ],
-      "@/layout": [
-        "./src/layout/*"
-      ],
-      "@/global": [
-        "./src/global/*"
-      ],
-      "@/styles": [
-        "./src/styles/*"
-      ],
-      "@/shared": [
-        "./src/shared/*"
-      ],
-      "@/ui": [
-        "./src/components/ui/*"
-      ],
-      "@/icons": [
-        "./src/components/icons/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/pages": ["./src/pages/*"],
+      "@/utils": ["./src/utils/*"],
+      "@/layout": ["./src/layout/*"],
+      "@/global": ["./src/global/*"],
+      "@/styles": ["./src/styles/*"],
+      "@/shared": ["./src/shared/*"],
+      "@/ui": ["./src/components/ui/*"],
+      "@/icons": ["./src/components/icons/*"]
     },
-    "strictNullChecks": false  //oppose
+    "strictNullChecks": false //oppose
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

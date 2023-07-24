@@ -6,10 +6,10 @@ import Header from "./Header";
 // import ActivityCard from "./ActivityCard";
 
 export {
-    CustomTable,
-    ProfileSection,
-    PersonalInfoSection,
-    ActivityLogSection,
-    Header
-    // ActivityCard
-}
+  CustomTable,
+  ProfileSection,
+  PersonalInfoSection,
+  ActivityLogSection,
+  Header,
+  // ActivityCard
+};
