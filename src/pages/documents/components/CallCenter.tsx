@@ -40,11 +40,11 @@ function CallCenter({ setshowCallScreen }) {
   const renderScreen = () => {
     switch (activeScreen) {
       case "inCallChats":
-        return <InCallChats />;
+        return <InCallChats setActiveScreen={setActiveScreen} />;
       case "inCallParticipants":
-        return <InCallParticipants />;
+        return <InCallParticipants setActiveScreen={setActiveScreen} />;
       case "shareDetails":
-        return <ShareDetails />;
+        return <ShareDetails setActiveScreen={setActiveScreen} />;
     }
   };
 
