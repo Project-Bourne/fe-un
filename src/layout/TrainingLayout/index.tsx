@@ -17,7 +17,7 @@ const TrainingLayout = ({ children }: LayoutType) => {
     <div className="w-full h-[100vw] bg-white">
       {/* Header */}
       <div className="flex flex-row w-full py-7 px-7 items-center justify-between">
-        <h1 className="text-[18px] font-semibold">Training</h1>
+        <h1 className="text-[18px] font-semibold">Help</h1>
       </div>
 
       {/* Settings tabs */}
