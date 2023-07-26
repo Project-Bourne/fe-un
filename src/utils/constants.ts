@@ -49,7 +49,7 @@ export const HomeSubData = [
     id: 2,
   },
 ];
-export const workspaceeSubData = [
+export const workspaceTab = [
   {
     name: "Workspaces",
     id: 1,
@@ -57,6 +57,20 @@ export const workspaceeSubData = [
   {
     name: "Activites",
     id: 2,
+  },
+];
+export const workspaceGroupTab = [
+  {
+    name: "Articles",
+    id: 1,
+  },
+  {
+    name: "Activites",
+    id: 2,
+  },
+  {
+    name: "Collaborators",
+    id: 3,
   },
 ];
 

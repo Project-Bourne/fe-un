@@ -6,7 +6,6 @@ import {
   TableBodyDataSup,
 } from "../utils/constants";
 import { UsersList } from "../user";
-import { Header } from "../components";
 
 export const TabBodyContents = [
   {
@@ -39,7 +38,6 @@ function Users() {
   return (
     <>
       <div>
-        <Header filter={true} />
         <Tab
           tabHeaderContents={TabHeaderData}
           tabBodyContents={TabBodyContents}

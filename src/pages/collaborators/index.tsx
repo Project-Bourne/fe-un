@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Group from "./workspaces/Group";
+import Group from "./workspaces/Collaboration";
 import { Button, CustomModal } from "@/components/ui";
 import Image from "next/image";
 import AddWorkspace from "./modal pop up/AddWorkspacePopUp";
@@ -48,7 +48,7 @@ const index = () => {
       </div>
 
       {/* tab section  */}
-      <TabLayout />
+      <TabLayout layout={1} />
 
       {/* Render the add workspace  modal */}
       {modalType === "AddWorkspace" && (
@@ -56,7 +56,7 @@ const index = () => {
           style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
         >
-          <AddWorkspace onHandleModal={handleCloseModal} />
+          <AddWorkspace onHandlAddeModal={handleCloseModal} />
         </CustomModal>
       )}
     </div>

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui";
+import { useRouter } from "next/router";
 
-const AddWorkspacePopUp = ({ onHandleModal }) => {
+const AddWorkspacePopUp = ({ onHandlAddeModal }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     workName: "",
     workspaceDescription: "",
@@ -10,9 +11,17 @@ const AddWorkspacePopUp = ({ onHandleModal }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
-    // You can perform additional actions here, like making an API call, etc.
-    onHandleModal(); // Close the modal after form submission.
+    const form = event.target;
+    if (form.checkValidity()) {
+      console.log(formData);
+      const id = 2;
+      // You can perform additional actions here, like making an API call, etc.
+      router.push(`/collaborators/workspaces/${id}`); // Navigate to the desired route
+    } else {
+      // If the form is invalid, display validation messages or handle it accordingly.
+      form.reportValidity();
+      onHandlAddeModal();
+    }
   };
 
   const handleChange = (event) => {
@@ -47,6 +56,7 @@ const AddWorkspacePopUp = ({ onHandleModal }) => {
           className="border p-2 my-3 rounded-[.3rem]"
           value={formData.workName}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="workspaceDescription" className="text-sm text-gray-500">
@@ -60,20 +70,25 @@ const AddWorkspacePopUp = ({ onHandleModal }) => {
           className="border p-2 my-3 rounded-[.3rem] h-[100px]"
           value={formData.workspaceDescription}
           onChange={handleChange}
+          required
         ></textarea>
-        <div className="flex justify-center">
+        <label
+          htmlFor="submitButton"
+          className="text-sm flex justify-center text-gray-500"
+        >
           <Button
+            id="submitButton"
             classNameStyle="flex gap-x-1 items-center text-center justify-center mt-10 hover:text-sirp-primary text-white text-[14px] hover:bg-sirp-primaryLess2 mb-5"
             size="lg"
             background="bg-sirp-primary"
-            type="submit" // Set the type attribute to "submit" to trigger the form submission on button click
+            type="submit"
             value={
               <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
-                <label>Continue</label>
+                Continue
               </div>
             }
           />
-        </div>
+        </label>
       </form>
     </div>
   );
