@@ -41,7 +41,7 @@ const TabComp = ({ item, index, route }: TabCompType) => {
   return (
     <div
       className={
-        item.route == router.pathname
+        router.pathname.includes(item.route)
           ? "md:px-8 px-3 pt-3 flex flex-row items-center border-b-2 border-sirp-primary pb-2 md:pb-3 mb-[-2px] cursor-pointer"
           : "md:px-8 px-3  pt-3 flex items-center pb-3 mb-[-2px] cursor-pointer text-sirp-grey"
       }
@@ -63,7 +63,7 @@ const TabComp = ({ item, index, route }: TabCompType) => {
 
       <h2
         className={
-          router.pathname == item.route
+          router.pathname.includes(item.route)
             ? "text-[12px] font-semibold text-sirp-primary"
             : "text-[12px] font-semibold "
         }
