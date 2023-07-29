@@ -118,7 +118,6 @@ const InviteCollaborators = (props) => {
 
         <div className="flex items-center gap-5 justify-center mt-[2.2rem] md:w-[40rem] w-full">
           <Button
-            id="submitButton"
             onClick={handleInvite}
             classNameStyle="flex gap-x-1 items-center text-center justify-center mt-2 hover:text-sirp-primary text-white text-sm hover:bg-sirp-primaryLess2 mb-1"
             size="lg"

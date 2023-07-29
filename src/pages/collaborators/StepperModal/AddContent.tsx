@@ -4,6 +4,7 @@ import Image from "next/image";
 import FileUploadSection from "./fileUpload";
 import { Button } from "@/components/ui";
 import { useRouter } from "next/router";
+import UploadfromCollab from "./UploadfromCollab";
 
 const AddConten = (props) => {
   const { stages, index, setIndex } = props;
@@ -12,6 +13,7 @@ const AddConten = (props) => {
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showReader, setShowReader] = useState(false);
+  const [showCollabUpload, setShowCollabUpload] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -59,6 +61,11 @@ const AddConten = (props) => {
     setFormData("");
   };
 
+  const uploadFromCollabDocument = () => {
+    console.log("upload from collab document");
+    setShowCollabUpload(true);
+  };
+
   return (
     <div>
       <Stages steps={stages} step={index} />
@@ -69,13 +76,31 @@ const AddConten = (props) => {
             handleDeleteFile={handleDeleteFile}
             isLoading={isLoading}
           />
+        ) : showCollabUpload ? (
+          <UploadfromCollab /> // This is the component that will be rendered when the user clicks the "Select from collab documents" button
         ) : (
           <>
+            <div
+              className="flex my-5 mx-5 cursor-pointer gap-2"
+              onClick={uploadFromCollabDocument}
+            >
+              <Image
+                src={require("../../../assets/icons/arrow-narrow-left  blue.svg")}
+                alt="upload image"
+                width={20}
+                height={20}
+                priority
+              />
+              <span className="text-sirp-primary text-sm">
+                Select from collab documents
+              </span>
+            </div>
+
             <form onSubmit={handleSubmit}>
               <div className="flex align-middle w-full border-2 rounded-full border-[#E5E7EB]-500  border-dotted">
                 <span className="flex align-middle justify-center mx-3">
                   <Image
-                    src={require(`../../../assets/icons/link.svg`)}
+                    src={require("../../../assets/icons/link.svg")}
                     alt="upload image"
                     width={20}
                     height={20}
@@ -91,7 +116,7 @@ const AddConten = (props) => {
                 <span className="flex align-middle justify-center mx-3">
                   <Image
                     className="flex align-middle justify-center font-light text-[#A1ADB5] cursor-pointer"
-                    src={require(`../../../assets/icons/x.svg`)}
+                    src={require("../../../assets/icons/x.svg")}
                     alt="upload image"
                     width={20}
                     height={20}
@@ -101,6 +126,7 @@ const AddConten = (props) => {
               </div>
             </form>
 
+            {/* the is the handle drag and drop section */}
             <div
               onDragOver={handleDragOver}
               onDrop={handleDrop}
@@ -110,7 +136,7 @@ const AddConten = (props) => {
                 <span className="flex align-middle justify-center mx-3">
                   <Image
                     className="flex align-middle justify-center"
-                    src={require(`../../../assets/icons/cloud.svg`)}
+                    src={require("../../../assets/icons/cloud.svg")}
                     alt="upload image"
                     width={25}
                     height={25}
@@ -134,36 +160,38 @@ const AddConten = (props) => {
                   or drag and drop
                 </span>
                 <span className="font-light  text-[#383E42]">
-                  TXT, RFT, DOC, PDF upto 5MB
+                  TXT, RFT, DOC, PDF up to 5MB
                 </span>
               </div>
             </div>
+
+            {/* this are the two button  */}
+            <div className="flex items-center gap-5 justify-center mt-[2.2rem] md:w-[40rem] w-full">
+              <Button
+                classNameStyle="flex gap-x-1 items-center text-center justify-center mt-2 hover:text-sirp-primary text-white text-sm hover:bg-sirp-primaryLess2 mb-1"
+                size="lg"
+                background="bg-sirp-primary"
+                type="submit"
+                value={
+                  <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
+                    Create workspace
+                  </div>
+                }
+                disabled
+              />
+              <Button
+                classNameStyle="flex border iteam-center justify-center text-center border-sirp-primary gap-x-1 items-center mt-2 mb-1 cursor-pointer rounded-[1rem]"
+                size="sm"
+                background="bg-white"
+                value={
+                  <div className="flex gap-3 text-[1rem] text-sirp-primary items-center justify-center py-4">
+                    Skip
+                  </div>
+                }
+              />
+            </div>
           </>
         )}
-      </div>
-      <div className="flex items-center gap-5 justify-center mt-[2.2rem] md:w-[40rem] w-full">
-        <Button
-          classNameStyle="flex gap-x-1 items-center text-center justify-center mt-2 hover:text-sirp-primary text-white text-sm hover:bg-sirp-primaryLess2 mb-1"
-          size="lg"
-          background="bg-sirp-primary"
-          type="submit"
-          value={
-            <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
-              Create workspace
-            </div>
-          }
-          disabled
-        />
-        <Button
-          classNameStyle="flex border iteam-center justify-center text-center border-sirp-primary gap-x-1 items-center mt-2 mb-1 cursor-pointer rounded-[1rem]"
-          size="sm"
-          background="bg-white"
-          value={
-            <div className="flex gap-3 text-[1rem] text-sirp-primary items-center justify-center py-4">
-              Skip
-            </div>
-          }
-        />
       </div>
     </div>
   );

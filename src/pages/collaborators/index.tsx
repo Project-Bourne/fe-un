@@ -22,7 +22,7 @@ const index = () => {
         <div className="flex gap-x-3 md:w-[25%] w-[45%] justify-end mr-5">
           {/* Button to open the AddWorkspace modal */}
           <Button
-            className="flex gap-x-1 items-center"
+            classNameStyle="flex gap-x-1 items-center justify-center text-center"
             onClick={() => handleModal("AddWorkspace")}
             size="lg"
             background="bg-sirp-primary"
@@ -37,7 +37,7 @@ const index = () => {
                   style={{ alignSelf: "center" }}
                   priority
                 />
-                <label className="text-white">Add workspace</label>
+                <label className="text-white text-center">Add workspace</label>
               </div>
             }
           />

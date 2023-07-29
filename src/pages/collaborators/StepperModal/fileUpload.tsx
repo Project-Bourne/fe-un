@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui";
+import { useRouter } from "next/router";
 
 const FileUploadSection = ({ file, handleDeleteFile, isLoading }) => {
+  const router = useRouter();
+
+  const handleCreateWorkspace = () => {
+    router.push("/collaborators/workspaces/2");
+  };
+
   return (
     <>
       <div className="p-10 flex align-middle items-center w-full flex-col justify-center">
@@ -39,6 +46,7 @@ const FileUploadSection = ({ file, handleDeleteFile, isLoading }) => {
       </div>
       <div className="flex items-center gap-5 justify-center mt-[2.2rem] md:w-[40rem] w-full">
         <Button
+          onClick={handleCreateWorkspace}
           classNameStyle="flex gap-x-1 items-center text-center justify-center mt-2 hover:text-sirp-primary text-white text-sm hover:bg-sirp-primaryLess2 mb-1"
           size="lg"
           background="bg-sirp-primary"

@@ -30,16 +30,32 @@ function InviteUsersPopUp({ onHandleModalTwo }) {
 
   const handleCheck = (id) => {
     setSuggestions((prevSuggestions) =>
-      prevSuggestions.map((suggestion) => {
-        if (suggestion.id === id) {
-          return {
-            ...suggestion,
-            isChecked: !suggestion.isChecked,
-          };
-        }
-        return suggestion;
-      }),
+      prevSuggestions.map((suggestion) =>
+        suggestion.id === id
+          ? { ...suggestion, isChecked: !suggestion.isChecked }
+          : suggestion,
+      ),
     );
+  };
+
+  // Handle the "Add users" button click
+  const handleAddUsersClick = () => {
+    // Function to get the selected suggestions
+    const getSelectedSuggestions = () => {
+      return suggestions.filter((suggestion) => suggestion.isChecked);
+    };
+
+    // Determine if at least one checkbox is checked
+    const isAddUsersButtonEnabled = suggestions.some(
+      (suggestion) => suggestion.isChecked,
+    );
+
+    const selectedSuggestions = getSelectedSuggestions();
+    console.log("Selected Suggestions:", selectedSuggestions);
+    // Perform any further actions with the selected suggestions here
+
+    // Call the onHandleModalTwo function (assuming it's responsible for handling the modal)
+    onHandleModalTwo();
   };
 
   return (
@@ -88,15 +104,17 @@ function InviteUsersPopUp({ onHandleModalTwo }) {
 
       <div className="flex items-center justify-end">
         <Button
-          onClick={onHandleModalTwo}
-          className="flex gap-x-1 items-center mt-10 mb-5 cursor-pointer rounded-[1rem]"
+          onClick={handleAddUsersClick} // Call the function to handle the button click
+          classNameStyle="flex gap-x-1 items-center mt-10 mb-5 justify-center text-center cursor-pointer rounded-[1rem]"
           size="sm"
           background="bg-sirp-primary"
           value={
             <div className="flex gap-2 text-[1rem] items-center justify-center py-5">
-              <label className="text-white">Add us</label>
+              <label className="text-white text-center">Add users</label>
             </div>
           }
+          // Disable the button if no checkbox is checked
+          disabled={!suggestions.some((suggestion) => suggestion.isChecked)}
         />
       </div>
     </div>

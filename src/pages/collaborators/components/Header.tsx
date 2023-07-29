@@ -23,7 +23,7 @@ function Header({ filter }: HeaderModel) {
         <div className="flex gap-x-3 md:w-[25%] w-[45%] justify-end mr-5">
           {/* Button to open the Collaborate modal */}
           <Button
-            className="flex gap-x-1 items-center"
+            classNameStyle="flex gap-x-1 items-center justify-center text-center"
             onClick={() => handleModal("collaborate")}
             size="md"
             background="bg-sirp-primary"
@@ -38,14 +38,14 @@ function Header({ filter }: HeaderModel) {
                   style={{ alignSelf: "center" }}
                   priority
                 />
-                <label className="text-white">Add User</label>
+                <label className="text-white text-center">Add content</label>
               </div>
             }
           />
           {/* Button to open the  modal */}
 
           <Button
-            className="flex gap-x-1 items-center"
+            classNameStyle="flex gap-x-1 items-center justify-center text-center"
             onClick={() => handleModal("invite")}
             size="md"
             background="bg-sirp-primary"
@@ -60,7 +60,7 @@ function Header({ filter }: HeaderModel) {
                   style={{ alignSelf: "center" }}
                   priority
                 />
-                <label className="text-white">Add User</label>
+                <label className="text-white text-center">Add User</label>
               </div>
             }
           />
