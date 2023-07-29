@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Group from "./workspaces/Collaboration";
 import { Button, CustomModal } from "@/components/ui";
 import Image from "next/image";
 import AddWorkspace from "./modal pop up/AddWorkspacePopUp";
