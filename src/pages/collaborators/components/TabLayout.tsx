@@ -3,6 +3,7 @@ import { workspaceTab, workspaceGroupTab } from "@/utils/constants";
 import RecentWorkspace from "./RecentWorkspace";
 import Collaboration from "../workspaces/Collaboration";
 import Article from "../workspaces/Article";
+import Activites from "../workspaces/Activites";
 
 function TabLayout({ layout }) {
   const tabLayoutOne = workspaceTab;
@@ -64,12 +65,12 @@ function TabLayout({ layout }) {
       {layout === 1 ? (
         <div>
           {selectedTab === 1 && <RecentWorkspace />}
-          {selectedTab === 2 && <h1>Saved</h1>}
+          {selectedTab === 2 && <Activites />}
         </div>
       ) : (
         <div>
           {selectedTab === 1 && <Article />}
-          {selectedTab === 2 && <h1>Activities</h1>}
+          {selectedTab === 2 && <Activites />}
           {selectedTab === 3 && <Collaboration />}
         </div>
       )}

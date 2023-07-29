@@ -1,14 +1,8 @@
 import React from "react";
-import Image from "next/image";
 import DocCard from "@/pages/documents/components/docCards";
 import OverviewCard from "@/pages/documents/components/overviewCard";
-import { useRouter } from "next/router";
 
 const Article = () => {
-  const router = useRouter();
-  const redirect = () => {
-    router.push("/documents/add-content");
-  };
   return (
     <div className="w-full h-[100vh]  grid grid-cols-2">
       <div className="border-r overflow-y-auto border-gray-300 p-5">

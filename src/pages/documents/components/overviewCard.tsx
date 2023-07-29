@@ -8,7 +8,6 @@ import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 
 function OverviewCard() {
-  const value = 66;
   const router = useRouter();
   const handleClick = () => {
     router.push("/documents/viewDocument");
@@ -56,7 +55,7 @@ function OverviewCard() {
           <div className="w-[70px] h-[70px]">
             <CircularProgressbar
               value={76.6}
-              text={"70%"}
+              text={"76.6%"}
               strokeWidth={10}
               styles={{
                 path: {
