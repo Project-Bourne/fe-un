@@ -104,7 +104,7 @@ function viewDocument() {
         setShowShare={setShowShare}
         showShare={showShare}
       />
-      {showCall && <CallModal setShowCall={setShowCall} showCall={showCall} />}
+      {showCall && <CallModal setShowCall={setShowCall} />}
     </div>
   );
 }

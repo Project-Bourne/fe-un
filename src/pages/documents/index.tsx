@@ -11,7 +11,7 @@ function Documents() {
   };
   return (
     <div className="w-full h-[100vh]  grid grid-cols-2">
-      <div className="border-r overflow-y-auto border-gray-300 p-5">
+      <div className="border-r overflow-y-auto pb-[200px] border-gray-300 p-5">
         <h1 className="text-[#383E42] font-bold text-3xl">Documents</h1>
         <div className="grid my-5">
           <DocCard />

@@ -5,8 +5,8 @@ import RecentDocument from "./components/RecentDocument";
 
 const index = () => {
   return (
-    <div className="h-full w-full">
-      <h1 className="ml-4 mt-[20px] text-2xl font-bold">Welcome Oluanrawaju</h1>
+    <div className="h-[100vh] w-full overflow-y-auto pb-[8rem]">
+      <h1>Welcome Oluanrawaju</h1>
       <Card />
       <RecentCard />
       <RecentDocument />
