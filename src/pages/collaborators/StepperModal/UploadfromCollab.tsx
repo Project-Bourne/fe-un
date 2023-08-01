@@ -1,9 +1,10 @@
+import { Button } from "@/components/ui";
 import React, { useState } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui";
 import { Checkbox } from "@mui/material";
+import { useRouter } from "next/router";
 
-function Collaborate({ onHandleModal }) {
+const UploadfromCollab = (props) => {
   const initialSuggestions = [
     {
       id: 1,
@@ -22,6 +23,8 @@ function Collaborate({ onHandleModal }) {
     },
   ];
 
+  const router = useRouter();
+
   const [suggestions, setSuggestions] = useState(initialSuggestions);
 
   const handleCheck = (id) => {
@@ -38,7 +41,7 @@ function Collaborate({ onHandleModal }) {
     const selectedSuggestions = suggestions.filter(
       (suggestion) => suggestion.isChecked,
     );
-    onHandleModal();
+    router.push("/collaborators/workspaces/2");
     console.log("Selected Suggestions:", selectedSuggestions);
   };
 
@@ -90,15 +93,25 @@ function Collaborate({ onHandleModal }) {
           type="submit"
           value={
             <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
-              Add Content
+              Create workspace
             </div>
           }
           // Disable the button if no box is checked
           disabled={!isCreateButtonEnabled}
         />
+        <Button
+          classNameStyle="flex border iteam-center justify-center text-center border-sirp-primary gap-x-1 items-center mt-2 mb-1 cursor-pointer rounded-[1rem]"
+          size="sm"
+          background="bg-white"
+          value={
+            <div className="flex gap-3 text-[1rem] text-sirp-primary items-center justify-center py-4">
+              Skip
+            </div>
+          }
+        />
       </div>
     </div>
   );
-}
+};
 
-export default Collaborate;
+export default UploadfromCollab;

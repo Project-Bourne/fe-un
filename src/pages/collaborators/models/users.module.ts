@@ -17,6 +17,9 @@ export interface ActivityCardModel {
 export interface HeaderModel {
   filter?: boolean;
   showModal?: boolean;
+  showButton?: any; // conditons for showing button
+  onButtonClick?: any; //first click hanadler for button
+  onAnotherButtonClick?: any;
 }
 
 export interface LogDataModel {

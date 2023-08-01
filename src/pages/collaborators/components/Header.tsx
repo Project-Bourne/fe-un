@@ -1,51 +1,52 @@
-import {
-  Button,
-  CustomModal,
-  Dropdown,
-  DropdownWithFlag,
-  Input,
-} from "@/components/ui";
+import { Button, CustomModal } from "@/components/ui";
 import Image from "next/image";
 import { useState } from "react";
-import { UserRoles } from "@/utils/constants";
 import { HeaderModel } from "../models/users.module";
 import Collaborate from "../modal pop up/CollabratePopUp";
+import InviteUsers from "../modal pop up/InviteUsersPopUp";
 
 function Header({ filter }: HeaderModel) {
-  const [toggleModal, setToggleModal] = useState(false);
+  const [modalType, setModalType] = useState("");
 
-  const handleModal = () => {
-    setToggleModal(false);
+  const handleModal = (type) => {
+    setModalType(type);
+  };
+
+  const handleCloseModal = () => {
+    setModalType("");
   };
 
   return (
     <>
       <div className="flex justify-between pl-5 pr-2  py-3">
-        <h1 className="text-[30px]">Collaborators</h1>
-        <div
-          className={`flex gap-x-3 ${
-            filter
-              ? "md:w-[25%] w-[45%]"
-              : "md:w-[18%] w-[45%] justify-end mr-5"
-          }`}
-        >
-          {filter && (
-            <div className="bg-sirp-lightGrey cursor-pointer flex gap-x-1 py-2 px-3 rounded-lg justify-center items-center content-center">
-              <Image
-                src={require("../../../assets/icons/filter.svg")}
-                alt="Filter"
-                width={18}
-                height={18}
-                className="self-center"
-                style={{ alignSelf: "center" }}
-                priority
-              />
-              <label className="text-[12px] items-center">Filter &#8964;</label>
-            </div>
-          )}
+        <h1 className="text-[30px]">Group 911</h1>
+        <div className="flex gap-x-3 md:w-[25%] w-[45%] justify-end mr-5">
+          {/* Button to open the Collaborate modal */}
           <Button
-            className="flex gap-x-1 items-center"
-            onClick={() => setToggleModal(true)}
+            classNameStyle="flex gap-x-1 items-center justify-center text-center"
+            onClick={() => handleModal("collaborate")}
+            size="md"
+            background="bg-sirp-primary"
+            value={
+              <div className="flex gap-x-1 text-[12px] items-center justify-center">
+                <Image
+                  src={require("../../../assets/icons/plus 1.svg")}
+                  alt="add user"
+                  width={14}
+                  height={14}
+                  className="self-center"
+                  style={{ alignSelf: "center" }}
+                  priority
+                />
+                <label className="text-white text-center">Add content</label>
+              </div>
+            }
+          />
+          {/* Button to open the  modal */}
+
+          <Button
+            classNameStyle="flex gap-x-1 items-center justify-center text-center"
+            onClick={() => handleModal("invite")}
             size="md"
             background="bg-sirp-primary"
             value={
@@ -59,18 +60,32 @@ function Header({ filter }: HeaderModel) {
                   style={{ alignSelf: "center" }}
                   priority
                 />
-                <label className="text-white">Add User</label>
+                <label className="text-white text-center">Add User</label>
               </div>
             }
           />
+
+          {/* Button to open the Invite Users modal */}
         </div>
       </div>
-      {toggleModal && (
+
+      {/* Render the Collaborate modal */}
+      {modalType === "collaborate" && (
         <CustomModal
-          style="bg-white md:w-[50%] w-[90%] relative top-[10%] rounded-xl mx-auto pt-3 px-3 pb-5"
-          closeModal={() => setToggleModal(false)}
+          style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
+          closeModal={handleCloseModal}
         >
-          <Collaborate onHandleModal={handleModal} />
+          <Collaborate onHandleModal={handleCloseModal} />
+        </CustomModal>
+      )}
+
+      {/* Render the Invite Users modal */}
+      {modalType === "invite" && (
+        <CustomModal
+          style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
+          closeModal={handleCloseModal}
+        >
+          <InviteUsers onHandleModalTwo={handleCloseModal} />
         </CustomModal>
       )}
     </>

@@ -1,8 +1,22 @@
-import { ButtonModel } from "@/models/ui/components.models";
-import { ClassNames } from "@emotion/react";
+// Assuming your existing ButtonModel interface looks like this:
+interface ButtonModel {
+  value: React.ReactNode;
+  type?: "submit" | "button" | "reset";
+  onClick?: () => void;
+  background: string;
+  classNameStyle: string;
+  size: "sm" | "md" | "lg" | "xl";
+}
 
-function Button(props: ButtonModel) {
-  const { value, type, onClick, background, classNameStyle, size } = props;
+// Add the `disabled` prop to the ButtonModel interface:
+interface ButtonModelWithDisabled extends ButtonModel {
+  disabled?: boolean;
+}
+
+// Update the Button component:
+function Button(props: ButtonModelWithDisabled) {
+  const { value, type, onClick, background, classNameStyle, size, disabled } =
+    props;
 
   const btnSize = () => {
     if (size === "sm") return "25%";
@@ -13,10 +27,13 @@ function Button(props: ButtonModel) {
 
   return (
     <button
-      className={`rounded-md ${classNameStyle} ${background}`}
+      className={`rounded-md ${classNameStyle} ${background} ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
       style={{ width: `${btnSize()}` }}
       type={type}
-      onClick={onClick}
+      onClick={!disabled ? onClick : undefined}
+      disabled={disabled}
     >
       {value}
     </button>
