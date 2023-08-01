@@ -1,52 +1,65 @@
 import React, { useState } from "react";
-import { Tab } from "@/components/ui";
-import {
-  TabHeaderData,
-  TableBodyData,
-  TableBodyDataSup,
-} from "./utils/constants";
-import { UsersList } from "./user";
-import { Header } from "./components";
+import { Button, CustomModal } from "@/components/ui";
+import Image from "next/image";
+import AddWorkspace from "./modal pop up/AddWorkspacePopUp";
+import TabLayout from "./components/TabLayout";
 
-export const TabBodyContents = [
-  {
-    id: 0,
-    component: <UsersList tableData={TableBodyData} usertype={-1} />,
-  },
-  {
-    id: 1,
-    component: <UsersList tableData={TableBodyData} usertype={0} />,
-  },
-  {
-    id: 2,
-    component: <UsersList tableData={TableBodyData} usertype={1} />,
-  },
-  {
-    id: 3,
-    component: <UsersList tableData={[]} usertype={2} />,
-  },
-  {
-    id: 4,
-    component: <UsersList tableData={TableBodyData} usertype={3} />,
-  },
-  {
-    id: 5,
-    component: <UsersList tableData={TableBodyDataSup} usertype={4} />,
-  },
-];
+const index = () => {
+  const [modalType, setModalType] = useState("");
 
-function Users() {
+  const handleModal = (type) => {
+    setModalType(type);
+  };
+
+  const handleCloseModal = () => {
+    setModalType("");
+  };
+
   return (
-    <>
-      <div>
-        <Header filter={true} />
-        <Tab
-          tabHeaderContents={TabHeaderData}
-          tabBodyContents={TabBodyContents}
-        />
-      </div>
-    </>
-  );
-}
+    <div>
+      <div className="flex justify-between pl-5 pr-2  py-3">
+        <h1 className="text-[30px]">Workspaces</h1>
+        <div className="flex gap-x-3 md:w-[25%] w-[45%] justify-end mr-5">
+          {/* Button to open the AddWorkspace modal */}
+          <Button
+            classNameStyle="flex gap-x-1 items-center justify-center text-center"
+            onClick={() => handleModal("AddWorkspace")}
+            size="lg"
+            background="bg-sirp-primary"
+            value={
+              <div className="flex gap-x-1 text-[12px] items-center justify-center">
+                <Image
+                  src={require("../../assets/icons/plus 1.svg")}
+                  alt="add user"
+                  width={14}
+                  height={50}
+                  className="self-center"
+                  style={{ alignSelf: "center" }}
+                  priority
+                />
+                <label className="text-white text-center">Add workspace</label>
+              </div>
+            }
+          />
 
-export default Users;
+          {/* Button to open the Invite Users modal */}
+        </div>
+      </div>
+
+      {/* tab section  */}
+      <TabLayout layout={1} />
+
+      {/* Render the add workspace  modal */}
+      {modalType === "AddWorkspace" && (
+        <CustomModal
+          style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
+          closeModal={handleCloseModal}
+        >
+          <AddWorkspace onHandlAddeModal={handleCloseModal} />
+        </CustomModal>
+      )}
+    </div>
+  );
+};
+
+export default index;

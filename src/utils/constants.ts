@@ -18,7 +18,7 @@ export const NavBarContents = [
     route: "/chats",
   },
   {
-    name: "Collaborators",
+    name: "Workspaces",
     icon: "starred.svg",
     id: 3,
     route: "/collaborators",
@@ -47,6 +47,30 @@ export const HomeSubData = [
     name: "Saved",
     icon: "star.svg",
     id: 2,
+  },
+];
+export const workspaceTab = [
+  {
+    name: "Workspaces",
+    id: 1,
+  },
+  {
+    name: "Activites",
+    id: 2,
+  },
+];
+export const workspaceGroupTab = [
+  {
+    name: "Articles",
+    id: 1,
+  },
+  {
+    name: "Activites",
+    id: 2,
+  },
+  {
+    name: "Collaborators",
+    id: 3,
   },
 ];
 
@@ -279,6 +303,62 @@ export const FAQS = [
   "Exporting from fact checker",
 ];
 
+export const RecentWork = [
+  {
+    id: 1,
+    maintext: "Group 911",
+    subtext: "Working on social impact News",
+    linkurl: "/dashboard",
+    linktext: "Invite Collaborators",
+    icon: "groupAvatar.svg",
+    maintext2: "Recent Collaborators",
+  },
+  {
+    id: 2,
+    maintext: "Starbucks",
+    subtext: "How to design a product that can grow itself 10x in year:",
+    linkurl: "/chats",
+    linktext: "Invite Collaborators",
+    icon: "groupAvatar.svg",
+    maintext2: "Recent Collaborators",
+  },
+  {
+    id: 3,
+    maintext: "Addidas",
+    subtext: "Any mechanical keyboard enthusiasts in design?",
+    linkurl: "/chats",
+    linktext: "Invite Collaborators",
+    icon: "groupAvatar.svg",
+    maintext2: "Recent Collaborators",
+  },
+  {
+    id: 4,
+    maintext: "Avon Products",
+    subtext: "Yo Reddit! What’s a small thing that anyone can do ",
+    linkurl: "/chats",
+    linktext: "Invite Collaborators",
+    icon: "groupAvatar.svg",
+    maintext2: "Recent Collaborators",
+  },
+  {
+    id: 5,
+    maintext: "Binford Ltd.",
+    subtext: "The More Important the Work, the More Important the Rest",
+    linkurl: "/chats",
+    linktext: "Invite Collaborators",
+    icon: "groupAvatar.svg",
+    maintext2: "Recent Collaborators",
+  },
+  {
+    id: 5,
+    maintext: "Petersburg Ltd",
+    subtext: "The More Important the Work, the More Important the Rest",
+    linkurl: "/chats",
+    linktext: "Invite Collaborators",
+    icon: "groupAvatar.svg",
+    maintext2: "Recent Collaborators",
+  },
+];
 export const CardData = [
   {
     title:

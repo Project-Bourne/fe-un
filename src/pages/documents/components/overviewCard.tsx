@@ -8,7 +8,6 @@ import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 
 function OverviewCard() {
-  const value = 66;
   const router = useRouter();
   const handleClick = () => {
     router.push("/documents/viewDocument");
@@ -55,8 +54,8 @@ function OverviewCard() {
         <div className="flex">
           <div className="w-[70px] h-[70px]">
             <CircularProgressbar
-              value={70}
-              text={"70%"}
+              value={76.6}
+              text={"76.6%"}
               strokeWidth={10}
               styles={{
                 path: {
@@ -79,33 +78,7 @@ function OverviewCard() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 mt-5">
-        <span className="text-[#6F7A82]">Authors</span>
-        <div className="grid grid-cols-2">
-          <div className="flex items-center justify-start">
-            <span>
-              <Image
-                src={require(`../../../assets/icons/Avatar.png`)}
-                width={50}
-                height={50}
-                alt="plus"
-              />
-            </span>
-            <div className="flex items-start justify-center flex-col ml-3">
-              <span className="font-bold text-lg">Peter Duru</span>
-              <span className="text-[#6F7A82]">Transcorp@gmail.com</span>
-            </div>
-          </div>
-          <div>
-            <Image
-              src={require(`../../../assets/icons/avatar-group.svg`)}
-              alt="avatar"
-              width={150}
-              height={150}
-            />
-          </div>
-        </div>
-      </div>
+
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">Source </span>
         <div className="flex">
@@ -114,7 +87,7 @@ function OverviewCard() {
       </div>
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">Tags & Keywords </span>
-        <div className="flex gap-3">
+        <div className="flex gap-3 md-flex-col flex-row">
           <Tabs value={"UI Design"} />
           <Tabs value={"Web3 design"} />
           <Tabs value={"Tutorials"} />
