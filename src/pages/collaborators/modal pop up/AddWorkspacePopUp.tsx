@@ -6,9 +6,11 @@ import AddContent from "../StepperModal/AddContent";
 
 const stages = [{ label: "" }, { label: "" }, { label: "" }];
 const AddWorkspacePopUp = ({ onHandlAddeModal }) => {
+
+
   const [index, setIndex] = useState(0);
   const props = { stages, index, setIndex };
-
+  
   return (
     <div>
       <div className="flex flex-col gap-5 my-5">

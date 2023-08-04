@@ -3,10 +3,13 @@ import { Stages } from "../components";
 import { Button } from "@/components/ui";
 import { Checkbox } from "@mui/material";
 import Image from "next/image";
+import { useSelector, useDispatch } from 'react-redux';
+import { setCollab } from '@/redux/reducers/workspaceReducer';
+
 
 const InviteCollaborators = (props) => {
   const { stages, index, setIndex } = props;
-
+  const dispatch = useDispatch();
   // Refactor the suggestion data into a separate array to improve readability
   const initialSuggestions = [
     {
@@ -33,31 +36,37 @@ const InviteCollaborators = (props) => {
   ];
 
   const [suggestions, setSuggestions] = useState(initialSuggestions);
+  const [selectedSuggestions, setSelectedSuggestions] = useState([]);
 
-  // Toggle the isChecked state when a checkbox is clicked
   const handleCheck = (id) => {
-    setSuggestions((prevSuggestions) =>
-      prevSuggestions.map((suggestion) =>
-        suggestion.id === id
-          ? { ...suggestion, isChecked: !suggestion.isChecked }
-          : suggestion,
-      ),
-    );
+    setSelectedSuggestions((prevSelected) => {
+      // Toggle selection status
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter((selectedId) => selectedId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    });
+
+    console.log(selectedSuggestions)
+  
   };
+
+
 
   // Handle the invite button click
   const handleInvite = () => {
-    // Function to get the selected suggestions
-    const getSelectedSuggestions = () => {
-      return suggestions.filter((suggestion) => suggestion.isChecked);
-    };
+    // // Function to get the selected suggestions
+    // const getSelectedSuggestions = () => {
+    //   return suggestions.filter((suggestion) => suggestion.isChecked);
+    // };
 
-    // Get the selected suggestions
-    const selectedSuggestions = getSelectedSuggestions();
+    // // Get the selected suggestions
+    // const selectedSuggestions = getSelectedSuggestions();
 
-    // Perform further actions with the selected suggestions
-    console.log("Selected Suggestions:", selectedSuggestions);
-
+    // // Perform further actions with the selected suggestions
+    // console.log("Selected Suggestions:", selectedSuggestions);
+    dispatch(setCollab(selectedSuggestions));
     // Increment the index (you may have other logic here)
     setIndex(index + 1);
   };
@@ -110,8 +119,8 @@ const InviteCollaborators = (props) => {
               </div>
             </div>
             <Checkbox
-              checked={suggestion.isChecked}
-              onChange={() => handleCheck(suggestion.id)}
+            checked={selectedSuggestions.includes(suggestion.id)}
+            onChange={() => handleCheck(suggestion.id)}
             />
           </div>
         ))}
