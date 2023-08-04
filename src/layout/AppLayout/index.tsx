@@ -4,7 +4,7 @@ import { Header, NavBar } from "@/components/layouts";
 
 function AppLayout({ children }) {
   return (
-    <div className="bg-white w-full h-[100vh] z-30 relative flex flex-row overflow-y-scroll">
+    <div className="bg-white w-[100vw] h-[100vh] z-30 relative flex flex-row overflow-y-scroll">
       {/* Nav Bar Component */}
       <NavBar />
 

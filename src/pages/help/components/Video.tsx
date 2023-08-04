@@ -18,17 +18,18 @@ const Video = () => {
 
   return (
     <>
-      <div className="video-container shadow-md my-5 w-full mx-auto h-[60px] relative">
+      <div className="video-container my-5 w-full mx-auto h-full relative ">
         <video
-          src="https://player.vimeo.com/external/477258245.hd.mp4?s=c798ca10efc0251c894a5b74154f14bdead7edbe&profile_id=174&oauth2_token_id=57447761"
+          src="/assets/images/video.mp4"
           ref={vidRef}
-          controls={false}
+          //   controls={false}
+          controls
           loop
           autoPlay
           muted
           className="w-full h-full object-cover"
         />
-        <div className="vid-overlay absolute inset-0 bg-black bg-opacity-65"></div>
+        {/* <div className="vid-overlay absolute inset-0 bg-black bg-opacity-65"></div> */}
         {/* <div className="vid-overlay" onClick={handleClick}>
           {playvid ? (
             <div className="vid-icon">

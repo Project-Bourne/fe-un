@@ -223,12 +223,19 @@ export const LogData = [
 ];
 
 export const TrainingData = [
+  // {
+  //   name: "All",
+  //   icon: "all.svg",
+  //   selectedIcon: "on.all.svg",
+  //   id: 1,
+  //   route: "/help/all",
+  // },
   {
-    name: "All",
-    icon: "all.svg",
-    selectedIcon: "on.all.svg",
-    id: 1,
-    route: "/help/all",
+    name: "Fact Checker",
+    icon: "checker.svg",
+    selectedIcon: "on.checker.svg",
+    id: 3,
+    route: "/help/checker",
   },
   {
     name: "IRP",
@@ -236,13 +243,6 @@ export const TrainingData = [
     selectedIcon: "on.irp.svg",
     id: 2,
     route: "/help/irp",
-  },
-  {
-    name: "Fact Checker",
-    icon: "checker.svg",
-    selectedIcon: "on.checker.svg",
-    id: 3,
-    route: "/help/checker",
   },
   {
     name: "Analyzer",
@@ -278,6 +278,13 @@ export const TrainingData = [
     selectedIcon: "on.interrogator.svg",
     id: 8,
     route: "/help/interrogator",
+  },
+  {
+    name: "FAQ",
+    icon: "all.svg",
+    selectedIcon: "on.all.svg",
+    id: 1,
+    route: "/help/faq",
   },
 ];
 
@@ -354,9 +361,10 @@ export const RecentWork = [
 ];
 export const CardData = [
   {
-    title: "Nature's Beauty",
+    title:
+      "Redesigned Naira: CBN launches Cash Swap Programme for rural and Corn Ewa ati garri?",
     tag: "nature",
-    image: null,
+    // image: null,
     video: null,
   },
   {
@@ -366,51 +374,57 @@ export const CardData = [
     video: null,
   },
   {
-    title: "Delicious Dessert",
+    title:
+      "Delicious Redesigned Naira: CBN launches Cash Swap Programme for rural and Corn Ewa ati garri?",
     tag: "food",
-    image: null,
+    // image: null,
     video: null,
   },
   {
-    title: "Sunset at the Beach",
+    title:
+      "Sunset at the Beach Delicious Redesigned Naira: CBN launches Cash Swap Programme for rural and Corn Ewa",
     tag: "nature",
     image: "avatar.jpg",
-    video: null,
+    // video: null,
   },
   {
-    title: "Adventure Time",
+    title:
+      "Adventure Time Delicious Redesigned Naira: CBN launches Cash Swap Programme for rural and Corn Ewa",
     tag: "travel",
-    image: null,
+    // image: null,
     video: "travel_video1.mp4",
   },
   {
-    title: "Tech Gadgets",
+    title:
+      "Tech Gadgets Delicious Redesigned Naira: CBN launches Cash Swap Programme for rural and Corn Ewa",
     tag: "technology",
     image: "avatar.jpg",
-    video: null,
+    // video: null,
   },
   {
-    title: "Artistic Expression",
+    title:
+      "Artistic Expression Delicious Redesigned Naira: CBN launches Cash Swap Programme for rural and Corn Ewa",
     tag: "art",
     image: "avatar.jpg",
-    video: null,
+    // video: null,
   },
   {
-    title: "Music Melody",
+    title:
+      "Music Melody Delicious Redesigned Naira: CBN launches Cash Swap Programme for rural and Corn Ewa",
     tag: "music",
-    image: null,
+    // image: null,
     video: "music_video1.mp4",
   },
   {
     title: "Historical Landmark",
     tag: "travel",
     image: "avatar.jpg",
-    video: null,
+    // video: null,
   },
   {
     title: "Morning Coffee",
     tag: "food",
     image: "avatar.jpg",
-    video: null,
+    // video: null,
   },
 ];

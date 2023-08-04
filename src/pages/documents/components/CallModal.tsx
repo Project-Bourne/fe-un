@@ -26,7 +26,7 @@ const callType = [
 
 const CallModal = ({ setShowCall }) => {
   const [callId, setCallId] = useState(null);
-  const [activeScreen, setActiveScreen] = useState("callScreen");
+  const [activeScreen, setActiveScreen] = useState("caller");
 
   const handleCallType = (id) => {
     setCallId(id);

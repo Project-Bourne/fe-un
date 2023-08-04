@@ -118,7 +118,10 @@ const FileUpload = () => {
               <div className="flex w-[50%] align-middle justify-end  mt-4">
                 {!isLoading && (
                   <div className="p-5 cursor-pointer flex w-[30%] align-middle justify-center bg-[#4582C4]  border-2 text-white rounded-[15px] font-extrabold">
-                    <span className="ml-3" onClick={translate}>
+                    <span
+                      className="ml-3"
+                      onClick={() => router.push("/documents/viewDocument")}
+                    >
                       View content
                     </span>
                   </div>

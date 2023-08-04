@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import { Stages } from "../components";
+import Service from '@/services/collaborator.service';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSpace } from '@/redux/reducers/workspaceReducer';
+
+
 
 function WorkspaceDetails(props) {
+  const service = new Service();
+  const dispatch = useDispatch();
+  // const createSpace = useSelector((state: RootState) => state?.workSpace?.createSpace);
   const [formData, setFormData] = useState({
     workName: "",
     workspaceDescription: "",
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    if (form.checkValidity()) {
-      console.log(formData);
-
-      setIndex(index + 1);
-      // You can perform additional actions here, like making an API call, etc.
-    } else {
-      // If the form is invalid, display validation messages or handle it accordingly.
-      form.reportValidity();
-    }
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,6 +25,34 @@ function WorkspaceDetails(props) {
     }));
   };
   const { stages, index, setIndex } = props;
+
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      const form = event.target;
+      if (form.checkValidity()) {
+        dispatch(setSpace(formData));
+        // console.log(formData);
+        // let workspaceData: WorkspaceData = {
+        //   spaceName: formData.workName,
+        //   description: formData.workspaceDescription,
+        //   creatorId: 'a0154870-eab8-4d23-ab96-cd099b4fbe93',
+        // };
+        console.log(formData, "formdata")
+        // const createdWorkspace = await service.createWorkspace(workspaceData);
+        // console.log('Created workspace:', createdWorkspace);
+
+        setIndex(index + 1);
+        // You can perform additional actions here, like making an API call, etc.
+      } else {
+        // If the form is invalid, display validation messages or handle it accordingly.
+        form.reportValidity();
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  };
 
   return (
     <div>
