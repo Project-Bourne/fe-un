@@ -1,8 +1,9 @@
-import { ChatsLayout } from "@/layout/index";
-import React, { useState } from "react";
+import { ChatsLayout } from "../../layout/index";
+import React, { useEffect, useState } from "react";
 import EmptyChat from "./components/EmptyChat";
 import ChatItem from "./components/ChatItem";
 import ChatSection from "./components/ChatSection";
+import socketio from "../../utils/socket";
 
 const chatsData = [
   {
@@ -171,6 +172,12 @@ const messages = [
 function Index() {
   const [listMobileDisplay, setListMobileDisplay] = useState("block");
   const [chatsMobileDisplay, setChatsMobileDisplay] = useState("hidden");
+
+  useEffect(() => {
+    if (socketio) {
+      console.log("socket status", socketio);
+    }
+  }, [socketio]);
 
   const handleClick = () => {
     setListMobileDisplay("hidden");
