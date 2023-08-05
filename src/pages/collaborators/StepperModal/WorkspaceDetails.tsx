@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import { Stages } from "../components";
-import Service from '@/services/collaborator.service';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSpace } from '@/redux/reducers/workspaceReducer';
-
-
+import CollabService from "@/services/collaborator.service";
+import { useSelector, useDispatch } from "react-redux";
+import { setSpace } from "@/redux/reducers/workspaceReducer";
 
 function WorkspaceDetails(props) {
-  const service = new Service();
+  const service = new CollabService();
   const dispatch = useDispatch();
-  // const createSpace = useSelector((state: RootState) => state?.workSpace?.createSpace);
   const [formData, setFormData] = useState({
     workName: "",
     workspaceDescription: "",
   });
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,15 +28,7 @@ function WorkspaceDetails(props) {
       const form = event.target;
       if (form.checkValidity()) {
         dispatch(setSpace(formData));
-        // console.log(formData);
-        // let workspaceData: WorkspaceData = {
-        //   spaceName: formData.workName,
-        //   description: formData.workspaceDescription,
-        //   creatorId: 'a0154870-eab8-4d23-ab96-cd099b4fbe93',
-        // };
-        console.log(formData, "formdata")
-        // const createdWorkspace = await service.createWorkspace(workspaceData);
-        // console.log('Created workspace:', createdWorkspace);
+        console.log(formData, "formdata");
 
         setIndex(index + 1);
         // You can perform additional actions here, like making an API call, etc.
@@ -49,9 +37,8 @@ function WorkspaceDetails(props) {
         form.reportValidity();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
   };
 
   return (

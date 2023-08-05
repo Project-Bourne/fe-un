@@ -1,72 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stages } from "../components";
 import { Button } from "@/components/ui";
 import { Checkbox } from "@mui/material";
 import Image from "next/image";
-import { useSelector, useDispatch } from 'react-redux';
-import { setCollab } from '@/redux/reducers/workspaceReducer';
-
+import globalService from "@/services";
+import CollabService from "@/services/collaborator.service";
+import { useSelector, useDispatch } from "react-redux";
+import { setCollab } from "@/redux/reducers/workspaceReducer";
 
 const InviteCollaborators = (props) => {
   const { stages, index, setIndex } = props;
+  let createspace = useSelector((state) => state?.workSpace?.createSpace);
+  const userService = new globalService();
+  const workspaceService = new CollabService();
   const dispatch = useDispatch();
-  // Refactor the suggestion data into a separate array to improve readability
-  const initialSuggestions = [
-    {
-      id: 1,
-      name: "Herry Chisome",
-      email: "musba’uwaasiu@gmail.com",
-      imageUrl: require("../../../assets/icons/Avatarmeta.svg"),
-      isChecked: false,
-    },
-    {
-      id: 2,
-      name: "Mikel Obi",
-      email: "anotherperson@gmail.com",
-      imageUrl: require("../../../assets/icons/Avatarmeta.svg"),
-      isChecked: false,
-    },
-    {
-      id: 3,
-      name: "John Doe",
-      email: "anotherperson@gmail.com",
-      imageUrl: require("../../../assets/icons/Avatarmeta.svg"),
-      isChecked: false,
-    },
-  ];
 
-  const [suggestions, setSuggestions] = useState(initialSuggestions);
+  const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestions, setSelectedSuggestions] = useState([]);
 
-  const handleCheck = (id) => {
+  useEffect(() => {
+    userService
+      .getUsers()
+      .then((data) => {
+        setSuggestions(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
+  }, []);
+
+  const handleCheck = (selected) => {
     setSelectedSuggestions((prevSelected) => {
       // Toggle selection status
-      if (prevSelected.includes(id)) {
-        return prevSelected.filter((selectedId) => selectedId !== id);
+      if (prevSelected.includes(selected)) {
+        return prevSelected.filter((selectedId) => selectedId !== selected);
       } else {
-        return [...prevSelected, id];
+        return [...prevSelected, selected];
       }
     });
 
-    console.log(selectedSuggestions)
-  
+    console.log(selectedSuggestions);
   };
 
-
-
   // Handle the invite button click
-  const handleInvite = () => {
-    // // Function to get the selected suggestions
-    // const getSelectedSuggestions = () => {
-    //   return suggestions.filter((suggestion) => suggestion.isChecked);
-    // };
-
-    // // Get the selected suggestions
-    // const selectedSuggestions = getSelectedSuggestions();
-
-    // // Perform further actions with the selected suggestions
-    // console.log("Selected Suggestions:", selectedSuggestions);
+  const handleInvite = async () => {
     dispatch(setCollab(selectedSuggestions));
+    try {
+      let workspaceData = {
+        spaceName: createspace.workName,
+        description: createspace.workspaceDescription,
+        creatorId: "a0154870-eab8-4d23-ab96-cd099b4fbe93",
+      };
+      const createdWorkspace = await workspaceService.createWorkspace(
+        workspaceData,
+      );
+      console.log("Created workspace:", createdWorkspace);
+      Promise.all(
+        selectedSuggestions.map(async (suggestion) => {
+          let collabData = {
+            userId: suggestion.uuid,
+            username: suggestion.email,
+            spaceId: createdWorkspace.data.uuid,
+            designation: suggestion.country,
+          };
+          await workspaceService.createCollab(collabData);
+        }),
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
     // Increment the index (you may have other logic here)
     setIndex(index + 1);
   };
@@ -99,28 +102,29 @@ const InviteCollaborators = (props) => {
 
         {suggestions.map((suggestion) => (
           <div
-            key={suggestion.id}
+            key={suggestion.uuid}
             className="flex items-center bg-sirp-dashbordb1 justify-between border mx-1 my-2 rounded-[1rem]"
           >
             <div className="ml-5 md:w-[25rem] w-[10rem]">
               <div className="flex gap-3 items-center my-1 cursor-pointer">
-                <Image
-                  src={suggestion.imageUrl}
+                {/* <Image
+                  src={suggestion.image}
                   alt="documents"
                   className="cursor-pointer"
                   width={50}
-                />
+                  height={50}
+                /> */}
                 <div>
                   <p className="font-bold text-sm text-black">
-                    {suggestion.name}
+                    {suggestion.firstName} {suggestion.lastName}
                   </p>
                   <p className="text-gray-500  text-sm">{suggestion.email}</p>
                 </div>
               </div>
             </div>
             <Checkbox
-            checked={selectedSuggestions.includes(suggestion.id)}
-            onChange={() => handleCheck(suggestion.id)}
+              checked={selectedSuggestions.includes(suggestion.uuid)}
+              onChange={() => handleCheck(suggestion)}
             />
           </div>
         ))}
