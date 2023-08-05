@@ -2,7 +2,6 @@
 
 import { loadGetInitialProps } from "next/dist/shared/lib/utils";
 
-
 /**
  * Object Request Header
  */
@@ -24,11 +23,10 @@ export const requestHeader = {
  * @returns Response Data;
  */
 
-
 //deepsoul = "http://192.168.0.142:4040/"
 //deepsoul2 = "http://192.168.88.99:4000/"
 //micheals Iphone = "http://172.20.10.9:4000/api/v1/"
-let API_USER_URL = "http://192.168.88.161:4000/api/v1/"
+let API_USER_URL = "http://localhost:4000/api/v1/";
 
 export async function request(url, method, payload, token, text, form) {
   requestHeader["Content-Type"] =
