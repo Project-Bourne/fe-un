@@ -17,7 +17,7 @@ function EmptyChat() {
             Your chats will appear here, click the button to begin
           </p>
         </div>
-        <button className="text-white text-[14px] mx-auto bg-sirp-primary md:w-[12%] rounded-2xl px-5 py-3">
+        <button className="text-white text-[14px] mx-auto bg-sirp-primary hover:bg-sirp-primary/[0.9] md:w-[12%] rounded-2xl px-5 py-3">
           Start chat
         </button>
       </div>

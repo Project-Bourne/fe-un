@@ -8,6 +8,7 @@ import Breadcrumbs from "./Breadcrumbs";
 import CustomEmoji from "./Emoji";
 import AudioRecorderComponent from "./AudioRecorderComponent";
 import BlinkingRedDot from "./BlinkingRedDot";
+import ImageList from "./ImageList";
 
 export {
   Input,
@@ -21,4 +22,5 @@ export {
   CustomEmoji,
   AudioRecorderComponent,
   BlinkingRedDot,
+  ImageList,
 };

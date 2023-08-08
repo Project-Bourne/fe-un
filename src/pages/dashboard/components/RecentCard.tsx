@@ -1,5 +1,82 @@
 import React from "react";
 import Image from "next/image";
+import { ImageList } from "@/components/ui";
+
+const imageList = [
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 1
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 1
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 1
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 1
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+  {
+    img: '../../../assets/images/user1.jpg',
+    alt: '1',
+    status: 0
+
+  },
+]
+
 function RecentCard() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-5 mx-5">
@@ -16,14 +93,18 @@ function RecentCard() {
             <p className="text-sm text-gray-600">Total collaborators</p>
           </div>
         </div>
-        <div className=" px-5 py-5">
+        <div className="px-5 py-5">
           <h2 className="font-bold">Recent Collaborators</h2>
-          <Image
+          <ImageList
+            users={imageList} 
+            stopImageCountAt={5}
+          />
+          {/* <Image
             src={require("../../../assets/icons/groupAvatar.svg")}
             alt="documents"
             className="cursor-pointer mt-5"
             width={300}
-          />
+          /> */}
         </div>
       </div>
       <div className="border bg-sirp-secondary2 rounded-[1rem]">
