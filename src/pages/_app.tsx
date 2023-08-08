@@ -14,6 +14,11 @@ function App({ Component, pageProps, ...appProps }) {
     // Connect the socket instance
     socketio.connect();
     _constructor();
+
+
+    return () => {
+      socketio.disconnect();
+    }
   }, []);
 
   useEffect(() => {
@@ -22,12 +27,18 @@ function App({ Component, pageProps, ...appProps }) {
     });
 
     socketio.on("bot-new-msgs", (msgs) => {
-      console.log("msgs", msgs.msg);
+      console.log("msgs", msgs);
     });
+
+    socketio.on("error", (err) => {
+      console.log('socket error', err)
+    });
+    
   }, [socketio]);
 
   const _constructor = async () => {
     const useSocket = SocketClass;
+    // get UUID from localStorage upon user authentication 
     useSocket.updateData({ uuid: "ff10f31d-2b0d-48b0-a5fa-84cbd56dac28" });
   };
 

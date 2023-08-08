@@ -12,14 +12,14 @@ class SocketClass {
   }
 
   // get all chats between users
-  async getAllMsgs() {
+  getAllMsgs() {
     this.socket.on("all-msgs", (data) => {
       console.log("get all chats ", data);
       // call a slice to update global state
     });
   }
 
-  async updateData(data: { uuid: string }) {
+   updateData(data: { uuid: string }) {
     try {
       console.log({ data });
       this.socket.emit("update-data", data, (response) => {
@@ -46,7 +46,7 @@ class SocketClass {
 
   // send single message
   sendMessage(data) {
-    this.socket.emit("", data);
+    this.socket.emit("send-msg", data);
   }
 }
 

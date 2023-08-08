@@ -1,5 +1,7 @@
 import { io } from "socket.io-client";
 
-const socketio = io("http://192.168.88.161:4000");
+const socketio = io("http://localhost:4000", {
+    autoConnect: false
+});
 
 export default socketio;
