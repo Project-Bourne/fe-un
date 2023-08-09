@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Recorder } from "vmsg";
 import BlinkingRedDot from "./BlinkingRedDot";
 
@@ -26,22 +26,29 @@ const AudioRecorderComponent = ({
     // }
   };
 
-  const stopRecording = async () => {
+  // const stopRecording = async () => {
+  // };
+
+  const sendRecording = () => {
     // const blob = await recorder.stopRecording();
     // setRecording(URL.createObjectURL(blob));
     // console.log(blob);
     // setIsRecording(false);
   };
 
-  const sendRecording = () => {
-    // if (!recording) {
-    //   return;
-    // }
-    // handleRecordedAudio(recording);
-    // setRecording(null);
-    // setToggleAudio(false);
-    // console.log(recording)
-  };
+  // useEffect(() => {
+  // if (!recording) {
+  //   return;
+  // }
+  // handleRecordedAudio(recording);
+  // setRecording(null);
+  // setToggleAudio(false);
+  // console.log(recording)
+
+  // return () =>  {
+  //   setRecording(null)
+  // }
+  // }, [recording])
 
   if (!toggleAudio) {
     return null;
@@ -49,7 +56,7 @@ const AudioRecorderComponent = ({
 
   return (
     <>
-      <div className="absolute z-10 flex md:top-[35.4rem] right-8 md:w-[30%] gap-x-4 bg-white py-2 px-4 shadow-md rounded-full">
+      <div className="absolute z-10 flex md:top-[35.4rem] right-8 md:w-[27%] gap-x-5 bg-white py-2 px-4 shadow-md rounded-full">
         {!isRecording ? (
           <>
             <button onClick={startRecording} className="w-[10%]">
@@ -70,7 +77,7 @@ const AudioRecorderComponent = ({
         )}
 
         <div className="w-[20%] flex justify-between">
-          {isRecording && (
+          {/* {isRecording && (
             <button onClick={stopRecording}>
               <Image
                 src={require("../../assets/icons/audio.stop.svg")}
@@ -78,8 +85,11 @@ const AudioRecorderComponent = ({
                 width={13}
               />
             </button>
-          )}
-          <button onClick={sendRecording}>
+          )} */}
+          <button
+            onClick={sendRecording}
+            className={`${!isRecording && "pointer-events-none"}`}
+          >
             <Image
               src={require("../../assets/icons/audio.send.svg")}
               alt="send"

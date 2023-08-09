@@ -2,16 +2,27 @@ import { AudioRecorderComponent, CustomEmoji } from "@/components/ui";
 import { Emoji, EmojiStyle } from "emoji-picker-react";
 // import { SearchInput } from "@/components/ui/Input";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AttachmentPopups from "./AttachmentPopups";
+import socketio from "@/utils/socket";
+import SocketClass from "../../../socket/chat.socket";
 
 export const ChatInput = (props) => {
+
+  //Socket emitter
+  useEffect(() => {
+    socketio.on("msg-sent", () => {
+      console.log("Message SENT");
+    })
+  }, [socketio])
+
   const { showUploadPopup, showAttachment, setShowAttachment, showAudioFile } =
     props;
   const [toggleEmoji, setToggleEmoji] = useState<boolean>(false);
   const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState(false);
   const [textValue, setTextValue] = useState("");
+
 
   const handleRecordedAudio = (data) => {
     showAudioFile(data);
@@ -20,7 +31,22 @@ export const ChatInput = (props) => {
     // Get the emoji from the emojiObject and concatenate with textarea text
     setTextValue((prevState) => prevState + emoji);
   };
-  const handleSendMessage = () => {};
+  const handleSendMessage = async () => {
+    try{
+      if(socketio && textValue !== ""){
+        const data = textValue;
+        const uuid = "c2db55d3-cfc5-4ea2-966f-03765d63b9b0"; 
+        const useSocket = SocketClass;
+        const message = {data, uuid};
+        console.log(message);
+        useSocket.sendMessage(message);
+      }
+  
+      setTextValue("");
+    }catch(err){
+      console.log(err)
+    }
+  };
 
   return (
     <>
