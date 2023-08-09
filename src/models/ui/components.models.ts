@@ -50,8 +50,8 @@ export interface CustomCollabDashboardCardModel {
 export interface CustomCardModal {
   imgSrc: any;
   imgSrc2?: any;
-  mainText: string;
-  mainText2?: string;
+  mainText: number | string;
+  mainText2?: number | string;
   subText: string;
   subText2?: string;
   classes?: string;

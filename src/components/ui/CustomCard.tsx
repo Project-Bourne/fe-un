@@ -28,7 +28,7 @@ function CustomCard(props: CustomCardModal) {
           {children} {/* Render additional content */}
         </div>
       ) : (
-        <div className="rounded-[1rem] flex justify-between bg-sirp-dashboardcola">
+        <div className="rounded-3xl md:flex gap-x-5 bg-sirp-dashboardcola">
           <div className={classes}>
             <Image src={imgSrc} alt="Card" width={60} height={30} />
             <div>
