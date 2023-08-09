@@ -28,42 +28,25 @@ const sliceData = (data, page, rowsPerPage) => {
 function CustomTable({
   tableHeaderData,
   tableBodyData,
-  rowsPerPage,
   usertype,
 }) {
-  const [tableRange, setTableRange] = useState([]);
-  const [slice, setSlice] = useState([]);
   const [page, setPage] = useState(1);
 
-  // set table items to be rendered when table is paginated
-  useEffect(() => {
-    const range = calculateRange(tableBodyData, rowsPerPage);
-    setTableRange([...range]);
 
-    const slice = sliceData(tableBodyData, page, rowsPerPage);
-    setSlice([...slice]);
-  }, [tableBodyData, setTableRange, page, setSlice]);
-
-  //   table footer
-  useEffect(() => {
-    if (slice.length < 1 && page !== 1) {
-      setPage(page - 1);
-    }
-  }, [slice, page, setPage]);
 
   // handle paginate buttons
   const handlePaginate = (
-    event: React.MouseEvent<HTMLButtonElement>,
     type: string,
   ) => {
-    event.preventDefault();
     if (type === "next") {
-      if (page < tableRange.length) setPage(page + 1);
+      // handle 'next' table data
     }
     if (type === "back") {
-      if (page > 1) setPage(page - 1);
+      // handle 'previous' table data
     }
   };
+
+
 
   return (
     <TableContainer component={Paper} className="shadow-sm border-r-0">
@@ -84,22 +67,22 @@ function CustomTable({
         {tableBodyData.length > 0 ? (
           <>
             <TableBody>
-              {slice?.map((item) => (
-                <TableRow key={item.id} className="hover:bg-gray-50">
+              {tableBodyData?.map((item) => (
+                <TableRow key={item.uuid} className="hover:bg-gray-50">
                   <TableCell className="text-xs capitalize hover:cursor-pointer hover:underline">
-                    <Link href={`users/${item.id}`}>{item.name}</Link>
+                    <Link href={`users/${item.uuid}`}>{item.firstName} {item.lastName}</Link>
                   </TableCell>
                   <TableCell className="text-xs capitalize">
-                    {item.type}
+                    {item.role}
                   </TableCell>
                   <TableCell className=" text-xs capitalize">
-                    {item.designation}
+                    {item.country}
                   </TableCell>
                   <TableCell align="right">
                     <div className="flex gap-x-[0.2rem] items-center">
                       <div
                         className={`rounded-full w-2 h-2 ${
-                          item.status === "Online"
+                          item.status === "active"
                             ? "bg-green-600"
                             : "bg-[#EF4444]"
                         }`}
@@ -124,7 +107,7 @@ function CustomTable({
                   ) : (
                     <TableCell>
                       <div className="flex gap-x-3 items-center">
-                        <button className="bg-transparent text-xs p-0 text-[#9F9036]">
+                        <button className="bg-transparent border-b-2 border text-xs p-0 text-[#9F9036]">
                           Chat
                         </button>
                         <button className="bg-transparent text-xs p-0 text-[#9F9036]">
@@ -145,16 +128,16 @@ function CustomTable({
                   <div className="flex justify-end px-[5rem]">
                     {page > 1 && (
                       <>
-                        <button onClick={(e) => handlePaginate(e, "back")}>
+                        <button onClick={() => handlePaginate("back")}>
                           &lt;
                         </button>{" "}
                         &nbsp;&nbsp;
                       </>
                     )}
-                    Page {page} of {tableRange.length} &nbsp;&nbsp;
-                    {page !== tableRange.length && (
+                    Page {page} of {tableBodyData.length} &nbsp;&nbsp;
+                    {page !== tableBodyData.length && (
                       <>
-                        <button onClick={(e) => handlePaginate(e, "next")}>
+                        <button onClick={() => handlePaginate("next")}>
                           &gt;
                         </button>
                       </>

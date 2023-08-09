@@ -6,7 +6,6 @@ function UsersList({ tableData, usertype }) {
     <CustomTable
       tableHeaderData={TableHeaderData}
       tableBodyData={tableData}
-      rowsPerPage={10}
       usertype={usertype}
     />
   );

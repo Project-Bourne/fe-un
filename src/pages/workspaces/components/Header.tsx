@@ -5,26 +5,26 @@ import { HeaderModel } from "../models/users.module";
 import Collaborate from "../modal pop up/CollabratePopUp";
 import InviteUsers from "../modal pop up/InviteUsersPopUp";
 
-function Header({ filter }: HeaderModel) {
-  const [modalType, setModalType] = useState("");
+function Header({ workspaceId }) {
+  const [modalType, setModalType] = useState(false);
 
-  const handleModal = (type) => {
-    setModalType(type);
+  const handleModal = ()=> {
+    setModalType(true);
   };
 
   const handleCloseModal = () => {
-    setModalType("");
+    setModalType(false);
   };
 
   return (
     <>
       <div className="flex justify-between pl-5 pr-2  py-3">
-        <h1 className="text-[30px]">Group 911</h1>
+        <h1 className="text-[30px]">{workspaceId}</h1>
         <div className="flex gap-x-3 md:w-[25%] w-[45%] justify-end mr-5">
           {/* Button to open the Collaborate modal */}
           <Button
             classNameStyle="flex gap-x-1 items-center justify-center text-center"
-            onClick={() => handleModal("collaborate")}
+            onClick={() => handleModal}
             size="md"
             background="bg-sirp-primary"
             value={
@@ -46,7 +46,7 @@ function Header({ filter }: HeaderModel) {
 
           <Button
             classNameStyle="flex gap-x-1 items-center justify-center text-center"
-            onClick={() => handleModal("invite")}
+            onClick={() => handleModal}
             size="md"
             background="bg-sirp-primary"
             value={
@@ -70,7 +70,7 @@ function Header({ filter }: HeaderModel) {
       </div>
 
       {/* Render the Collaborate modal */}
-      {modalType === "collaborate" && (
+      {modalType && (
         <CustomModal
           style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
@@ -80,12 +80,12 @@ function Header({ filter }: HeaderModel) {
       )}
 
       {/* Render the Invite Users modal */}
-      {modalType === "invite" && (
+      {modalType &&(
         <CustomModal
           style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
         >
-          <InviteUsers onHandleModalTwo={handleCloseModal} />
+          <InviteUsers onHandleModalTwo={handleCloseModal} workspaceId={workspaceId}/>
         </CustomModal>
       )}
     </>

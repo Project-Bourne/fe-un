@@ -69,7 +69,7 @@ function TabLayout({ layout }) {
         </div>
       ) : (
         <div>
-          {selectedTab === 1 && <Article />}
+        {selectedTab === 1 && <Article />}
           {selectedTab === 2 && <Activites />}
           {selectedTab === 3 && <Collaboration />}
         </div>
