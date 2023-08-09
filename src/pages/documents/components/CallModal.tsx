@@ -3,8 +3,7 @@ import Image from "next/image";
 import InviteUsers from "./InviteUsers";
 import CallCenter from "./CallCenter";
 import InvitedGuests from "./invitedGuests";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const callType = [
   {
@@ -35,14 +34,14 @@ const CallModal = ({ setShowCall }) => {
   const handleCall = (id) => {
     if (!id) {
       toast("Choose a call type", {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
       });
     } else {
       setActiveScreen("invites");
@@ -232,7 +231,6 @@ const CallModal = ({ setShowCall }) => {
           </div>
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 };

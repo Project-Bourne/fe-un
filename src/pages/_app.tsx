@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { AppLayout } from "../layout/index";
 import "../styles/global.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import socketio from "../utils/socket";
@@ -51,6 +53,7 @@ function App({ Component, pageProps, ...appProps }) {
       <LayoutWrapper>
         <Component {...pageProps} socket={socket} />
       </LayoutWrapper>
+      <ToastContainer />
     </Provider>
   );
 }

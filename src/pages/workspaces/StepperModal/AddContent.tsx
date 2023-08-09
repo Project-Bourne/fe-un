@@ -43,7 +43,10 @@ const AddConten = (props) => {
       setIsFileUploaded(true);
     }
   };
-
+  const goBack = () => {
+    setIndex(index - 1)
+  }
+  
   const handleDragOver = (event) => {
     event.preventDefault();
   };
@@ -82,7 +85,8 @@ const AddConten = (props) => {
           <>
             <div
               className="flex my-5 mx-5 cursor-pointer gap-2"
-              onClick={uploadFromCollabDocument}
+              // onClick={uploadFromCollabDocument}
+              onClick={goBack}
             >
               <Image
                 src={require("../../../assets/icons/arrow-narrow-left  blue.svg")}
@@ -91,9 +95,10 @@ const AddConten = (props) => {
                 height={20}
                 priority
               />
-              <span className="text-sirp-primary text-sm">
+              <span className="text-sirp-primary text-sm">Back</span>
+              {/* <span className="text-sirp-primary text-sm">
                 Select from collab documents
-              </span>
+              </span> */}
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -125,7 +130,6 @@ const AddConten = (props) => {
                 </span>
               </div>
             </form>
-
             {/* the is the handle drag and drop section */}
             <div
               onDragOver={handleDragOver}
@@ -179,7 +183,7 @@ const AddConten = (props) => {
                 }
                 disabled
               />
-              <Button
+              {/* <Button
                 classNameStyle="flex border iteam-center justify-center text-center border-sirp-primary gap-x-1 items-center mt-2 mb-1 cursor-pointer rounded-[1rem]"
                 size="sm"
                 background="bg-white"
@@ -188,7 +192,7 @@ const AddConten = (props) => {
                     Skip
                   </div>
                 }
-              />
+              /> */}
             </div>
           </>
         )}

@@ -65,7 +65,25 @@ class CollabService {
       throw error;
     }
   }
-
+  /**
+   * Update a workspace by its ID.
+   * @param {string} workspaceId - The ID of the workspace to update.
+   * @returns {Promise<Object>} - The response data from the server.
+   */
+  async getWorspaceById(workspaceId) {
+    try {
+      const response = await request(
+        `collab/${workspaceId}/collabs`,
+        "GET",
+        true,
+        false,
+        false,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   /**
    * Get a workspace by its ID.
    * @param {string} workspaceId - The ID of the workspace to get.

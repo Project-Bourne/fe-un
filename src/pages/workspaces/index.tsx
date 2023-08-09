@@ -17,7 +17,7 @@ const index = () => {
 
   return (
     <div>
-      <div className="flex justify-between pl-5 pr-2  py-3">
+      <div className="flex justify-between pl-5 pr-2  py-3 ">
         <h1 className="text-[30px]">Workspaces</h1>
         <div className="flex gap-x-3 md:w-[25%] w-[45%] justify-end mr-5">
           {/* Button to open the AddWorkspace modal */}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import { Stages } from "../components";
 import CollabService from "@/services/collaborator.service";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSpace } from "@/redux/reducers/workspaceReducer";
 
 function WorkspaceDetails(props) {
@@ -12,6 +12,7 @@ function WorkspaceDetails(props) {
     workName: "",
     workspaceDescription: "",
   });
+  const [isDisabled, setIsDisabled] = useState(true)
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -19,23 +20,17 @@ function WorkspaceDetails(props) {
       ...prevData,
       [name]: value,
     }));
+    if (formData.workName.length > 0 && formData.workspaceDescription.length > 0) {
+      setIsDisabled(false);
+    }
   };
   const { stages, index, setIndex } = props;
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      const form = event.target;
-      if (form.checkValidity()) {
-        dispatch(setSpace(formData));
-        console.log(formData, "formdata");
-
-        setIndex(index + 1);
-        // You can perform additional actions here, like making an API call, etc.
-      } else {
-        // If the form is invalid, display validation messages or handle it accordingly.
-        form.reportValidity();
-      }
+      dispatch(setSpace(formData));
+      setIndex(index + 1);
     } catch (error) {
       console.log(error);
     }
@@ -57,6 +52,7 @@ function WorkspaceDetails(props) {
           type="text"
           name="workName"
           id="workName"
+          required
           className="border p-2 my-3 rounded-[.3rem]"
           value={formData.workName}
           onChange={handleChange}
@@ -69,6 +65,7 @@ function WorkspaceDetails(props) {
           name="workspaceDescription"
           id="workspaceDescription"
           placeholder="Location"
+          required
           maxLength={500}
           className="border p-2 my-3 rounded-[.3rem] h-[100px]"
           value={formData.workspaceDescription}
@@ -79,9 +76,9 @@ function WorkspaceDetails(props) {
           className="text-sm flex justify-center text-gray-500"
         >
           <Button
-            id="submitButton"
             classNameStyle="flex gap-x-1 items-center text-center justify-center mt-10 hover:text-sirp-primary text-white text-[14px] hover:bg-sirp-primaryLess2 mb-5"
             size="lg"
+            disabled={isDisabled}
             background="bg-sirp-primary"
             type="submit"
             value={

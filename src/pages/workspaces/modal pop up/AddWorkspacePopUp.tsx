@@ -18,12 +18,14 @@ const AddWorkspacePopUp = ({ onHandlAddeModal }) => {
         <p className="text-[14px] ml-5">
           Fill the details below to add a new workspace
         </p>
+        <div className="max-h-[70vh] overflow-y-scroll">
         {/* stepper should be here  */}
         {index === 0 && <WorkspaceDetails {...props} />}
         {/* stepper should be here  */}
         {index === 1 && <InviteCollaborators {...props} />}
         {/* stepper should be here  */}
         {index === 2 && <AddContent {...props} />}
+        </div>
       </div>
     </div>
   );
