@@ -4,7 +4,7 @@ const chatSlice = createSlice({
     name: 'chats',
     initialState: {
         newMessage: 0,
-        openChat: "",
+        activeChat: "",
         allRecentChats: [],
         allMessages: [],
     },
@@ -13,7 +13,7 @@ const chatSlice = createSlice({
             state.newMessage += 1;
         },
         setOpenChat: (state: any, action: PayloadAction<{openChat: string}>) => {
-            state.openChat = action?.payload
+            state.activeChat = action?.payload
         },
         setRecentChats: ( state: any, action: PayloadAction<{allRecentChats: any}>) => {
             state.allRecentChats.push(action?.payload);
