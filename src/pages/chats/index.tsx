@@ -1,112 +1,12 @@
 import { ChatsLayout } from "../../layout/index";
 import React, { useEffect, useState } from "react";
 import EmptyChat from "./components/EmptyChat";
-import ChatItem from "./components/ChatItem";
 import ChatSection from "./components/ChatSection";
 import socketio from "../../utils/socket";
 import { ChatList } from "./components/ChatList";
+import { useSelector } from "react-redux";
 
-const chatsData = [
-  // {
-  //   id: 0,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 3,
-  //   },
-  //   status: "online",
-  // },
-  // {
-  //   id: 1,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 1,
-  //   },
-  //   status: "offline",
-  // },
-  // {
-  //   id: 2,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 3,
-  //   },
-  //   status: "offline",
-  // },
-  // {
-  //   id: 3,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 3,
-  //   },
-  //   status: "online",
-  // },
-  // {
-  //   id: 4,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 1,
-  //   },
-  //   status: "offline",
-  // },
-  // {
-  //   id: 5,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 3,
-  //   },
-  //   status: "offline",
-  // },
-  // {
-  //   id: 6,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 3,
-  //   },
-  //   status: "online",
-  // },
-  // {
-  //   id: 7,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 1,
-  //   },
-  //   status: "offline",
-  // },
-  // {
-  //   id: 8,
-  //   name: "Rebecca Onyebabnji",
-  //   message: {
-  //     type: "string",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit incidunt dolore minima ipsa vel quos magni velit aperiam. Odit, sapiente eum. Impedit sit vitae asperiores quae iste cumque ratione ab.",
-  //     count: 3,
-  //   },
-  //   status: "offline",
-  // },
-];
+
 
 const messages = [
   {
@@ -173,6 +73,8 @@ const messages = [
 function Index() {
   const [listMobileDisplay, setListMobileDisplay] = useState("block");
   const [chatsMobileDisplay, setChatsMobileDisplay] = useState("hidden");
+  const chatsData = useSelector((state: any) => state.chats.allRecentChats)
+
 
   useEffect(() => {
     if (socketio) {

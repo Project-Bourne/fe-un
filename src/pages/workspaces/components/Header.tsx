@@ -5,7 +5,12 @@ import { HeaderModel } from "../models/users.module";
 import Collaborate from "../modal pop up/CollabratePopUp";
 import InviteUsers from "../modal pop up/InviteUsersPopUp";
 
-function Header({ workspaceId }) {
+type HeaderProps = {
+  workspaceId?: any,
+  filter?: any
+}
+
+function Header({ workspaceId }: HeaderProps) {
   const [modalType, setModalType] = useState(false);
 
   const handleModal = ()=> {

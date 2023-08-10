@@ -5,7 +5,7 @@ import dashboardSlice from './dashboard/dashboardReducer';
 
 const rootReducer = combineReducers({ 
     workSpace: workSpaceSlice,
-    chat: chatSlice,
+    chats: chatSlice,
     dashboard: dashboardSlice
 });
 
