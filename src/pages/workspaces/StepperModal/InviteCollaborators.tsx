@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { setCollab, setSpaceId } from "@/redux/reducers/workspaceReducer";
 
 const InviteCollaborators = (props) => {
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true);
   const { stages, index, setIndex } = props;
   let createspace = useSelector((state) => state?.workSpace?.createSpace);
   const userService = new globalService();
@@ -40,13 +40,13 @@ const InviteCollaborators = (props) => {
       }
     });
     if (selectedSuggestions.length < 1) {
-      setIsDisabled(false)
+      setIsDisabled(false);
     }
     console.log(selectedSuggestions);
   };
   const goBack = () => {
-    setIndex(index - 1)
-  }
+    setIndex(index - 1);
+  };
   // Handle the invite button click
   const handleInvite = async () => {
     dispatch(setCollab(selectedSuggestions));
@@ -104,7 +104,7 @@ const InviteCollaborators = (props) => {
         onClick={goBack}
       >
         <Image
-          src={require("../../../assets/icons/arrow-narrow-left  blue.svg")}
+          src={require("../../../assets/icons/arrow-narrow-left-blue.svg")}
           alt="upload image"
           width={20}
           height={20}
