@@ -4,78 +4,66 @@ import { ImageList } from "@/components/ui";
 
 const imageList = [
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 1
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 1,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 1
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 1,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 1
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 1,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 1
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 1,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
   {
-    img: '../../../assets/images/user1.jpg',
-    alt: '1',
-    status: 0
-
+    img: "../../../assets/images/user1.jpg",
+    alt: "1",
+    status: 0,
   },
-]
+];
 
 function RecentCard() {
   return (
@@ -83,7 +71,7 @@ function RecentCard() {
       <div className="border bg-sirp-secondary2 rounded-3xl">
         <div className="flex justify-start gap-5 items-center py-5 px-4 border-b-[1px] ">
           <Image
-            src={require("../../../assets/icons/Frame 06.svg")}
+            src={require("../../../assets/icons/frame06.svg")}
             alt="documents"
             className="cursor-pointer"
             width={60}
@@ -95,17 +83,14 @@ function RecentCard() {
         </div>
         <div className="px-7 py-4">
           <h2 className="font-bold">Recent Collaborators</h2>
-          <ImageList
-            users={imageList} 
-            stopImageCountAt={5}
-          />
+          <ImageList users={imageList} stopImageCountAt={5} />
         </div>
       </div>
 
       <div className="border bg-sirp-secondary2 rounded-3xl">
         <div className="flex justify-start gap-5 items-center py-5 px-4 border-b-[1px] ">
           <Image
-            src={require("../../../assets/icons/Frame 012.svg")}
+            src={require("../../../assets/icons/frame012.svg")}
             alt="documents"
             className="cursor-pointer"
             width={70}
@@ -117,10 +102,7 @@ function RecentCard() {
         </div>
         <div className="px-7 py-4">
           <h2 className="font-bold">Recent Chats</h2>
-           <ImageList
-            users={imageList} 
-            stopImageCountAt={3}
-          />
+          <ImageList users={imageList} stopImageCountAt={3} />
         </div>
       </div>
     </div>
