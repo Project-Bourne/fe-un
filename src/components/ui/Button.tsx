@@ -5,7 +5,7 @@ interface ButtonModel {
   onClick?: () => void;
   background: string;
   classNameStyle: string;
-  size: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
 // Add the `disabled` prop to the ButtonModel interface:

@@ -9,7 +9,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCollab, setSpaceId } from "@/redux/reducers/workspaceReducer";
 import InviteUsersPopUp from "../modal pop up/InviteUsersPopUp";
 
-function RecentWorkspace({ onHandleModalTwo }) {
+type RecentWorkspaceProps = {
+  onHandleModalTwo ?: any
+}
+
+function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
   const service = new Service();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -26,7 +30,7 @@ function RecentWorkspace({ onHandleModalTwo }) {
         const response = await service.getWorkspace();
         setWorkSpace(response);
         console.log(workSpace, "RecentWork");
-        let createspace = useSelector((state) => state?.workSpace?.createSpace);
+        let createspace = useSelector((state: any) => state?.workSpace?.createSpace);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching workspaces:", error.message);
@@ -82,8 +86,8 @@ function RecentWorkspace({ onHandleModalTwo }) {
                 key={index}
                 className="border bg-sirp-secondary2 rounded-[1rem]"
               >
-                <div className="flex flex-col py-4 px-4 border-b-2 ">
-                  <div className=" cursor-pointer hover:text-sirp-primary hover:underline" onClick={() => goToSingleWorkspace(item.spaceName)}>
+                <div className="flex flex-col py-4 px-4">
+                  <div className="cursor-pointer hover:text-sirp-primary" onClick={() => goToSingleWorkspace(item.spaceName)}>
                     <h2 className="font-bold">{item.spaceName}</h2>
                     <p className="text-sm text-gray-600">{item.description}</p>
                   </div>
