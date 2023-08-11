@@ -34,7 +34,11 @@ function Header({ workspaceId }: HeaderProps) {
             value={
               <div className="flex gap-x-1 text-[12px] items-center justify-center">
                 <Image
+<<<<<<< HEAD
                   src={require("../../../assets/icons/plus1.svg")}
+=======
+                  src={require("../../../assets/icons/plus_1.svg")}
+>>>>>>> 5c4ccd7 (cleanup)
                   alt="add user"
                   width={14}
                   height={14}

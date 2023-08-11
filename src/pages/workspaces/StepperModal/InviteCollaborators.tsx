@@ -106,7 +106,7 @@ const InviteCollaborators = (props) => {
         onClick={goBack}
       >
         <Image
-          src={require("../../../assets/icons/arrow-narrow-left  blue.svg")}
+          src={require("../../../assets/icons/arrow-narrow-left-blue.svg")}
           alt="upload image"
           width={20}
           height={20}
