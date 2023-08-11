@@ -4,7 +4,8 @@ import "../styles/global.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import { store, persistor } from "../redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import socketio from "../utils/socket";
 import SocketClass from "../socket/chat.socket";
 
@@ -17,10 +18,9 @@ function App({ Component, pageProps, ...appProps }) {
     socketio.connect();
     _constructor();
 
-
     return () => {
       socketio.disconnect();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -33,14 +33,13 @@ function App({ Component, pageProps, ...appProps }) {
     });
 
     socketio.on("error", (err) => {
-      console.log('socket error', err)
+      console.log("socket error", err);
     });
-    
   }, [socketio]);
 
   const _constructor = async () => {
     const useSocket = SocketClass;
-    // get UUID from localStorage upon user authentication 
+    // get UUID from localStorage upon user authentication
     useSocket.updateData({ uuid: "ff10f31d-2b0d-48b0-a5fa-84cbd56dac28" });
   };
 
@@ -50,10 +49,12 @@ function App({ Component, pageProps, ...appProps }) {
 
   return (
     <Provider store={store}>
-      <LayoutWrapper>
-        <Component {...pageProps} socket={socket} />
-      </LayoutWrapper>
-      <ToastContainer />
+      <PersistGate loading="null" persistor={persistor}>
+        <LayoutWrapper>
+          <Component {...pageProps} socket={socket} />
+        </LayoutWrapper>
+        <ToastContainer />
+      </PersistGate>
     </Provider>
   );
 }

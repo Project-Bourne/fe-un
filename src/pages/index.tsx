@@ -34,7 +34,7 @@ function NavBar() {
         />
 
         <h2 className="text-sirp-primary font-semibold text-[14px] hidden md:block">
-          Start Crawler
+          table
         </h2>
       </div> */}
 
