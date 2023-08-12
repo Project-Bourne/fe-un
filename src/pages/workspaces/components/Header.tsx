@@ -1,19 +1,18 @@
 import { Button, CustomModal } from "@/components/ui";
 import Image from "next/image";
 import { useState } from "react";
-import { HeaderModel } from "../models/users.module";
 import Collaborate from "../modal pop up/CollabratePopUp";
 import InviteUsers from "../modal pop up/InviteUsersPopUp";
 
 type HeaderProps = {
-  workspaceId?: any,
-  filter?: any
-}
+  workspaceId?: any;
+  filter?: any;
+};
 
 function Header({ workspaceId }: HeaderProps) {
   const [modalType, setModalType] = useState(false);
 
-  const handleModal = ()=> {
+  const handleModal = () => {
     setModalType(true);
   };
 
@@ -85,12 +84,15 @@ function Header({ workspaceId }: HeaderProps) {
       )}
 
       {/* Render the Invite Users modal */}
-      {modalType &&(
+      {modalType && (
         <CustomModal
           style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
         >
-          <InviteUsers onHandleModalTwo={handleCloseModal} workspaceId={workspaceId}/>
+          <InviteUsers
+            onHandleModalTwo={handleCloseModal}
+            workspaceId={workspaceId}
+          />
         </CustomModal>
       )}
     </>

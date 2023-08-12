@@ -1,4 +1,4 @@
-export interface ChatItemModel {
+export default interface ChatItemModel {
   id: number;
   name: string;
   message: {

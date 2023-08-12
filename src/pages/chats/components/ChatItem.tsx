@@ -1,7 +1,6 @@
 import { useTruncate } from "@/components/custom-hooks";
 import Image from "next/image";
-import { useState } from "react";
-import { ChatItemModel } from "../model/chat.model";
+import ChatItemModel from "../model/chat.model";
 
 function ChatItem(props: ChatItemModel) {
   const { name, message, status, onClick } = props;

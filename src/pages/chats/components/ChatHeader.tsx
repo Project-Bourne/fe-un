@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import ChatMenu from "./ChatMenu";
 
-export const Header = (props) => {
+function Header(props) {
   const { showVideoCallModal, showAudioCallModal, status } = props;
   const [toggleMenu, setToggleMenu] = useState(false);
 
@@ -71,4 +71,6 @@ export const Header = (props) => {
       </div>
     </div>
   );
-};
+}
+
+export default Header;

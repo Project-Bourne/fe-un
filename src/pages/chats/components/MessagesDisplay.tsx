@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export const MessagesDisplay = ({ messages }) => {
+function MessagesDisplay({ messages }) {
   return (
     <div className="bg-[#F9F9F9] relative h-[65vh] md:h-[56.8vh] overflow-y-auto">
       <ul className="md:pb-[3rem] pb-[7rem]">
@@ -63,4 +63,6 @@ export const MessagesDisplay = ({ messages }) => {
       </ul>
     </div>
   );
-};
+}
+
+export default MessagesDisplay;

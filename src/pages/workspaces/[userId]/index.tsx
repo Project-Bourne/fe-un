@@ -1,6 +1,6 @@
 import { Breadcrumbs, Tab } from "@/components/ui";
 import { Button, CustomModal } from "@/components/ui";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 import {
