@@ -6,7 +6,7 @@ function Card() {
     <div className="grid md:grid-cols-2 grid-cols-1 gap-5 mt-5 mx-5">
       <CustomCard
         imgSrc={require("../../../assets/icons/collabImport1.svg")}
-        imgSrc2={require("../../../assets/icons/CollabImport2.svg")}
+        imgSrc2={require("../../../assets/icons/collabImport2.svg")}
         mainText={`${200} Documents`}
         subText={"Total import from IRP"}
         mainText2={`${40} Documents`}
@@ -18,7 +18,7 @@ function Card() {
         layoutCount={2}
       />
       <CustomCard
-        imgSrc={require("../../../assets/icons/CollabCall.svg")}
+        imgSrc={require("../../../assets/icons/collabCall.svg")}
         mainText={"Start a Call"}
         subText={
           "Send a video/audio call request to collaborator(s), your call will start when the collaborator(s) accepts your call request"

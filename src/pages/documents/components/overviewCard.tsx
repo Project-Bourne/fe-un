@@ -28,7 +28,7 @@ function OverviewCard() {
           <div className="flex items-center justify-start">
             <span>
               <Image
-                src={require(`../../../assets/icons/Avatar.png`)}
+                src={require("../../../assets/icons/avatar.png")}
                 width={50}
                 height={50}
                 alt="plus"
