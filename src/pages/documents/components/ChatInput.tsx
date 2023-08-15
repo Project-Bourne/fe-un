@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export const ChatInput = () => {
+function ChatInput() {
   const [isTyping, setIsTyping] = useState(false);
   const [textValue, setTextValue] = useState("");
 
@@ -49,4 +49,6 @@ export const ChatInput = () => {
       </div>
     </>
   );
-};
+}
+
+export default ChatInput;

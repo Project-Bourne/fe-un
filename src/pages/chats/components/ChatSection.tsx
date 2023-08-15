@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Header } from "./ChatHeader";
-import { ChatInput } from "./ChatInput";
-import { MessagesDisplay } from "./MessagesDisplay";
+import MessagesDisplay from "./MessagesDisplay";
+import Header from "./ChatHeader";
+import ChatInput from "./ChatInput";
 
 function ChatSection(props) {
   // const { messages  } = props;

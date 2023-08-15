@@ -7,14 +7,13 @@ import AttachmentPopups from "./AttachmentPopups";
 import socketio from "@/utils/socket";
 import SocketClass from "../../../socket/chat.socket";
 
-export const ChatInput = (props) => {
-
+function ChatInput(props) {
   //Socket emitter
   useEffect(() => {
     socketio.on("msg-sent", () => {
       console.log("Message SENT");
-    })
-  }, [socketio])
+    });
+  }, [socketio]);
 
   const { showUploadPopup, showAttachment, setShowAttachment, showAudioFile } =
     props;
@@ -22,7 +21,6 @@ export const ChatInput = (props) => {
   const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState(false);
   const [textValue, setTextValue] = useState("");
-
 
   const handleRecordedAudio = (data) => {
     showAudioFile(data);
@@ -32,19 +30,19 @@ export const ChatInput = (props) => {
     setTextValue((prevState) => prevState + emoji);
   };
   const handleSendMessage = async () => {
-    try{
-      if(socketio && textValue !== ""){
+    try {
+      if (socketio && textValue !== "") {
         const data = textValue;
-        const uuid = "c2db55d3-cfc5-4ea2-966f-03765d63b9b0"; 
+        const uuid = "c2db55d3-cfc5-4ea2-966f-03765d63b9b0";
         const useSocket = SocketClass;
-        const message = {data, uuid};
+        const message = { data, uuid };
         console.log(message);
         useSocket.sendMessage(message);
       }
-  
+
       setTextValue("");
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -125,4 +123,6 @@ export const ChatInput = (props) => {
       />
     </>
   );
-};
+}
+
+export default ChatInput;

@@ -1,7 +1,7 @@
 import { Breadcrumbs, Tab } from "@/components/ui";
 import { Header } from "../components";
-import { ActivityCard } from "../components/ActivityCard";
 import { LogsData, TabHeaderData } from "../utils/constants";
+import ActivityCard from "../components/ActivityCard";
 
 function Logs() {
   return (

@@ -20,12 +20,12 @@ function ImageList({users, stopImageCountAt}: ImageListProps) {
         <div className="flex mt-3">
             {/* loop through user object and render images  */}
             {users?.map((user, index) => (
-                <>
+                <React.Fragment
+                key={index}
+                >
                 {/* loop through user objects as long as each item index is one-less than the the specified 'stopImageCountAt' prop */}
                     {index < stopImageCountAt &&
-                        <React.Fragment
-                        key={index}
-                        >
+                        <>
                             <Image
                                 src={require("../../assets/images/user1.jpg")}
                                 alt={user.alt}
@@ -33,9 +33,9 @@ function ImageList({users, stopImageCountAt}: ImageListProps) {
                                     ${user.status === 0 ? 'border-sirp-primaryBlue' : 'border-sirp-gray'}
                                 `}
                             />
-                        </React.Fragment> 
+                        </> 
                     }
-                </>     
+                </React.Fragment>     
                 )
             )}
             {remainderCount > 0 && <div className="border-[2px] border-sirp-primaryBlue bg-sirp-primaryLess2 h-[45px] w-[45px] rounded-full flex items-center justify-center -ml-[.8rem]">+{remainderCount}</div>}

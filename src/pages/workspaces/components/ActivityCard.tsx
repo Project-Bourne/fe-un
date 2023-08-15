@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ActivityCardModel } from "../models/users.module";
 import { useTruncate } from "@/components/custom-hooks";
 
-export function ActivityCard({
+function ActivityCard({
   time,
   actionText,
   activityText,
@@ -34,3 +34,5 @@ export function ActivityCard({
     </div>
   );
 }
+
+export default ActivityCard;

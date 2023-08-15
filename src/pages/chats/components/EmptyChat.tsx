@@ -1,8 +1,9 @@
 // import { Button } from "@/components/ui";
 import { CustomModal } from "@/components/ui";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewChat from "./NewChat";
+import { useSelector } from "react-redux";
 
 function EmptyChat() {
   const [newChat, setNewChat] = useState(false);
@@ -12,7 +13,6 @@ function EmptyChat() {
   }
 
   const closeNewChatModal = () => setNewChat(false)
-
 
   return (
     <>
@@ -24,7 +24,7 @@ function EmptyChat() {
           />
         </div>
         <div className="grid gap-y-5 text-center">
-          <div className="w-[20%] mx-auto grid gap-y-2">
+          <div className="md:w-[20%] w-[80%] mx-auto grid gap-y-2">
             <h3 className="text-[17px] font-semibold">No Chats yet</h3>
             <p className="text-[15px] text-[#A1ADB5]">
               Your chats will appear here, click the button to begin
@@ -38,7 +38,7 @@ function EmptyChat() {
 
        {newChat && 
         <CustomModal
-          style="bg-white md:w-[35%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
+          style="bg-white md:w-[30%] w-[80%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={closeNewChatModal}
         >
           <NewChat closeModal={closeNewChatModal} />
