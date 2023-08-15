@@ -5,7 +5,7 @@ const workSpaceSlice = createSlice({
   initialState: {
     workSpaceId: "",
     createSpace: null,
-    createCollab: null,
+    createCollab: [],
   },
 
   reducers: {
@@ -20,7 +20,6 @@ const workSpaceSlice = createSlice({
     },
   },
 });
-
 
 export const { setSpace, setCollab, setSpaceId } = workSpaceSlice.actions;
 export default workSpaceSlice.reducer;

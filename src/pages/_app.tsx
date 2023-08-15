@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AppLayout } from "../layout/index";
+import { motion } from "framer-motion";
 import "../styles/global.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +13,11 @@ import SocketClass from "../socket/chat.socket";
 function App({ Component, pageProps, ...appProps }) {
   // State to hold the socket instance
   const [socket, setSocket] = useState<any | null>(null);
-
+  const pageAnimationVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, y: 20, transition: { duration: 0.5 } },
+  };
   useEffect(() => {
     // Connect the socket instance
     socketio.connect();
@@ -50,9 +55,15 @@ function App({ Component, pageProps, ...appProps }) {
   return (
     <Provider store={store}>
       <PersistGate loading="null" persistor={persistor}>
-        <LayoutWrapper>
-          <Component {...pageProps} socket={socket} />
-        </LayoutWrapper>
+        <motion.div
+          key={appProps.router.route} // Ensure proper animation on route change
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={pageAnimationVariants}
+        >
+          <Component {...pageProps} />
+        </motion.div>
         <ToastContainer />
       </PersistGate>
     </Provider>

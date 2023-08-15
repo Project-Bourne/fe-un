@@ -33,6 +33,14 @@
     },
     "strictNullChecks": false //oppose
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/redux/store/index.js", "src/redux/reducers/index.js", "src/redux/reducers/workspaceReducer.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/redux/store/index.js",
+    "src/redux/reducers/index.js",
+    "src/redux/reducers/workspaceReducer.ts"
+  ],
   "exclude": ["node_modules"]
 }

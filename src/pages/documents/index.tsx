@@ -5,6 +5,11 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 function Documents() {
+  const [isActive, setIsActive] = useState(false);
+  const handleClick = (num) => {
+    // alert(num)
+    setIsActive(true);
+  };
   const router = useRouter();
   const redirect = () => {
     router.push("/documents/add-content");
@@ -14,14 +19,14 @@ function Documents() {
       <div className="border-r overflow-y-auto pb-[200px] border-gray-300 p-5">
         <h1 className="text-[#383E42] font-bold text-3xl">Documents</h1>
         <div className="grid my-5">
-          <DocCard />
-          <DocCard />
-          <DocCard />
-          <DocCard />
-          <DocCard />
-          <DocCard />
-          <DocCard />
-          <DocCard />
+          <DocCard docCardClick={handleClick} />
+          <DocCard docCardClick={handleClick} />
+          <DocCard docCardClick={handleClick} />
+          <DocCard docCardClick={handleClick} />
+          <DocCard docCardClick={handleClick} />
+          <DocCard docCardClick={handleClick} />
+          <DocCard docCardClick={handleClick} />
+          <DocCard docCardClick={handleClick} />
         </div>
       </div>
       <div className="w-full overflow-y-auto">
@@ -59,9 +64,13 @@ function Documents() {
             </span>
           </div>
         </div>
-        <div>
-          <OverviewCard />
-        </div>
+        {isActive && (
+          <div className="w-full overflow-y-auto">
+            <div>
+              <OverviewCard />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
