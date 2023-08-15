@@ -2,40 +2,34 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui";
 import { useRouter } from "next/router";
-import DocumentService from '@/services/document.service'
+import DocumentService from "@/services/document.service";
 import { useSelector, useDispatch } from "react-redux";
 
 const FileUploadSection = ({ file, handleDeleteFile, isLoading }) => {
   const router = useRouter();
-  const docService = new DocumentService()
-  let workSpaceId = useSelector((state) => state?.workSpace?.workSpaceId);
-  const documentData = useState ({
+  const docService = new DocumentService();
+  let workSpaceId = useSelector((state: any) => state?.workSpace?.workSpaceId);
+  const documentData = useState({
     uuid: "a0154870-eab8-4d23-ab96-cd099b4fbe93",
-    title:"My beautiful Title",
-    author:"Chisom Chima",
+    title: "My beautiful Title",
+    author: "Chisom Chima",
     date: "27/07/2020",
-    confidence:"78%",
-    content:"I love creating beatiful content",
-    source:"BBC",
-    location:"doc",
-    docUrl:"https://www.figma.com/file/g4VM40i5HXJpOPxX0LRVa5/Product-UIs-(New)?type=design&node-id=864-87191&mode=design&t=St137dommFNHqNpI-0",
-    keywords:["UI", "Design", 'AI', "robotics" ],
-    filename:"document"
-  })
+    confidence: "78%",
+    content: "I love creating beatiful content",
+    source: "BBC",
+    location: "doc",
+    docUrl:
+      "https://www.figma.com/file/g4VM40i5HXJpOPxX0LRVa5/Product-UIs-(New)?type=design&node-id=864-87191&mode=design&t=St137dommFNHqNpI-0",
+    keywords: ["UI", "Design", "AI", "robotics"],
+    filename: "document",
+  });
 
-
-
-
-  const handleCreateWorkspace = async() => {
+  const handleCreateWorkspace = async () => {
     try {
-      const {data} = await docService.createDocument(documentData)
-      console.log(data, 'data')
+      const { data } = await docService.createDocument(documentData);
+      console.log(data, "data");
       router.push(`/workspaces/workspaces/${workSpaceId}`);
-    } catch (error) {
-      
-    }
- 
-
+    } catch (error) {}
   };
 
   return (
