@@ -68,10 +68,20 @@ const messages = [
   },
 ];
 
+const chatData = []
+
+
+
+
 function Index() {
   const [listMobileDisplay, setListMobileDisplay] = useState("block");
   const [chatsMobileDisplay, setChatsMobileDisplay] = useState("hidden");
-  const chatsData = useSelector((state: any) => state.chats.allRecentChats);
+  const { allRecentChats, activeChat } = useSelector((state: any) => state?.chats);
+
+  useEffect(() => {
+      console.log('chhats data', allRecentChats)
+  }, [allRecentChats])
+
 
   useEffect(() => {
     if (socketio) {
@@ -88,11 +98,11 @@ function Index() {
     <ChatsLayout>
       {/* <h1>Chats</h1> */}
       <div className="w-full h-full">
-        {chatsData.length > 0 ? (
+        {activeChat ? (
           <div className="grid h-[76.5vh] md:grid-cols-3">
             {/* list of active chats  */}
             <ChatList
-              chatsData={chatsData}
+              chatsData={allRecentChats}
               handleClick={handleClick}
               listMobileDisplay={listMobileDisplay}
             />

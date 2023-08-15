@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RecentChats } from "./models";
 
 const chatSlice = createSlice({
     name: 'chats',
     initialState: {
         newMessage: 0,
-        activeChat: "",
+        activeChat: null,
         allRecentChats: [],
         allMessages: [],
     },
@@ -12,10 +13,10 @@ const chatSlice = createSlice({
         setNewMessage: ( state: any ) => {
             state.newMessage += 1;
         },
-        setOpenChat: (state: any, action: PayloadAction<{openChat: string}>) => {
+        setActiveChat: (state: any, action: PayloadAction<{openChat: string}>) => {
             state.activeChat = action?.payload
         },
-        setRecentChats: ( state: any, action: PayloadAction<{allRecentChats: any}>) => {
+        setRecentChats: ( state: any, action) => {
             state.allRecentChats.push(action?.payload);
         },
         setAllMessages: ( state: any, action: PayloadAction<{allMessages: any}>) => {
@@ -31,5 +32,5 @@ const chatSlice = createSlice({
     }
 });
 
-export const { setNewMessage, setOpenChat, setRecentChats, setAllMessages, clearMessages, deleteMessage } = chatSlice.actions;
+export const { setNewMessage, setActiveChat, setRecentChats, setAllMessages, clearMessages, deleteMessage } = chatSlice.actions;
 export default chatSlice.reducer;

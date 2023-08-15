@@ -9,25 +9,19 @@ import { UsersList } from "../user";
 import CollabService from '@/services/collaborator.service'
 import globalService from "@/services";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 
 function Users() {
   const [userData, setUserData] = useState([])
   const collabService = new CollabService()
   const userService = new globalService()
+  const dispatch = useDispatch()
   const router = useRouter()
-  const workSpaceId = router.query.id
-  useEffect(() => {
-    const getUsers = () => {
-      userService
-        .getUsers()
-        .then((data) => {
-          setUserData(data);
+  const workSpaceId = router.query.id;
 
-        })
-        .catch((error) => {
-          console.error("Error fetching users:", error);
-        });
+  useEffect(() => {
+    const getUsers = () => {  
       collabService.getWorspaceById("00cdaeff-7f7a-488c-8c3d-7ad5f94e421e").then((data) => {
 
       }).catch((error) => {

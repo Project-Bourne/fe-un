@@ -56,7 +56,7 @@ const AudioRecorderComponent = ({
 
   return (
     <>
-      <div className="absolute z-10 flex md:top-[35.4rem] right-8 md:w-[27%] gap-x-5 bg-white py-2 px-4 shadow-md rounded-full">
+      <div className="absolute z-10 flex md:top-[34rem] right-8 md:w-[27%] gap-x-5 bg-white py-2 px-4 shadow-md rounded-full">
         {!isRecording ? (
           <>
             <button onClick={startRecording} className="w-[10%]">
