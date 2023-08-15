@@ -20,7 +20,8 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
   const [loading, setLoading] = useState(false);
   const [workSpace, setWorkSpace] = useState<getWorkspace[]>([]);
   const [showUserModal, setShowUserModal] = useState(false);
-  const [workspaceId, setWorkspaceId] =useState('')
+  const [workspaceId, setWorkspaceId] = useState('')
+  // let createspace = useSelector((state: any) => state?.workSpace?.createSpace);
 
 
   useEffect(() => {
@@ -29,8 +30,7 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
       try {
         const response = await service.getWorkspace();
         setWorkSpace(response);
-        console.log(workSpace, "RecentWork");
-        let createspace = useSelector((state: any) => state?.workSpace?.createSpace);
+        // console.log(workSpace, "RecentWork");
         setLoading(false);
       } catch (error) {
         console.error("Error fetching workspaces:", error.message);

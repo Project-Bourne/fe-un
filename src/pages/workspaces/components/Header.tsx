@@ -1,7 +1,6 @@
 import { Button, CustomModal } from "@/components/ui";
 import Image from "next/image";
 import { useState } from "react";
-import { HeaderModel } from "../models/users.module";
 import Collaborate from "../modal pop up/CollabratePopUp";
 import InviteUsers from "../modal pop up/InviteUsersPopUp";
 
@@ -35,7 +34,7 @@ function Header({ workspaceId }: HeaderProps) {
             value={
               <div className="flex gap-x-1 text-[12px] items-center justify-center">
                 <Image
-                  src={require("../../../assets/icons/plus_1.svg")}
+                  src={require("../../../assets/icons/plus1.svg")}
                   alt="add user"
                   width={14}
                   height={14}

@@ -3,10 +3,8 @@ import React, { useEffect, useState } from "react";
 import EmptyChat from "./components/EmptyChat";
 import ChatSection from "./components/ChatSection";
 import socketio from "../../utils/socket";
-import { ChatList } from "./components/ChatList";
 import { useSelector } from "react-redux";
-
-
+import ChatList from "./components/ChatList";
 
 const messages = [
   {
@@ -70,10 +68,19 @@ const messages = [
   },
 ];
 
+const chatData = []
+
+
+
+
 function Index() {
   const [listMobileDisplay, setListMobileDisplay] = useState("block");
   const [chatsMobileDisplay, setChatsMobileDisplay] = useState("hidden");
-  const chatsData = useSelector((state: any) => state.chats.allRecentChats)
+  const { allRecentChats, activeChat } = useSelector((state: any) => state?.chats);
+
+  useEffect(() => {
+      console.log('chhats data', allRecentChats)
+  }, [allRecentChats])
 
 
   useEffect(() => {
@@ -91,13 +98,14 @@ function Index() {
     <ChatsLayout>
       {/* <h1>Chats</h1> */}
       <div className="w-full h-full">
-        {chatsData.length > 0 ? (
+        {activeChat ? (
           <div className="grid h-[76.5vh] md:grid-cols-3">
             {/* list of active chats  */}
-              <ChatList 
-                chatsData={chatsData}
-                handleClick={handleClick}
-                listMobileDisplay={listMobileDisplay} />
+            <ChatList
+              chatsData={allRecentChats}
+              handleClick={handleClick}
+              listMobileDisplay={listMobileDisplay}
+            />
             {/* messaging display */}
             <div
               className={`${chatsMobileDisplay} md:block relative col-span-2 transition duration-500 ease-in-out`}

@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import Video from "../../components/Video";
 import useTruncate from "@/components/custom-hooks/getTruncatedText";
 
 function CardWithoutMedia({ item }) {

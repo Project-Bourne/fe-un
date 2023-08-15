@@ -1,10 +1,6 @@
 import SettingsLayout from "@/layout/SettingsLayout";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { View1, View2 } from "../components";
-import { Button, Dropdown, DropdownWithFlag } from "@/components/ui";
-import { UserRoles } from "@/utils/constants";
 
 const ProfileSettings = () => {
   return (

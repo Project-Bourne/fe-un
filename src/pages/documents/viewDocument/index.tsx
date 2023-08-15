@@ -2,7 +2,6 @@ import Image from "next/image";
 import Docs from "../components/Docs";
 import { useState } from "react";
 import CallModal from "../components/CallModal";
-import ChatModal from "../components/ChatModal";
 
 function viewDocument() {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab

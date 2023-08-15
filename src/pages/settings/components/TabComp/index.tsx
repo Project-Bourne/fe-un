@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../../../styles/global.css";
-import Link from "next/link";
 
 type TabCompType = {
   item: {

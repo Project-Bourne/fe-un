@@ -34,7 +34,7 @@ function App({ Component, pageProps, ...appProps }) {
     });
 
     socketio.on("bot-new-msgs", (msgs) => {
-      console.log("msgs", msgs);
+      console.log("new msgs", msgs);
     });
 
     socketio.on("error", (err) => {
