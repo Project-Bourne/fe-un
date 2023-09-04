@@ -8,13 +8,9 @@ import { useSelector, useDispatch } from "react-redux";
 const FileUploadSection = ({ file, handleDeleteFile, isLoading }) => {
   const router = useRouter();
   const docService = new DocumentService();
-<<<<<<< HEAD
   const workSpaceId: any = useSelector(
     (state: any) => state?.workSpace?.workSpaceId,
   );
-=======
-  let workSpaceId = useSelector((state: any) => state?.workSpace?.workSpaceId);
->>>>>>> 31813d0 (feat: added persisted state)
   const documentData = useState({
     uuid: "a0154870-eab8-4d23-ab96-cd099b4fbe93",
     title: "My beautiful Title",

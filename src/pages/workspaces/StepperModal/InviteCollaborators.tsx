@@ -12,13 +12,9 @@ import { setCollab, setSpaceId } from "@/redux/reducers/workspaceReducer";
 const InviteCollaborators = (props) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const { stages, index, setIndex } = props;
-<<<<<<< HEAD
   const createspace = useSelector(
     (state: any) => state?.workSpace?.createSpace,
   );
-=======
-  let createspace = useSelector((state: any) => state?.workSpace?.createSpace);
->>>>>>> 31813d0 (feat: added persisted state)
   const userService = new globalService();
   const workspaceService = new CollabService();
   const dispatch = useDispatch();
