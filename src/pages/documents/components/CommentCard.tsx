@@ -9,7 +9,7 @@ function CommentCard() {
         <div className="text-sm flex flex-wrap">
           <span className="mr-1">
             <Image
-              src={require("../../../assets/images/user1.jpg")}
+              src={require("../../../../public/images/user1.jpg")}
               alt="userImage"
               width={20}
               height={20}
@@ -23,7 +23,7 @@ function CommentCard() {
         </div>
         <div>
           <Image
-            src={require("../../../assets/images/user1.jpg")}
+            src={require("../../../../public/images/user1.jpg")}
             alt="userImage"
             width={18}
             height={18}

@@ -1,10 +1,10 @@
-import TrainingLayout from "@/layout/TrainingLayout";
-import { FAQS, QuickSearch } from "@/utils/constants";
+import TrainingLayout from "../../../layout/TrainingLayout";
+import { FAQS, QuickSearch } from "../../../utils/constants";
 import React from "react";
-import { SearchComp, FAQComp } from "../components";
 import Image from "next/image";
-import { CardData } from "@/utils/constants";
 import CustomAccordion from "../components/CustomAccordion";
+import SearchComp from "../components/SearchComp";
+import FAQComp from "../components/FAQ";
 
 const AllTraining = () => {
   return (
@@ -31,7 +31,7 @@ const AllTraining = () => {
             <div className="w-full  border-dotted border-2 p-4 my-5 flex items-center rounded-[1rem]">
               <span>
                 <Image
-                  src={require("../../../assets/icons/search.svg")}
+                  src={require("../../../../public/icons/search.svg")}
                   alt="search"
                   width={14}
                   height={14}

@@ -13,7 +13,7 @@ function ChatCard() {
         <div className="text-sm flex items-center justify-start">
           <span className="mr-1">
             <Image
-              src={require("../../../assets/images/user1.jpg")}
+              src={require("../../../../public/images/user1.jpg")}
               alt="userImage"
               width={20}
               height={20}

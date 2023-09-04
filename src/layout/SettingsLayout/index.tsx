@@ -1,8 +1,8 @@
-import { TabComp } from "@/pages/settings/components";
 import { SettingsData } from "@/utils/constants";
 import React, { ReactNode } from "react";
 import "../../styles/global.css";
 import { useRouter } from "next/router";
+import TabComp from "@/pages/settings/components/TabComp";
 
 type LayoutType = {
   children: ReactNode;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, CustomModal } from "@/components/ui";
+import { Button, CustomModal } from "../../components/ui";
 import Image from "next/image";
-import AddWorkspace from "./modal pop up/AddWorkspacePopUp";
+import AddWorkspace from "./modalPopUp/AddWorkspacePopUp";
 import TabLayout from "./components/TabLayout";
 
 const index = () => {
@@ -30,10 +30,14 @@ const index = () => {
               <div className="flex gap-x-1 text-[12px] items-center justify-center">
                 <Image
 <<<<<<< HEAD
+<<<<<<< HEAD
                   src={require("../../assets/icons/plus1.svg")}
 =======
                   src={require("../../assets/icons/plus_1.svg")}
 >>>>>>> 5c4ccd7 (cleanup)
+=======
+                  src={require("../../../public/icons/plus1.svg")}
+>>>>>>> a5af88e (update: collab build)
                   alt="add user"
                   width={14}
                   height={50}

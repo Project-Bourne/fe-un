@@ -1,8 +1,9 @@
-import TrainingLayout from "@/layout/TrainingLayout";
-import { FAQS, QuickSearch } from "@/utils/constants";
 import React from "react";
-import { SearchComp, FAQComp } from "../components";
+import TrainingLayout from "../../../layout/TrainingLayout";
+import { FAQS, QuickSearch } from "../../../utils/constants";
 import Video from "../components/Video";
+import SearchComp from "../components/SearchComp";
+import FAQComp from "../components/FAQ";
 
 function CheckerDetails() {
   return (

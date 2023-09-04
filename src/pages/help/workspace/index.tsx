@@ -1,9 +1,10 @@
-import TrainingLayout from "@/layout/TrainingLayout";
-import { FAQS, QuickSearch } from "@/utils/constants";
-import { SearchComp, FAQComp } from "../components";
+import TrainingLayout from "../../../layout/TrainingLayout";
+import { FAQS, QuickSearch } from "../../../utils/constants";
 import React from "react";
 import Card from "./components/Card";
-import { CardData } from "@/utils/constants";
+import { CardData } from "../../../utils/constants";
+import SearchComp from "../components/SearchComp";
+import FAQComp from "../components/FAQ";
 
 const WorkspaceTraining = () => {
   return (

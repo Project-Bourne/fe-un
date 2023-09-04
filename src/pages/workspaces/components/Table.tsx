@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,37 +8,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/base/TablePagination";
 import { TableFooter } from "@mui/material";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 
-// set number of items to be displayed per page
-const calculateRange = (data, rowsPerPage) => {
-  const range = [];
-  const num = Math.ceil(data.length / rowsPerPage);
-  let i = 1;
-  for (let i = 1; i <= num; i++) {
-    range.push(i);
-  }
-  return range;
-};
-
-const sliceData = (data, page, rowsPerPage) => {
-  return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
-};
-
-function CustomTable({
-  tableHeaderData,
-  tableBodyData,
-  usertype,
-}) {
+function CustomTable({ tableHeaderData, tableBodyData, usertype }) {
   const [page, setPage] = useState(1);
 
-
-
   // handle paginate buttons
-  const handlePaginate = (
-    type: string,
-  ) => {
+  const handlePaginate = (type: string) => {
     if (type === "next") {
       // handle 'next' table data
     }
@@ -45,8 +22,6 @@ function CustomTable({
       // handle 'previous' table data
     }
   };
-
-
 
   return (
     <TableContainer component={Paper} className="shadow-sm border-r-0">
@@ -70,7 +45,9 @@ function CustomTable({
               {tableBodyData?.map((item) => (
                 <TableRow key={item.uuid} className="hover:bg-gray-50">
                   <TableCell className="text-xs capitalize hover:cursor-pointer hover:underline">
-                    <Link href={`users/${item.uuid}`}>{item.firstName} {item.lastName}</Link>
+                    <Link href={`users/${item.uuid}`}>
+                      {item.firstName} {item.lastName}
+                    </Link>
                   </TableCell>
                   <TableCell className="text-xs capitalize">
                     {item.role}

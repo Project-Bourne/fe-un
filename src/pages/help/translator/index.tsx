@@ -1,9 +1,10 @@
-import TrainingLayout from "@/layout/TrainingLayout";
-import { FAQS, QuickSearch } from "@/utils/constants";
+import TrainingLayout from "../../../layout/TrainingLayout";
+import { FAQS, QuickSearch } from "../../../utils/constants";
 import React from "react";
-import { SearchComp, FAQComp } from "../components";
-import { CardData } from "@/utils/constants";
+import { CardData } from "../../../utils/constants";
 import Card from "./components/Card";
+import SearchComp from "../components/SearchComp";
+import FAQComp from "../components/FAQ";
 
 const Translator = () => {
   return (

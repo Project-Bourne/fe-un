@@ -1,4 +1,4 @@
-import { request } from "@/hooks/api";
+import { request } from "../hooks/api";
 
 class DocumentService {
   /**
@@ -23,7 +23,14 @@ class DocumentService {
     }
   }
 
- 
+  async getAllDocuments(userId) {
+    try {
+      const response = await request("", "GET", true, false, false);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 // Export the Service class.

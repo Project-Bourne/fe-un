@@ -1,35 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Tab } from "@/components/ui";
+import { Tab } from "../../../components/ui";
+import UsersList from "../user";
+import CollabService from "../../../services/collaborator.service";
+import globalService from "../../../services";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import NotificationService from "../../../services/notification.service";
 import {
   TabHeaderData,
   TableBodyData,
   TableBodyDataSup,
-} from "../utils/constants";
-import { UsersList } from "../user";
-import CollabService from '@/services/collaborator.service'
-import globalService from "@/services";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-
+} from "@/utils/constants.workspace";
 
 function Users() {
-  const [userData, setUserData] = useState([])
-  const collabService = new CollabService()
-  const userService = new globalService()
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const [userData, setUserData] = useState([]);
+  const collabService = new CollabService();
+  const userService = new globalService();
+  const dispatch = useDispatch();
+  const router = useRouter();
   const workSpaceId = router.query.id;
 
   useEffect(() => {
-    const getUsers = () => {  
-      collabService.getWorspaceById("00cdaeff-7f7a-488c-8c3d-7ad5f94e421e").then((data) => {
-
-      }).catch((error) => {
-        console.log(error)
-      })
-    }
-    getUsers()
-  }, [])
+    const getUsers = () => {
+      collabService
+        .getWorspaceById("00cdaeff-7f7a-488c-8c3d-7ad5f94e421e")
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          // console.log(error)
+          NotificationService.error({
+            message: error?.error?.message,
+          });
+        });
+    };
+    getUsers();
+  }, []);
 
   const TabBodyContents = [
     {

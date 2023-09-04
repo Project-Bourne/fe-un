@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useRef, useState } from "react";
-import { InputModel, DropdownModel } from "@/models/ui/components.models";
+import { InputModel, DropdownModel } from "../../models/ui/components.models";
 import { useOnClickOutside } from "../custom-hooks";
 
 const countries = require("../../utils/countries.json");
@@ -32,7 +32,7 @@ function Input(props: InputModel) {
           >
             {!toggle ? (
               <Image
-                src={require("../../assets/icons/Hide.svg")}
+                src={require("../../../public/icons/Hide.svg")}
                 alt="Filter"
                 width={20}
                 height={20}
@@ -40,7 +40,14 @@ function Input(props: InputModel) {
                 priority
               />
             ) : (
-              <></>
+              <Image
+                src={require("../../../public/icons/show-pass.svg")}
+                alt="Filter"
+                width={20}
+                height={20}
+                className=""
+                priority
+              />
             )}
           </div>
         </div>
@@ -90,7 +97,7 @@ function DropdownWithFlag(props: DropdownModel) {
   const [countrySearch, setCountrySearch] = useState("");
   const searchInput = useRef();
 
-  const dropdownRef = useRef();
+  const dropdownRef = useRef(null);
   useOnClickOutside(dropdownRef, () => {
     setDropdown(false);
     setCountrySearch("");
@@ -240,7 +247,7 @@ function SearchInput(props) {
         onClick={handleClick}
       >
         <Image
-          src={require("../../assets/icons/search.svg")}
+          src={require("../../../public/icons/search.svg")}
           alt="Filter"
           width={25}
           height={25}

@@ -1,6 +1,6 @@
-import SettingsLayout from "@/layout/SettingsLayout";
-import ActivityCard from "@/pages/workspaces/components/ActivityCard";
-import { LogData } from "@/utils/constants";
+import SettingsLayout from "../../../layout/SettingsLayout";
+import ActivityCard from "../../workspaces/components/ActivityCard";
+import { LogData } from "../../../utils/constants";
 import React from "react";
 
 const LogSettings = () => {

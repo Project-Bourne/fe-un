@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
-import { Stages } from "../components";
 import CollabService from "@/services/collaborator.service";
 import { useDispatch } from "react-redux";
 import { setSpace } from "@/redux/reducers/workspaceReducer";
+import Stages from "../components/Stepper";
 
 function WorkspaceDetails(props) {
   const service = new CollabService();
@@ -12,7 +12,7 @@ function WorkspaceDetails(props) {
     workName: "",
     workspaceDescription: "",
   });
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -20,7 +20,10 @@ function WorkspaceDetails(props) {
       ...prevData,
       [name]: value,
     }));
-    if (formData.workName.length > 0 && formData.workspaceDescription.length > 0) {
+    if (
+      formData.workName.length > 0 &&
+      formData.workspaceDescription.length > 0
+    ) {
       setIsDisabled(false);
     }
   };

@@ -1,12 +1,19 @@
-import { useTruncate } from "@/components/custom-hooks";
-import ChatItemModel from "../model/chat.model";
+import React from "react";
+import { useTruncate } from "../../../components/custom-hooks";
+import { ChatItemModel } from "../../../models/chat.model";
 
-function ChatItem({chat, onClick}: ChatItemModel) {
-  const { firstName, lastName, message, status, img } = chat;
+function ChatItem({ chat, onClick }: ChatItemModel) {
+  const { userId, firstName, lastName, messages, img, newMessagesCount } = chat;
+  console.log("messages", messages);
+
+  const handleClick = (data: any) => {
+    console.log("active chat", data);
+    onClick(data);
+  };
 
   return (
     <div
-      onClick={onClick}
+      onClick={() => handleClick(userId)}
       className="flex justify-between px-3 py-4 bg-white border-b-[.15px] border-b-sirp-offline shadow shadow-sirp-offline hover:cursor-pointer hover:bg-sirp-lightGrey"
     >
       <div className="flex gap-x-3">
@@ -14,7 +21,9 @@ function ChatItem({chat, onClick}: ChatItemModel) {
           {/* user status dot (on image)  */}
           <div
             className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${
-              status && status === "online" ? "bg-sirp-online" : "bg-sirp-offline"
+              status && status === "online"
+                ? "bg-sirp-online"
+                : "bg-sirp-offline"
             }`}
           ></div>
           {/* user status background  */}
@@ -34,17 +43,19 @@ function ChatItem({chat, onClick}: ChatItemModel) {
         </div>
         {/* user name block  */}
         <div className="grid">
-          <h4 className="mb-0 md:text-[16px] text-[14px]">{useTruncate(firstName, 22)} {useTruncate(lastName, 22)}</h4>
+          <h4 className="mb-0 md:text-[16px] text-[14px]">
+            {useTruncate(firstName, 22)} {useTruncate(lastName, 22)}
+          </h4>
           <p className="text-[14px] font-light">
-            { message?.type === "string"
-              ? useTruncate(message?.content, 30)
-              : message?.content}
+            {messages && useTruncate(messages?.message?.text, 30)}
           </p>
         </div>
       </div>
-      <div className="rounded-full bg-sirp-primary py-[3px] w-[25px] my-auto text-white text-center items-center text-[12px] font-semibold">
-        { message?.count}
-      </div>
+      {newMessagesCount !== 0 && (
+        <div className="rounded-full bg-sirp-primary py-[3px] w-[25px] my-auto text-white text-center items-center text-[12px] font-semibold">
+          {newMessagesCount}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import vector from "../../../../../public/icons/Vector.svg";
 
 function HomeHistory() {
   return (
@@ -8,7 +9,7 @@ function HomeHistory() {
         <div className="flex align-middle justify-end">
           <Image
             className="flex align-middle justify-center"
-            src={require(`../../../../assets/icons/Vector.svg`)}
+            src={vector}
             alt="upload image"
             width={18}
             height={18}
@@ -39,7 +40,7 @@ function HomeHistory() {
         <div className="flex align-middle justify-end">
           <Image
             className="flex align-middle justify-center"
-            src={require(`../../../../assets/icons/Vector.svg`)}
+            src={vector}
             alt="upload image"
             width={18}
             height={18}
@@ -70,7 +71,7 @@ function HomeHistory() {
         <div className="flex align-middle justify-end">
           <Image
             className="flex align-middle justify-center"
-            src={require(`../../../../assets/icons/Vector.svg`)}
+            src={vector}
             alt="upload image"
             width={18}
             height={18}
@@ -101,7 +102,7 @@ function HomeHistory() {
         <div className="flex align-middle justify-end">
           <Image
             className="flex align-middle justify-center"
-            src={require(`../../../../assets/icons/Vector.svg`)}
+            src={vector}
             alt="upload image"
             width={18}
             height={18}
@@ -132,7 +133,7 @@ function HomeHistory() {
         <div className="flex align-middle justify-end">
           <Image
             className="flex align-middle justify-center"
-            src={require(`../../../../assets/icons/Vector.svg`)}
+            src={vector}
             alt="upload image"
             width={18}
             height={18}
@@ -163,7 +164,7 @@ function HomeHistory() {
         <div className="flex align-middle justify-end">
           <Image
             className="flex align-middle justify-center"
-            src={require(`../../../../assets/icons/Vector.svg`)}
+            src={vector}
             alt="upload image"
             width={18}
             height={18}

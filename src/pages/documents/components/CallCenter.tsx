@@ -93,7 +93,7 @@ function CallCenter({ setshowCallScreen }) {
               >
                 <Image
                   className="flex align-middle justify-center"
-                  src={require(`../../../assets/icons/${item.icon}`)}
+                  src={require(`../../../../public/icons/${item.icon}`)}
                   alt="upload image"
                   width={25}
                   height={25}
@@ -109,7 +109,7 @@ function CallCenter({ setshowCallScreen }) {
             >
               <span className="mr-1">
                 <Image
-                  src={require("../../../assets/icons/paticipant.svg")}
+                  src={require("../../../../public/icons/paticipant.svg")}
                   alt="userImage"
                   width={20}
                   height={20}
@@ -125,7 +125,7 @@ function CallCenter({ setshowCallScreen }) {
             >
               <span className="mr-1">
                 <Image
-                  src={require("../../../assets/icons/chat.svg")}
+                  src={require("../../../../public/icons/chat.svg")}
                   alt="userImage"
                   width={20}
                   height={20}
@@ -141,7 +141,7 @@ function CallCenter({ setshowCallScreen }) {
             >
               <span className="mr-1">
                 <Image
-                  src={require("../../../assets/icons/share.svg")}
+                  src={require("../../../../public/icons/share.svg")}
                   alt="userImage"
                   width={20}
                   height={20}

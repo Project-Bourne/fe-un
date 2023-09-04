@@ -12,7 +12,7 @@ function CardWithMedia({ item }) {
       {item.image ? (
         <span className="py-1 px-2">
           <Image
-            src={require(`../../../../assets/images/${item.image}`)}
+            src={require(`../../../../../public/images/${item.image}`)}
             alt="settings tab"
             className="w-full"
             priority

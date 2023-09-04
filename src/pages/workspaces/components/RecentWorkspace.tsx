@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { CustomModal } from "@/components/ui";
+import { CustomModal } from "../../../components/ui";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Service from "@/services/collaborator.service";
-import { getWorkspace } from "../types";
-import Loader from "@/components/ui/loader";
+import Service from "../../../services/collaborator.service";
+import { getWorkspace } from "../../../models/types";
+import Loader from "../../../components/ui/loader";
 import { useSelector, useDispatch } from "react-redux";
-import { setCollab, setSpaceId } from "@/redux/reducers/workspaceReducer";
-import InviteUsersPopUp from "../modal pop up/InviteUsersPopUp";
+import {
+  setCollab,
+  setSpaceId,
+} from "../../../redux/reducers/workspaceReducer";
+import InviteUsersPopUp from "../modalPopUp/InviteUsersPopUp";
 
 type RecentWorkspaceProps = {
-  onHandleModalTwo ?: any
-}
+  onHandleModalTwo?: any;
+};
 
 function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
   const service = new Service();
@@ -20,9 +23,8 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
   const [loading, setLoading] = useState(false);
   const [workSpace, setWorkSpace] = useState<getWorkspace[]>([]);
   const [showUserModal, setShowUserModal] = useState(false);
-  const [workspaceId, setWorkspaceId] = useState('')
+  const [workspaceId, setWorkspaceId] = useState("");
   // let createspace = useSelector((state: any) => state?.workSpace?.createSpace);
-
 
   useEffect(() => {
     const fetchWorkspaces = async () => {
@@ -41,7 +43,7 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
   }, []);
 
   const openUserModal = (id) => {
-    setWorkspaceId(id)
+    setWorkspaceId(id);
     dispatch(setSpaceId(id));
     setShowUserModal(true);
     console.log("modal", showUserModal);
@@ -62,7 +64,7 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
         <div className="mx-auto my-10 h-[50vh] ">
           <div className="flex items-center justify-center">
             <Image
-              src={require("../../../assets/icons/chat.empty.svg")}
+              src={require("../../../../public/icons/chat.empty.svg")}
               alt="empty-chats"
             />
           </div>
@@ -79,7 +81,7 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
         </div>
       ) : (
         <>
-          <h2 className="font-bold mt-5 mx-5">Recent Collaborators</h2>
+          <h2 className="font-bold mt-5 mx-5">Recent Collaborations</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-5 mx-5">
             {workSpace.map((item, index) => (
               <div
@@ -87,18 +89,20 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
                 className="border bg-sirp-secondary2 rounded-[1rem]"
               >
                 <div className="flex flex-col py-4 px-4">
-                  <div className="cursor-pointer hover:text-sirp-primary" onClick={() => goToSingleWorkspace(item.spaceName)}>
+                  <div
+                    className="cursor-pointer hover:text-sirp-primary"
+                    onClick={() => goToSingleWorkspace(item.spaceName)}
+                  >
                     <h2 className="font-bold">{item.spaceName}</h2>
                     <p className="text-sm text-gray-600">{item.description}</p>
                   </div>
                   <div
                     className="border mt-[1rem] w-100% pb-2 pt-2 capitalize text-center hover:bg-sirp-primary hover:text-white text-sirp-primary font-bold rounded-[1rem] border-sirp-primary  cursor-pointer"
-                    onClick={()=>openUserModal(item.uuid)}
+                    onClick={() => openUserModal(item.uuid)}
                   >
                     <span>Invite Collaborators</span>
                   </div>
                 </div>
-
               </div>
             ))}
           </div>
@@ -114,7 +118,10 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
           style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={closeUserModal}
         >
-          <InviteUsersPopUp onHandleModalTwo={closeUserModal} workspaceId={workspaceId} />
+          <InviteUsersPopUp
+            onHandleModalTwo={closeUserModal}
+            workspaceId={workspaceId}
+          />
         </CustomModal>
       )}
     </>

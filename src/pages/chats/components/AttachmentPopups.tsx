@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import ImagesPreview from "./ImagesPreview";
+import docUpload from "../../../../public/icons/chat.doc-upload.svg";
+import imageUpload from "../../../../public/icons/chat.image-upload.svg";
 
 function AttachmentPopups({ showAttachment, setShowAttachment }) {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -54,7 +56,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     <>
       <div className="grid gap-y-3 bg-transparent absolute -mt-[7rem]">
         <Image
-          src={require("../../../assets/icons/chat.doc-upload.svg")}
+          src={docUpload}
           alt="upload-doc"
           className="drop-shadow-lg hover:cursor-pointer"
           height={45}
@@ -62,7 +64,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
           onClick={() => docRef?.current?.click()}
         />
         <Image
-          src={require("../../../assets/icons/chat.image-upload.svg")}
+          src={imageUpload}
           alt="upload-image"
           className="ml-1 drop-shadow-lg hover:cursor-pointer"
           height={40}

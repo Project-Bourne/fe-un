@@ -1,15 +1,12 @@
-import { Breadcrumbs, Tab } from "@/components/ui";
-import { Button, CustomModal } from "@/components/ui";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Breadcrumbs, Tab, Button, CustomModal } from "../../../components/ui";
 import Image from "next/image";
 
-import {
-  ActivityLogSection,
-  Header,
-  PersonalInfoSection,
-  ProfileSection,
-} from "../components";
-import { TabHeaderData } from "../utils/constants";
+import PersonalInfoSection from "../components/PersonalInfoSection";
+import Header from "../components/Header";
+import ProfileSection from "../components/ProfileSection";
+import ActivityLogSection from "../components/ActivityLogSection";
+import { TabHeaderData } from "@/utils/constants.workspace";
 
 function UserDetails() {
   const [toggleModal, setToggleModal] = useState(false);
@@ -25,7 +22,7 @@ function UserDetails() {
           </p>
           <div className="px-5 py-1.5 flex gap-x-3.5 rounded-md bg-[#45C6ED] mb-4">
             <Image
-              src={require("../../../assets/images/user1.jpg")}
+              src={require("../../../../public/images/user1.jpg")}
               alt="user"
               className="rounded-full"
               width={35}

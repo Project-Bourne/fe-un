@@ -14,7 +14,7 @@ function Chats({ setShowChat }) {
             <span className="font-bold">Chats</span>
             <div className="cursor-pointer" onClick={closeChats}>
               <Image
-                src={require("../../../assets/icons/x.svg")}
+                src={require("../../../../public/icons/x.svg")}
                 alt="userImage"
                 width={20}
                 height={20}

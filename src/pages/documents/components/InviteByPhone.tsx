@@ -12,7 +12,7 @@ function InviteByPhone() {
               <span>Musba’u Wasiu</span>
               <span className="ml-1">
                 <Image
-                  src={require("../../../assets/icons/x.svg")}
+                  src={require("../../../../public/icons/x.svg")}
                   alt="userImage"
                   width={8}
                   height={8}
@@ -34,7 +34,7 @@ function InviteByPhone() {
                 <div className="text-sm flex items-center justify-start">
                   <span className="mr-1">
                     <Image
-                      src={require("../../../assets/images/user1.jpg")}
+                      src={require("../../../../public/images/user1.jpg")}
                       alt="userImage"
                       width={30}
                       height={30}
@@ -60,7 +60,7 @@ function InviteByPhone() {
                 <div className="text-sm flex items-center justify-start">
                   <span className="mr-1">
                     <Image
-                      src={require("../../../assets/images/user1.jpg")}
+                      src={require("../../../../public/images/user1.jpg")}
                       alt="userImage"
                       width={30}
                       height={30}
@@ -86,7 +86,7 @@ function InviteByPhone() {
                 <div className="text-sm flex items-center justify-start">
                   <span className="mr-1">
                     <Image
-                      src={require("../../../assets/images/user1.jpg")}
+                      src={require("../../../../public/images/user1.jpg")}
                       alt="userImage"
                       width={30}
                       height={30}

@@ -49,8 +49,8 @@ const TabComp = ({ item, index, route }: TabCompType) => {
       <Image
         src={
           router.pathname == item.route
-            ? require(`../../../../assets/icons/${item.selectedIcon}`)
-            : require(`../../../../assets/icons/${item.icon}`)
+            ? require(`../../../../../public/icons/${item.selectedIcon}`)
+            : require(`../../../../../public/icons/${item.icon}`)
         }
         // item.route.includes(route) ? require(`../../../../assets/icons/on.${item.icon}`) :
         alt="settings tab"

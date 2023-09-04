@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import Image from "next/image";
 import Docs from "../components/Docs";
-import { useState } from "react";
 import CallModal from "../components/CallModal";
 
 function viewDocument() {
@@ -66,7 +66,7 @@ function viewDocument() {
         <div>
           <Image
             className="flex align-middle justify-center"
-            src={require(`../../../assets/icons/groupAvatar.svg`)}
+            src={require(`../../../../public/icons/groupAvatar.svg`)}
             alt="upload image"
             width={200}
             height={100}
@@ -86,7 +86,7 @@ function viewDocument() {
             >
               <span className="mr-2">
                 <Image
-                  src={require(`../../../assets/icons/${item.icon}`)}
+                  src={require(`../../../../public/icons/${item.icon}`)}
                   alt=""
                 />
               </span>

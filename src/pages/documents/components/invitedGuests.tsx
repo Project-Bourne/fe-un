@@ -14,7 +14,7 @@ function InvitedGuests() {
               <div className="text-sm flex items-center bg-gray-100 p-3 h-[70px] rounded-[1rem] justify-start">
                 <span className="mr-1">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={30}
                     height={30}
@@ -30,7 +30,7 @@ function InvitedGuests() {
               <div className="text-sm flex items-center bg-gray-100 p-3 h-[70px] rounded-[1rem] justify-start">
                 <span className="mr-1">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={30}
                     height={30}
@@ -46,7 +46,7 @@ function InvitedGuests() {
               <div className="text-sm flex items-center bg-gray-100 p-3 h-[70px] rounded-[1rem] justify-start">
                 <span className="mr-1">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={30}
                     height={30}
@@ -62,7 +62,7 @@ function InvitedGuests() {
               <div className="text-sm flex items-center bg-gray-100 p-3 h-[70px] rounded-[1rem] justify-start">
                 <span className="mr-1">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={30}
                     height={30}
@@ -78,7 +78,7 @@ function InvitedGuests() {
               <div className="text-sm flex items-center bg-gray-100 p-3 h-[70px] rounded-[1rem] justify-start">
                 <span className="mr-1">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={30}
                     height={30}
@@ -94,7 +94,7 @@ function InvitedGuests() {
               <div className="text-sm flex items-center bg-gray-100 p-3 h-[70px] rounded-[1rem] justify-start">
                 <span className="mr-1">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={30}
                     height={30}
@@ -110,7 +110,7 @@ function InvitedGuests() {
               <div className="text-sm flex items-center bg-gray-100 p-3 h-[70px] rounded-[1rem] justify-start">
                 <span className="mr-1">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={30}
                     height={30}

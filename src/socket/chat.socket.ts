@@ -1,32 +1,26 @@
+import NotificationService from "../services/notification.service";
 import socketio from "../utils/socket";
 
 // type SocketIOClient = {
 //     Socket:  any
 // }
 
-class SocketClass {
+class SocketService {
   private socket: any;
 
   constructor() {
     this.socket = socketio;
   }
 
-  // get all chats between users
-  getAllMsgs() {
-    this.socket.on("all-msgs", (data) => {
-      console.log("get all chats ", data);
-      // call a slice to update global state
-    });
-  }
+  // listen for 1-to-1 chats between users
 
-   updateData(data: { uuid: string }) {
+  updateData(data: { uuid: string }) {
     try {
-      console.log({ data });
-      this.socket.emit("update-data", data, (response) => {
-        console.log("update data", response);
-      });
+      this.socket.emit("update-data", data);
     } catch (err) {
-      console.log(err);
+      NotificationService.error({
+        message: err?.error?.message,
+      });
     }
   }
 
@@ -50,4 +44,4 @@ class SocketClass {
   }
 }
 
-export default new SocketClass();
+export default new SocketService();

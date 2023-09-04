@@ -1,7 +1,8 @@
-import { Breadcrumbs, Tab } from "@/components/ui";
-import { Header } from "../components";
-import { LogsData, TabHeaderData } from "../utils/constants";
+import React from "react";
+import { Breadcrumbs, Tab } from "../../../components/ui";
 import ActivityCard from "../components/ActivityCard";
+import Header from "../components/Header";
+import { LogsData, TabHeaderData } from "@/utils/constants.workspace";
 
 function Logs() {
   return (

@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Recorder } from "vmsg";
@@ -61,7 +62,7 @@ const AudioRecorderComponent = ({
           <>
             <button onClick={startRecording} className="w-[10%]">
               <Image
-                src={require("../../assets/icons/chat.mic.svg")}
+                src={require("../../../public/icons/chat.mic.svg")}
                 alt="start"
                 width={25}
               />
@@ -91,7 +92,7 @@ const AudioRecorderComponent = ({
             className={`${!isRecording && "pointer-events-none"}`}
           >
             <Image
-              src={require("../../assets/icons/audio.send.svg")}
+              src={require("../../../public/icons/audio.send.svg")}
               alt="send"
               width={20}
             />

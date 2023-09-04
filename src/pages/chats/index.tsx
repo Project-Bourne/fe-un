@@ -3,93 +3,50 @@ import React, { useEffect, useState } from "react";
 import EmptyChat from "./components/EmptyChat";
 import ChatSection from "./components/ChatSection";
 import socketio from "../../utils/socket";
-import { useSelector } from "react-redux";
+import SocketService from "../../socket/chat.socket";
+import { useDispatch, useSelector } from "react-redux";
 import ChatList from "./components/ChatList";
-
-const messages = [
-  {
-    id: 0,
-    time_sent: "12:09",
-    date_sent: "15/07/2023",
-    status: "read",
-    content: "Lorem , consectetur  ",
-    content_type: "string",
-    action: "sent",
-  },
-  {
-    id: 1,
-    time_sent: "12:59",
-    date_sent: "15/07/2023",
-    status: "delivered",
-    content:
-      "Lorem ipsum dolor sit amet,  sint ut odit beatae repudiandae, rem esse accusamus voluptates cupiditate temporibus doloribus consectetur perferendis unde nemo? ",
-    content_type: "string",
-    action: "recieved",
-  },
-  {
-    id: 2,
-    time_sent: "12:49",
-    date_sent: "15/07/2023",
-    status: "read",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae commodi corrupti, eum voluptate suscipit sint ut odit beatae repudiandae, rem esse accusamus voluptates cupiditate temporibus doloribus consectetur perferendis unde nemo? ",
-    content_type: "string",
-    action: "sent",
-  },
-  {
-    id: 3,
-    time_sent: "12:39",
-    date_sent: "15/07/2023",
-    status: "delivered",
-    content:
-      "Lorem ipsum dolor sit amet,  sint ut odit beatae repudiandae, rem esse accusamus voluptates cupiditate temporibus doloribus consectetur perferendis unde nemo? ",
-    content_type: "string",
-    action: "recieved",
-  },
-  {
-    id: 4,
-    time_sent: "12:29",
-    date_sent: "15/07/2023",
-    status: "read",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae commodi corrupti, eum voluptate suscipit sint ut odit beatae repudiandae, rem esse accusamus voluptates cupiditate temporibus doloribus consectetur perferendis unde nemo? ",
-    content_type: "string",
-    action: "sent",
-  },
-  {
-    id: 5,
-    time_sent: "12:19",
-    date_sent: "15/07/2023",
-    status: "sent",
-    content:
-      "Lorem ipsum dolor sit amet,  sint ut odit beatae repudiandae, rem esse accusamus voluptates cupiditate temporibus doloribus consectetur perferendis unde nemo? ",
-    content_type: "string",
-    action: "recieved",
-  },
-];
-
-const chatData = []
-
-
-
+import {
+  setActiveChat,
+  setAllMessages,
+} from "@/redux/reducers/chat/chatReducer";
+import { MessageModel } from "../../models/chat.model";
 
 function Index() {
   const [listMobileDisplay, setListMobileDisplay] = useState("block");
   const [chatsMobileDisplay, setChatsMobileDisplay] = useState("hidden");
-  const { allRecentChats, activeChat } = useSelector((state: any) => state?.chats);
+  const [messages, setMessages] = useState<MessageModel[] | []>([]);
+  const { allRecentChats, activeChat, allMessages } = useSelector(
+    (state: any) => state?.chats,
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-      console.log('chhats data', allRecentChats)
-  }, [allRecentChats])
+    if (activeChat) {
+      socketio.emit("get-all-msg", { activeChat });
 
-
-  useEffect(() => {
-    if (socketio) {
-      console.log("socket status", socketio);
+      socketio.on("all-msgs", async (res) => {
+        // console.log("get all 1-1 chats ", JSON.parse(res));
+        dispatch(setAllMessages(JSON.parse(res)));
+      });
     }
-  }, [socketio]);
+  }, [activeChat]);
 
-  const handleClick = () => {
+  useEffect(() => {
+    console.log("chhats data", allRecentChats);
+  }, [allRecentChats]);
+
+  useEffect(() => {
+    console.log("all messages from user", allMessages);
+    const msgs = allMessages?.filter(
+      (message) => message.sender === activeChat,
+    );
+    console.log("....msgs", msgs);
+    setMessages(msgs);
+  }, [allMessages]);
+
+  const handleClick = (data) => {
+    dispatch(setActiveChat(data));
     setListMobileDisplay("hidden");
     setChatsMobileDisplay("block");
   };
@@ -98,7 +55,7 @@ function Index() {
     <ChatsLayout>
       {/* <h1>Chats</h1> */}
       <div className="w-full h-full">
-        {activeChat ? (
+        {allRecentChats || activeChat ? (
           <div className="grid h-[76.5vh] md:grid-cols-3">
             {/* list of active chats  */}
             <ChatList
@@ -114,7 +71,7 @@ function Index() {
             </div>
           </div>
         ) : (
-          <EmptyChat />
+          <EmptyChat showButton={true} showSubText={true} />
         )}
       </div>
     </ChatsLayout>

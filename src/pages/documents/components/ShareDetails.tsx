@@ -9,7 +9,7 @@ function ShareDetails({ setActiveScreen }) {
         <span className="font-bold ">In-call Participants</span>
         <span>
           <Image
-            src={require(`../../../assets/icons/x.svg`)}
+            src={require(`../../../../public/icons/x.svg`)}
             alt="upload image"
             width={18}
             height={18}

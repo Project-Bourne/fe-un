@@ -96,7 +96,7 @@ const CallModal = ({ setShowCall }) => {
                   >
                     <Image
                       className="flex align-middle justify-center"
-                      src={require(`../../../assets/icons/${item.icon}`)}
+                      src={require(`../../../../public/icons/${item.icon}`)}
                       alt="upload image"
                       width={25}
                       height={25}
@@ -164,7 +164,7 @@ const CallModal = ({ setShowCall }) => {
                   <span>
                     <Image
                       className="flex align-middle justify-center"
-                      src={require(`../../../assets/icons/start-call.svg`)}
+                      src={require(`../../../../public/icons/start-call.svg`)}
                       alt="upload image"
                       width={25}
                       height={25}
@@ -184,7 +184,7 @@ const CallModal = ({ setShowCall }) => {
                   <span>
                     <Image
                       className="flex align-middle justify-center"
-                      src={require(`../../../assets/icons/start-call.svg`)}
+                      src={require(`../../../../public/icons/start-call.svg`)}
                       alt="upload image"
                       width={25}
                       height={25}
@@ -216,7 +216,7 @@ const CallModal = ({ setShowCall }) => {
                 <span>
                   <Image
                     className="flex align-middle justify-center"
-                    src={require(`../../../assets/icons/start-call.svg`)}
+                    src={require(`../../../../public/icons/start-call.svg`)}
                     alt="upload image"
                     width={25}
                     height={25}

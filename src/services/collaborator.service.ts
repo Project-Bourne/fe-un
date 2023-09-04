@@ -1,4 +1,4 @@
-import { request } from "@/hooks/api";
+import { request } from "../hooks/api";
 
 class CollabService {
   /**

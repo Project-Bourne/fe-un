@@ -41,7 +41,7 @@ const FileUploadSection = ({ file, handleDeleteFile, isLoading }) => {
           <div className="flex align-middle items-center justify-center">
             <span className="rounded-full bg-sirp-primaryLess2 flex align-middle justify-center w-[40px] h-[40px]">
               <Image
-                src={require(`../../../assets/icons/file.svg`)}
+                src={require(`../../../../public/icons/file.svg`)}
                 alt="upload image"
                 width={20}
                 height={20}
@@ -58,7 +58,7 @@ const FileUploadSection = ({ file, handleDeleteFile, isLoading }) => {
           </div>
           <span className="rounded-full bg-[#FEE2E2] flex align-middle justify-center w-[70px] h-[40px] cursor-pointer">
             <Image
-              src={require(`../../../assets/icons/red-delete.svg`)}
+              src={require(`../../../../public/icons/red-delete.svg`)}
               alt="upload image"
               width={18}
               height={18}

@@ -13,7 +13,7 @@ function Comments({ setShowComments }) {
           <span className="font-bold">Comments</span>
           <div className="cursor-pointer" onClick={closeComments}>
             <Image
-              src={require("../../../assets/icons/x.svg")}
+              src={require("../../../../public/icons/x.svg")}
               alt="userImage"
               width={20}
               height={20}

@@ -1,6 +1,7 @@
-import { Button, Input } from "@/components/ui";
+import React from "react";
+import { Button, Input } from "../../../components/ui";
 import Image from "next/image";
-import { PersonalInformationModel } from "../models/users.module";
+import { PersonalInformationModel } from "../../../models/users.module";
 
 export default function PersonalInfoSection({
   blockUser,
@@ -24,7 +25,7 @@ export default function PersonalInfoSection({
             classNameStyle="py-2.5 px-3 text-[12px] text-gray-600 shadow-sm shadow-gray-300/[0.3] border-[1px] border-gray-400"
             value={
               <Image
-                src={require("../../../assets/icons/delete.svg")}
+                src={require("../../../../public/icons/delete.svg")}
                 alt="delete"
                 height={35}
                 width={35}

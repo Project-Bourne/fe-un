@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Stages } from "../components";
 import Image from "next/image";
 import FileUploadSection from "./fileUpload";
 import { Button } from "@/components/ui";
 import { useRouter } from "next/router";
 import UploadfromCollab from "./UploadfromCollab";
+import Stages from "../components/Stepper";
 
 const AddConten = (props) => {
   const { stages, index, setIndex } = props;
@@ -89,7 +89,7 @@ const AddConten = (props) => {
               onClick={goBack}
             >
               <Image
-                src={require("../../../assets/icons/arrow-narrow-left-blue.svg")}
+                src={require("../../../../public/icons/arrow-narrow-left-blue.svg")}
                 alt="upload image"
                 width={20}
                 height={20}
@@ -105,7 +105,7 @@ const AddConten = (props) => {
               <div className="flex align-middle w-full border-2 rounded-full border-[#E5E7EB]-500  border-dotted">
                 <span className="flex align-middle justify-center mx-3">
                   <Image
-                    src={require("../../../assets/icons/link.svg")}
+                    src={require("../../../../public/icons/link.svg")}
                     alt="upload image"
                     width={20}
                     height={20}
@@ -121,7 +121,7 @@ const AddConten = (props) => {
                 <span className="flex align-middle justify-center mx-3">
                   <Image
                     className="flex align-middle justify-center font-light text-[#A1ADB5] cursor-pointer"
-                    src={require("../../../assets/icons/x.svg")}
+                    src={require("../../../../public/icons/x.svg")}
                     alt="upload image"
                     width={20}
                     height={20}
@@ -140,7 +140,7 @@ const AddConten = (props) => {
                 <span className="flex align-middle justify-center mx-3">
                   <Image
                     className="flex align-middle justify-center"
-                    src={require("../../../assets/icons/cloud.svg")}
+                    src={require("../../../../public/icons/cloud.svg")}
                     alt="upload image"
                     width={25}
                     height={25}

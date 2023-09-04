@@ -1,5 +1,5 @@
 import React from "react";
-import useTruncate from "@/components/custom-hooks/getTruncatedText";
+import useTruncate from "../../../../components/custom-hooks/getTruncatedText";
 
 function CardWithoutMedia({ item }) {
   return (

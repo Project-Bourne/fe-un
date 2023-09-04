@@ -23,7 +23,7 @@ function DocCard({ docCardClick }: any) {
         </span>
         <span>
           <Image
-            src={require(`../../../assets/icons/avatar-group.svg`)}
+            src={require(`../../../../public/icons/avatar-group.svg`)}
             alt="avatar"
           />
         </span>

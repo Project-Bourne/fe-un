@@ -1,10 +1,11 @@
-import { AudioRecorderComponent, CustomEmoji } from "@/components/ui";
+import React from "react";
+import { AudioRecorderComponent, CustomEmoji } from "../../../components/ui";
 import { Emoji, EmojiStyle } from "emoji-picker-react";
 // import { SearchInput } from "@/components/ui/Input";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import AttachmentPopups from "./AttachmentPopups";
-import socketio from "@/utils/socket";
+import socketio from "../../../utils/socket";
 import SocketClass from "../../../socket/chat.socket";
 
 function ChatInput(props) {
@@ -52,7 +53,7 @@ function ChatInput(props) {
         <form className="flex relative justify-center w-[95%] mx-auto">
           <div className="md:w-[7%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center">
             <Image
-              src={require("../../../assets/icons/chat.attachment.svg")}
+              src={require("../../../../public/icons/chat.attachment.svg")}
               alt="attachment"
               width={35}
               height={35}
@@ -79,7 +80,7 @@ function ChatInput(props) {
           </div>
           <div className="flex justify-between gap-x-1 md:gap-x-2  md:w-[14%] bg-[#F9FBFE] rounded-r-full">
             <Image
-              src={require("../../../assets/icons/chat.emoji.svg")}
+              src={require("../../../../public/icons/chat.emoji.svg")}
               alt="emoji"
               width={25}
               height={25}
@@ -88,7 +89,7 @@ function ChatInput(props) {
               priority
             />
             <Image
-              src={require("../../../assets/icons/chat.mic.svg")}
+              src={require("../../../../public/icons/chat.mic.svg")}
               alt="audio"
               width={25}
               height={25}
@@ -97,7 +98,7 @@ function ChatInput(props) {
               priority
             />
             <Image
-              src={require("../../../assets/icons/chat.send.svg")}
+              src={require("../../../../public/icons/chat.send.svg")}
               alt="send"
               className={`${
                 !isTyping ? "bg-[#B9C1C7]" : "bg-sirp-primary"

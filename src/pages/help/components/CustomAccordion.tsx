@@ -20,7 +20,7 @@ function CustomAccordion() {
         {showContent ? (
           <span onClick={closeContent}>
             <Image
-              src={require(`../../../assets/icons/upcaret.svg`)}
+              src={require(`../../../../public/icons/upcaret.svg`)}
               alt="settings tab"
               width={20}
               height={20}
@@ -30,7 +30,7 @@ function CustomAccordion() {
         ) : (
           <span onClick={openContent}>
             <Image
-              src={require(`../../../assets/icons/downcaret.svg`)}
+              src={require(`../../../../public/icons/downcaret.svg`)}
               alt="settings tab"
               width={20}
               height={20}

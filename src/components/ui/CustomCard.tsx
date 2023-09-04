@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { CustomCardModal } from "@/models/ui/components.models";
+import { CustomCardModal } from "../../models/ui/components.models";
 
 function CustomCard(props: CustomCardModal) {
   const {

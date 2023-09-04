@@ -1,7 +1,6 @@
-import { CustomEmoji } from "@/components/ui";
-import { SearchInput } from "@/components/ui/Input";
+import React, { useState } from "react";
+import { SearchInput } from "../../../components/ui/Input";
 import Image from "next/image";
-import { useState } from "react";
 import ChatMenu from "./ChatMenu";
 
 function Header(props) {
@@ -25,7 +24,7 @@ function Header(props) {
           }`}
         >
           <Image
-            src={require("../../../assets/images/user1.jpg")}
+            src={require("../../../../public/images/user1.jpg")}
             alt={"user"}
             className="rounded-full border-[4px] border-white h-[43px] w-[43px]"
           />
@@ -41,14 +40,14 @@ function Header(props) {
             className="h-[40px] w-[45px] md:w-[60px] rounded-full bg-sirp-lightGrey flex justify-center items-center hover:cursor-pointer"
           >
             <Image
-              src={require("../../../assets/icons/chat.collapse.svg")}
+              src={require("../../../../public/icons/chat.collapse.svg")}
               alt="collapse-btn"
             />
           </div>
         </div>
         <div className="hidden md:flex gap-x-3">
           <Image
-            src={require("../../../assets/icons/chat.camera.svg")}
+            src={require("../../../../public/icons/chat.camera.svg")}
             className="hover:cursor-pointer"
             alt="video-call"
             width={37}
@@ -56,7 +55,7 @@ function Header(props) {
             onClick={showVideoCallModal}
           />
           <Image
-            src={require("../../../assets/icons/chat.phone.svg")}
+            src={require("../../../../public/icons/chat.phone.svg")}
             className="hover:cursor-pointer"
             alt="voice-call"
             width={37}

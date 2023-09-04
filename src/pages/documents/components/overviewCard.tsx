@@ -1,5 +1,4 @@
 import Image from "next/image";
-import path from "path";
 import React, { useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -7,7 +6,12 @@ import Tabs from "./tabs";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 
-function OverviewCard() {
+type Props = {
+  backIcon?: boolean;
+  goBack?: any;
+};
+
+function OverviewCard({ backIcon, goBack }: Props) {
   const router = useRouter();
   const handleClick = () => {
     router.push("/documents/viewDocument");
@@ -15,6 +19,17 @@ function OverviewCard() {
 
   return (
     <div className="w-full h-[100vh] p-5">
+      {backIcon && (
+        <Image
+          className="flex align-middle justify-center mb-5"
+          src={require("../../../../public/icons/back-arrow.svg")}
+          alt="back image"
+          width={18}
+          height={18}
+          priority
+          onClick={goBack}
+        />
+      )}
       {/* Authors */}
       <div className="flex flex-col gap-2">
         <span className="text-[#6F7A82]">Title</span>
@@ -28,7 +43,7 @@ function OverviewCard() {
           <div className="flex items-center justify-start">
             <span>
               <Image
-                src={require("../../../assets/icons/avatar.png")}
+                src={require("../../../../public/icons/avatar.png")}
                 width={50}
                 height={50}
                 alt="plus"
@@ -41,7 +56,7 @@ function OverviewCard() {
           </div>
           <div>
             <Image
-              src={require(`../../../assets/icons/avatar-group.svg`)}
+              src={require(`../../../../public/icons/avatar-group.svg`)}
               alt="avatar"
               width={150}
               height={150}

@@ -1,6 +1,7 @@
-import SettingsLayout from "@/layout/SettingsLayout";
+import SettingsLayout from "../../../layout/SettingsLayout";
 import React from "react";
-import { View1, View2 } from "../components";
+import View1 from "../components/View1";
+import View2 from "../components/View2";
 
 const ProfileSettings = () => {
   return (

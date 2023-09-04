@@ -1,7 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import Video from "../../components/Video";
-import CardWithMedia from "./CardWithMedia";
 import CardWithoutMedia from "./CardWithoutMedia";
 import { useRouter } from "next/router";
 

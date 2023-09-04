@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Stages } from "../components";
 import { Button } from "@/components/ui";
 import { Checkbox } from "@mui/material";
 import Image from "next/image";
@@ -8,6 +7,7 @@ import CollabService from "@/services/collaborator.service";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setCollab, setSpaceId } from "@/redux/reducers/workspaceReducer";
+import Stages from "../components/Stepper";
 
 const InviteCollaborators = (props) => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -106,7 +106,7 @@ const InviteCollaborators = (props) => {
         onClick={goBack}
       >
         <Image
-          src={require("../../../assets/icons/arrow-narrow-left-blue.svg")}
+          src={require("../../../../public/icons/arrow-narrow-left-blue.svg")}
           alt="upload image"
           width={20}
           height={20}

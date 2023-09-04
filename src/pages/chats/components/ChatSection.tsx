@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MessagesDisplay from "./MessagesDisplay";
 import Header from "./ChatHeader";
 import ChatInput from "./ChatInput";
+import { useSelector } from "react-redux";
 
 function ChatSection(props) {
-  // const { messages  } = props;
-  const [allMessages, setAllMessages] = useState<any>(props.messages);
+  const { messages } = props;
   const [showAttachment, setShowAttachment] = useState(false);
   const [audioFile, setAudioFile] = useState("");
 
   useEffect(() => {
     if (audioFile) {
-      setAllMessages(audioFile);
+      // setAllMessages(audioFile);
+      //dispatch audio message and add to allMessages
     }
   }, [audioFile]);
 
@@ -35,9 +36,9 @@ function ChatSection(props) {
       content_type: "audio",
       action: "sent",
     };
-    let msgArr = allMessages;
-    msgArr.push(newMessage);
-    setAudioFile(msgArr);
+    // let msgArr = allMessages;
+    // msgArr.push(newMessage);
+    // setAudioFile(msgArr);
   };
 
   // props
@@ -47,7 +48,7 @@ function ChatSection(props) {
   return (
     <>
       <Header {...headerProps} />
-      <MessagesDisplay messages={allMessages} />
+      <MessagesDisplay messages={messages} />
       <ChatInput
         {...chatInputProps}
         showAudioFile={showAudioFile}

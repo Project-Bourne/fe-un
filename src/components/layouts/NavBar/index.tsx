@@ -8,7 +8,7 @@ function NavBar() {
     <div className="w-[15vw] md:w-[20vw] h-full border-3 border-r bg-white px-3 py-10 md:p-10 fixed z-[20]">
       <div className="flex flex-row items-center cursor-pointer mb-20">
         <Image
-          src={require("../../../assets/svg/logo.svg")}
+          src={require("../../../../public/svg/logo.svg")}
           alt="IRP Logo"
           width={50}
           height={50}
@@ -25,7 +25,7 @@ function NavBar() {
                  cursor-pointer shadow-sm shadow-sirp-primaryLess1 hover:bg-blue-50"
       >
         <Image
-          src={require("../../../assets/svg/refresh.svg")}
+          src={require("../../../../public/svg/refresh.svg")}
           alt="Start/Refresh Crawler"
           width={18}
           height={18}

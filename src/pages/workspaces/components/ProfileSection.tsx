@@ -23,7 +23,7 @@ export default function ProfileSection() {
             {/* Profile Image */}
             <div className="flex flex-row items-center">
               <Image
-                src={require(`../../../assets/icons/userIcon.svg`)}
+                src={require(`../../../../public/icons/userIcon.svg`)}
                 alt="user"
                 width={30}
                 height={30}

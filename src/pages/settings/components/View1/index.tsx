@@ -15,7 +15,7 @@ const View1 = () => {
         <h2 className="font-semibold text-[13px]">Personal Information</h2>
         <div className="flex flex-row items-center border border-sirp-primary rounded-md px-4 py-3 cursor-pointer">
           <Image
-            src={require(`../../../../assets/icons/edit.svg`)}
+            src={require(`../../../../../public/icons/edit.svg`)}
             alt="Edit btn"
             width={18}
             height={18}
@@ -57,7 +57,7 @@ const View1 = () => {
 
         <div className="ml-[3vh] w-full items-center flex flex-row relative">
           <Image
-            src={require(`../../../../assets/icons/mail.svg`)}
+            src={require(`../../../../../public/icons/mail.svg`)}
             alt="mail"
             width={16}
             height={16}

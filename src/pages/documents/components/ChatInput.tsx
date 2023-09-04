@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import Image from "next/image";
-import { useState } from "react";
 
 function ChatInput() {
   const [isTyping, setIsTyping] = useState(false);
@@ -14,7 +14,7 @@ function ChatInput() {
         <form className="flex relative justify-center  flex-col mx-auto">
           <div className="md:w-[10%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center">
             <Image
-              src={require("../../../assets/icons/plus.svg")}
+              src={require("../../../../public/icons/plus.svg")}
               alt="attachment"
               width={35}
               height={35}
@@ -36,7 +36,7 @@ function ChatInput() {
           </div>
           <div className="flex justify-between gap-x-1 md:gap-x-2  md:w-[12%] bg-[#F9FBFE] rounded-r-full">
             <Image
-              src={require("../../../assets/icons/chat.send.svg")}
+              src={require("../../../../public/icons/chat.send.svg")}
               alt="send"
               className={`${
                 !isTyping ? "bg-[#B9C1C7]" : "bg-sirp-primary"

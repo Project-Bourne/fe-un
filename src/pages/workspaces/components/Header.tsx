@@ -1,8 +1,8 @@
-import { Button, CustomModal } from "@/components/ui";
+import { Button, CustomModal } from "../../../components/ui";
 import Image from "next/image";
-import { useState } from "react";
-import Collaborate from "../modal pop up/CollabratePopUp";
-import InviteUsers from "../modal pop up/InviteUsersPopUp";
+import React, { useState } from "react";
+import Collaborate from "../modalPopUp/CollabratePopUp";
+import InviteUsers from "../modalPopUp/InviteUsersPopUp";
 
 type HeaderProps = {
   workspaceId?: any;
@@ -35,10 +35,14 @@ function Header({ workspaceId }: HeaderProps) {
               <div className="flex gap-x-1 text-[12px] items-center justify-center">
                 <Image
 <<<<<<< HEAD
+<<<<<<< HEAD
                   src={require("../../../assets/icons/plus1.svg")}
 =======
                   src={require("../../../assets/icons/plus_1.svg")}
 >>>>>>> 5c4ccd7 (cleanup)
+=======
+                  src={require("../../../../public/icons/plus1.svg")}
+>>>>>>> a5af88e (update: collab build)
                   alt="add user"
                   width={14}
                   height={14}
@@ -60,7 +64,7 @@ function Header({ workspaceId }: HeaderProps) {
             value={
               <div className="flex gap-x-1 text-[12px] items-center justify-center">
                 <Image
-                  src={require("../../../assets/icons/add-user.svg")}
+                  src={require("../../../../public/icons/add-user.svg")}
                   alt="add user"
                   width={14}
                   height={14}

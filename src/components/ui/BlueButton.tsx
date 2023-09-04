@@ -7,7 +7,7 @@ function BlueButton() {
     <div>
       <button className="h-12 flex flex-row gap-2 w-44 justify-center hover:bg-sirp-primaryLess1 items-center cursor-pointer rounded-[1rem] bg-sirp-primary text-white font-bold">
         <Image
-          src={require("../../assets/icons/plus 1.svg")}
+          src={require("../../../public/icons/plus_1.svg")}
           alt="documents"
           className="cursor-pointer ml-1"
           width={20}

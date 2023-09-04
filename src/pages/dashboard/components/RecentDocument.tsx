@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import leftArrow from "../../../../public/icons/leftArro.svg";
 
 const data = [
   {
@@ -56,7 +57,7 @@ function RecentDocument() {
         <div className="border flex items-center gap-2 cursor-pointer  bg-[#F3F5F6] justify-center py-2 mt-5 md:w-[31rem] w-[20rem]  h-[100%] rounded-[1rem] mx-5">
           <h2>Show all</h2>
           <Image
-            src={require("../../../assets/icons/leftArro.svg")}
+            src={leftArrow}
             alt="documents"
             className="cursor-pointer w-[2rem] h-[2rem] mt-2"
             width={10}

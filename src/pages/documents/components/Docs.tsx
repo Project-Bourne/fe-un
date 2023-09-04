@@ -48,7 +48,7 @@ export default function Docs({
                 <div className="flex flex-row w-full px-7 items-center">
                   <Image
                     className="flex align-middle justify-center"
-                    src={require(`../../../assets/icons/back-arrow.svg`)}
+                    src={require(`../../../../public/icons/back-arrow.svg`)}
                     alt="upload image"
                     width={18}
                     height={18}
@@ -90,7 +90,7 @@ export default function Docs({
               <span className="w-full h-[30px]  rounded p-5 bg-gray-100 text-sm flex items-center">
                 <span className="mr-1 \">
                   <Image
-                    src={require("../../../assets/images/user1.jpg")}
+                    src={require("../../../../public/images/user1.jpg")}
                     alt="userImage"
                     width={20}
                     height={20}

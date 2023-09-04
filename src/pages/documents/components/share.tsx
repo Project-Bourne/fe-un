@@ -41,7 +41,7 @@ function Share({ setShowChat }) {
             <span className="font-bold">Share</span>
             <div className="cursor-pointer" onClick={closeChats}>
               <Image
-                src={require("../../../assets/icons/x.svg")}
+                src={require("../../../../public/icons/x.svg")}
                 alt="userImage"
                 width={20}
                 height={20}
@@ -60,7 +60,7 @@ function Share({ setShowChat }) {
               <div className="flex items-center justify-center p-2 w-[50%]  rounded-[1rem] border-2 border-gray-200">
                 <span className="mr-2">
                   <Image
-                    src={require("../../../assets/icons/copy.svg")}
+                    src={require("../../../../public/icons/copy.svg")}
                     alt="userImage"
                     width={20}
                     height={20}
@@ -81,7 +81,7 @@ function Share({ setShowChat }) {
                 <div className=" flex flex-col items-center cursor-pointer justify-center">
                   <span className="h-[40px] w-[40px] rounded-full border-[8px] mb-3 border-gray-300">
                     <Image
-                      src={require(`../../../assets/icons/${item.icon}`)}
+                      src={require(`../../../../public/icons/${item.icon}`)}
                       alt="userImage"
                       width={30}
                       height={30}
