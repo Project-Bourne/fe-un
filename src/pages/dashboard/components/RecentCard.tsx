@@ -74,15 +74,7 @@ function RecentCard() {
       <div className="border bg-sirp-secondary2 rounded-3xl">
         <div className="flex justify-start gap-5 items-center py-5 px-4 border-b-[1px] ">
           <Image
-<<<<<<< HEAD
-<<<<<<< HEAD
-            src={require("../../../assets/icons/frame-06.svg")}
-=======
-            src={require("../../../assets/icons/frame06.svg")}
->>>>>>> 26618a9 (cleanup)
-=======
             src={frame06}
->>>>>>> a5af88e (update: collab build)
             alt="documents"
             className="cursor-pointer"
             width={60}
@@ -101,15 +93,7 @@ function RecentCard() {
       <div className="border bg-sirp-secondary2 rounded-3xl">
         <div className="flex justify-start gap-5 items-center py-5 px-4 border-b-[1px] ">
           <Image
-<<<<<<< HEAD
-<<<<<<< HEAD
-            src={require("../../../assets/icons/frame-012.svg")}
-=======
-            src={require("../../../assets/icons/frame012.svg")}
->>>>>>> 26618a9 (cleanup)
-=======
             src={frame012}
->>>>>>> a5af88e (update: collab build)
             alt="documents"
             className="cursor-pointer"
             width={70}
