@@ -4,6 +4,7 @@ import Image from "next/image";
 import Breadcrumbs from "../../../components/ui/Breadcrumbs";
 import Comments from "./comments";
 import Chats from "./Chats";
+import TextEditor from "./TextEditor";
 import Share from "./share";
 
 export default function Docs({
@@ -21,7 +22,7 @@ export default function Docs({
   };
 
   return (
-    <div className="w-full h-[100vh] overflow-y-hidden">
+    <div className="w-full h-[100vh]">
       <div
         className={`${!showComments ? "w-full h-full" : "flex h-full"} ${
           !showChat ? "w-full h-full" : "flex h-full"
@@ -30,19 +31,19 @@ export default function Docs({
         <div
           className={`${
             !showComments
-              ? "m-10 mt-10 py-5 h-full overflow-y-scroll rounded-[1rem] bg-[#F9F9F9]"
-              : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 py-5 bg-[#F9F9F9]"
+              ? "m-10 mt-10 h-full overflow-y-scroll pb-[300px] rounded-[1rem] bg-[#F9F9F9]"
+              : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 bg-[#F9F9F9]"
           } ${
             !showChat
-              ? "m-10 mt-10 py-5 h-full overflow-y-scroll rounded-[1rem] bg-[#F9F9F9]"
-              : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 py-5 bg-[#F9F9F9]"
+              ? "m-10 mt-10 h-full overflow-y-scroll pb-[300px] rounded-[1rem] bg-[#F9F9F9]"
+              : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 bg-[#F9F9F9]"
           } ${
             !showShare
-              ? "m-10 mt-10 py-5 h-full overflow-y-scroll rounded-[1rem] bg-[#F9F9F9]"
-              : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 py-5 bg-[#F9F9F9]"
+              ? "m-10 mt-10 h-full overflow-y-scroll pb-[300px] rounded-[1rem] bg-[#F9F9F9]"
+              : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 bg-[#F9F9F9]"
           }`}
         >
-          <div className="w-full border-b cursor-pointer" onClick={goback}>
+          {/* <div className="w-full border-b cursor-pointer" onClick={goback}>
             <div className="flex items-center mb-3 align-middle justify-between">
               <div>
                 <div className="flex flex-row w-full px-7 items-center">
@@ -56,14 +57,14 @@ export default function Docs({
                   />
                 </div>
 
-                <div className="flex flex-row w-full px-7 items-center">
+                {/* <div className="flex flex-row w-full px-7 items-center">
                   <h1 className="text-[18px] font-semibold">Doc ID-01</h1>
-                </div>
-              </div>
+                </div> */}
+          {/* </div>
               <div></div>
             </div>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <Breadcrumbs />
           </div>
           <div className="bg-white rounded-2xl p-5 m-5 flex flex-col">
@@ -79,7 +80,9 @@ export default function Docs({
               22 Insightful quotes from our speakers (link to recording at the
               end)
             </span>
-          </div>
+          </div> */}
+
+          <TextEditor />
         </div>
         {showComments && (
           <div className="w-1/4 border-l h-full">

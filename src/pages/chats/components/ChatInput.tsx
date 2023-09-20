@@ -5,8 +5,9 @@ import { Emoji, EmojiStyle } from "emoji-picker-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import AttachmentPopups from "./AttachmentPopups";
-import socketio from "../../../utils/socket";
-import SocketClass from "../../../socket/chat.socket";
+import SocketService from "../../../socket/chat.socket";
+import { useSelector } from "react-redux";
+import socketio from "@/utils/socket";
 
 function ChatInput(props) {
   //Socket emitter
@@ -26,21 +27,21 @@ function ChatInput(props) {
   const handleRecordedAudio = (data) => {
     showAudioFile(data);
   };
+  const { activeChat } = useSelector((state: any) => state.chats);
   const handleEmojiClick = (emoji) => {
     // Get the emoji from the emojiObject and concatenate with textarea text
     setTextValue((prevState) => prevState + emoji);
   };
+
   const handleSendMessage = async () => {
     try {
-      if (socketio && textValue !== "") {
-        const data = textValue;
-        const uuid = "c2db55d3-cfc5-4ea2-966f-03765d63b9b0";
-        const useSocket = SocketClass;
-        const message = { data, uuid };
-        console.log(message);
-        useSocket.sendMessage(message);
-      }
-
+      console.log({ uuid: activeChat.uuid, data: textValue }, "text");
+      const useSocket = SocketService;
+      await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue });
+      await useSocket.getSelectedMsg({
+        userId: "50bd293d-bd93-4557-bf86-c3bfefbc8917",
+        uuid: activeChat?.uuid,
+      });
       setTextValue("");
     } catch (err) {
       console.log(err);

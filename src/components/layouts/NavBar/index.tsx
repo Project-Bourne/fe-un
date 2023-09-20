@@ -5,7 +5,7 @@ import { NavBarContents } from "@/utils/constants";
 
 function NavBar() {
   return (
-    <div className="w-[15vw] md:w-[20vw] h-full border-3 border-r bg-white px-3 py-10 md:p-10 fixed z-[20]">
+    <div className="w-[15vw] md:w-[20vw] h-full border-3 border-r bg-white px-3 py-10 md:p-10 fixed z-[20] navbar">
       <div className="flex flex-row items-center cursor-pointer mb-20">
         <Image
           src={require("../../../../public/svg/logo.svg")}
@@ -15,8 +15,8 @@ function NavBar() {
           className="md:mr-[20px]"
           priority
         />
-        <h1 className="text-sirp-primary font-semibold text-[30px] hidden md:block">
-          Collab
+        <h1 className="text-sirp-primary font-semibold text-[20px] hidden md:block">
+          Collab Workspace
         </h1>
       </div>
       {/* items-center justify-center py-4 md:px-5 w-[100%] flex flex-row self-center */}

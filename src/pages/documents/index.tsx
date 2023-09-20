@@ -19,7 +19,7 @@ function Documents() {
 
   return (
     <div>
-      <div className="fixed -mt-2.5 md:w-[80%] w-[85%] bg-white flex justify-between items-center border-b border-gray-300  py-3 px-5">
+      <div className="fixed -mt-2.5 md:w-[80%] w-[85%] bg-white flex justify-between items-center border-b border-gray-300  py-3 px-5 documents">
         <h1 className="text-[#383E42] font-bold md:text-3xl text-xl">
           Documents
         </h1>

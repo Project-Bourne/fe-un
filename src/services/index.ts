@@ -1,4 +1,4 @@
-import { request } from "@/hooks/api";
+import { request2 } from "@/hooks/api";
 
 class globalService {
   /**
@@ -8,14 +8,7 @@ class globalService {
 
   async getUsers() {
     try {
-      const response = await request(
-        "user/users",
-        "GET",
-        {},
-        true,
-        false,
-        false,
-      );
+      const response = await request2("users", "GET", {}, true, false, false);
       return response.data;
     } catch (error) {
       throw error;

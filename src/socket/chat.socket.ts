@@ -11,12 +11,53 @@ class SocketService {
   constructor() {
     this.socket = socketio;
   }
-
-  // listen for 1-to-1 chats between users
-
   updateData(data: { uuid: string }) {
     try {
       this.socket.emit("update-data", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  getRecentChats(data: { uuid: string }) {
+    try {
+      this.socket.emit("get-recent-chats", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  createWorkspace(data: {
+    spaceName: string;
+    description: string;
+    creatorId: string;
+  }) {
+    try {
+      this.socket.emit("create-space", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  joinWorkspace(data: { space: any; user: any; inviter: any }) {
+    try {
+      this.socket.emit("join-space", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  getSelectedMsg(data: { userId: string; uuid: string }) {
+    try {
+      this.socket.emit("get-msgs-selected", data);
     } catch (err) {
       NotificationService.error({
         message: err?.error?.message,
@@ -40,7 +81,13 @@ class SocketService {
 
   // send single message
   sendMessage(data) {
-    this.socket.emit("send-msg", data);
+    try {
+      this.socket.emit("send-msg", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
   }
 }
 

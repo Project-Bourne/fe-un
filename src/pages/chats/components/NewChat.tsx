@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  setActiveChat,
+  AddNewChat,
   setRecentChats,
 } from "../../../redux/reducers/chat/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,38 +11,36 @@ function NewChat({ closeModal }) {
   let users = useSelector((state: any) => state?.users?.allUsers);
   let recentChats = useSelector((state: any) => state?.chats?.allRecentChats);
 
-  const handleClick = (uuid, firstName, lastName, img) => {
-    const messages = [];
-    const newMessagesCount = 0;
-
-    const idExists = recentChats.some((obj) => obj.uuid === uuid);
-    if (!idExists) {
-      dispatch(setActiveChat(uuid));
-      dispatch(
-        setRecentChats({
-          userId: uuid,
-          firstName,
-          lastName,
-          img,
-          messages,
-          newMessagesCount,
-        }),
-      );
-      closeModal();
-    } else {
-      dispatch(setActiveChat(uuid));
-      closeModal();
-    }
+  const handleClick = (uuid, firstName, lastName, image, role, status) => {
+    console.log("hi");
+    dispatch(
+      AddNewChat({
+        uuid,
+        firstName,
+        lastName,
+        image,
+        role,
+        status,
+      }),
+    );
+    closeModal();
   };
 
   return (
     <ul className="h-[50vh] overflow-y-auto">
-      {users[0]?.map((user) => (
+      {users?.map((user) => (
         <li
           className="flex items-center gap-x-4 hover:cursor-pointer hover:bg-slate-100 rounded-md px-3 py-2.5"
           key={user.uuid}
           onClick={() =>
-            handleClick(user.uuid, user.firstName, user.lastName, user.image)
+            handleClick(
+              user.uuid,
+              user.firstName,
+              user.lastName,
+              user.image,
+              user.role,
+              user.status,
+            )
           }
         >
           {/* <div className=""> */}

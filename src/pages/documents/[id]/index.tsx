@@ -7,14 +7,14 @@ function viewDocument() {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
   const [showComments, setShowComments] = useState(false);
   const [showCall, setShowCall] = useState(false);
-  const [showChat, setShowChat] = useState(false);
+  const [showChat, setShowChat] = useState(true);
   const [showShare, setShowShare] = useState(false);
   const DocumentsBar = [
-    {
-      name: "Share",
-      icon: "share.svg",
-      id: 1,
-    },
+    // {
+    //   name: "Share",
+    //   icon: "share.svg",
+    //   id: 1,
+    // },
     {
       name: "Comment",
       icon: "comments.svg",
@@ -61,8 +61,8 @@ function viewDocument() {
   };
 
   return (
-    <div className="w-full h-full">
-      <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3">
+    <div className="w-full h-full doc">
+      <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
         <div>
           <Image
             className="flex align-middle justify-center"
