@@ -132,6 +132,7 @@ class SocketService {
 
   //get-all-spaces-by-id
   allSpaceByUser(data) {
+    console.log(data, 'all workspaces')
     try {
       this.socket.emit("get-all-spaces-by-id", data);
     } catch (err) {

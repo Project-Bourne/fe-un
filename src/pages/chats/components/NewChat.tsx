@@ -3,7 +3,9 @@ import {
   AddNewChat,
   setRecentChats,
 } from "../../../redux/reducers/chat/chatReducer";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import chatEmpty from "../../../../public/icons/chat.empty.svg";
 
 function NewChat({ closeModal }) {
   const [loading, setLoading] = useState(false);
@@ -27,35 +29,53 @@ function NewChat({ closeModal }) {
   };
 
   return (
-    <ul className="h-[50vh] overflow-y-auto">
-      {users?.map((user) => (
-        <li
-          className="flex items-center gap-x-4 hover:cursor-pointer hover:bg-slate-100 rounded-md px-3 py-2.5"
-          key={user.uuid}
-          onClick={() =>
-            handleClick(
-              user.uuid,
-              user.firstName,
-              user.lastName,
-              user.image,
-              user.role,
-              user.status,
-            )
-          }
-        >
-          {/* <div className=""> */}
-          <img
-            src={user.image}
-            alt={user.firstName}
-            className="h-[35px] w-[35px] rounded-full bg-red-400"
-          />
-          {/* </div> */}
-          <p className="md:text-[16px] text-[14px]">
-            {user.firstName} {user.lastName}
-          </p>
-        </li>
-      ))}
-    </ul>
+    <>
+      {users?.length > 0 ? <ul className="h-[50vh] overflow-y-auto">
+        {users?.map((user) => (
+          <li
+            className="flex items-center gap-x-4 hover:cursor-pointer hover:bg-slate-100 rounded-md px-3 py-2.5"
+            key={user.uuid}
+            onClick={() =>
+              handleClick(
+                user.uuid,
+                user.firstName,
+                user.lastName,
+                user.image,
+                user.role,
+                user.status,
+              )
+            }
+          >
+            {/* <div className=""> */}
+            <img
+              src={user.image}
+              alt={user.firstName}
+              className="h-[35px] w-[35px] rounded-full bg-red-400"
+            />
+            {/* </div> */}
+            <p className="md:text-[16px] text-[14px]">
+              {user.firstName} {user.lastName}
+            </p>
+          </li>
+        ))}
+      </ul> :
+        <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
+          <div className="mx-auto">
+            <Image src={chatEmpty} alt="empty-chats" />
+          </div>
+          <div className="grid gap-y-5 text-center">
+            <div className="md:w-[20%] w-[80%] mx-auto grid gap-y-2">
+              <h3 className="text-[17px] font-semibold">No Users to Show</h3>
+
+              <p className="text-[15px] text-[#A1ADB5]">
+                Users will show Here.
+              </p>
+
+            </div>
+          </div>
+        </div>}
+    </>
+
   );
 }
 

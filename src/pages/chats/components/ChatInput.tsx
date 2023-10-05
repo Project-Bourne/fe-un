@@ -47,15 +47,15 @@ function ChatInput(props) {
       }, 'ids')
       if (activeChat?.spaceName) {
         await useSocket.sendMessageSpace({ spaceId: activeChat.uuid, data: textValue, doc: false, img: false })
-        // dispatch(anotherone({
-        //   message: {
-        //     text: textValue,
-        //     doc: 0,
-        //     img: 0,
-        //     read: 0,
-        //     status: false
-        //   }
-        // }))
+        dispatch(anotherone({
+          message: {
+            text: textValue,
+            doc: 0,
+            img: 0,
+            read: 0,
+            status: false
+          }
+        }))
       } else {
         await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue, doc: false, img: false })
         dispatch(anotherone({

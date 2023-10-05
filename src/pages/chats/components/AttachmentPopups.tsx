@@ -20,7 +20,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
   const handleImageChange = (event) => {
     const files = event.target.files;
     const imagePreviews = [];
-    const imgFile =[]
+    const imgFile = []
     // Loop through each selected file to read its data using FileReader
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -62,7 +62,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
           method: 'POST',
           body: formData,
         });
-  
+
         const response = await res.json();
         if (response) {
           console.log(response);
@@ -73,22 +73,31 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
           };
           setSelectedFiles([]);
           const useSocket = SocketService;
-          await useSocket.sendMessage({
-            uuid: activeChat.uuid,
-            data: newObj.text,
-            doc: true, // Set this based on whether it's an image or document
-            img: false, // Set this based on whether it's an image or document
-          });
+          if (activeChat?.spaceName) {
+            await useSocket.sendMessageSpace({
+              spaceId: activeChat.uuid,
+              data: newObj.text,
+              doc: true,
+              img: false,
+            })
+          } else {
+            await useSocket.sendMessage({
+              uuid: activeChat.uuid,
+              data: newObj.text,
+              doc: true,
+              img: false,
+            });
+          }
         }
       } catch (error) {
         console.error(error);
       }
     });
-  
+
     await Promise.all(promises);
     setShowAttachment(false);
   };
-  
+
 
   const removeImage = (indexToRemove) => {
     setSelectedImages((prevSelectedImages) =>
@@ -140,18 +149,28 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
           };
           setSelectedImgFiles([]);
           const useSocket = SocketService;
-          await useSocket.sendMessage({
-            uuid: activeChat.uuid,
-            data: newObj.text,
-            doc: false,
-            img: true,
-          });
+          if (activeChat?.spaceName) {
+            await useSocket.sendMessageSpace({
+              spaceId: activeChat.uuid,
+              data: newObj.text,
+              doc: false,
+              img: true,
+            })
+          } else {
+            await useSocket.sendMessage({
+              uuid: activeChat.uuid,
+              data: newObj.text,
+              doc: false,
+              img: true,
+            });
+          }
+
         }
       } catch (error) {
         console.error(error);
       }
     });
-  
+
     await Promise.all(promises);
     setShowAttachment(false);
   };

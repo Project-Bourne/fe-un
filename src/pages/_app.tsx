@@ -170,19 +170,20 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       });
     });
 
-    socketio.on("new-message", async (res) => {
-      console.log("new-message", res);
-      // dispatch(setNewWorkSpace(data.data))
+    socketio.on("msg-sent-space", async (res) => {
+      console.log("msg-sent-space", res);
       const useSocket = SocketService;
       await useSocket.getSelectedspace({
-        spaceId: activeChat?.uuid,
+        spaceId: res?.space?.uuid,
         uuid: userInfo?.uuid,
       });
     });
 
-    socketio.on("all-space-by-id", async (res) => {
-      console.log("all-space-by-id", res);
-      dispatch(setAllWorkspaceByUser(res))
+    socketio.on("all-spaces-by-id", async (res) => {
+      let response = JSON.parse(res);
+      let data = JSON.parse(response?.data);
+      console.log("all-spaces-by-id", data);
+      dispatch(setAllWorkspaceByUser(data))
     });
 
     socketio.on("all-msgs-selected", (res) => {
