@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import WorkspaceDetails from "../StepperModal/WorkspaceDetails";
 import InviteCollaborators from "../StepperModal/InviteCollaborators";
 import AddContent from "../StepperModal/AddContent";
+import WorkspaceModal from "../StepperModal/WorspaceModal";
 
 const stages = [{ label: "" }, { label: "" }, { label: "" }];
-const AddWorkspacePopUp = ({ onHandlAddeModal }) => {
+const AddWorkspacePopUp = ({ onHandlAddeModal, setModalType }) => {
   const [index, setIndex] = useState(0);
   const props = { stages, index, setIndex };
 
@@ -14,11 +15,12 @@ const AddWorkspacePopUp = ({ onHandlAddeModal }) => {
       <div className="flex flex-col gap-2 my-5">
         <div className="max-h-[70vh] overflow-y-scroll">
           {/* stepper should be here  */}
-          {index === 0 && <WorkspaceDetails {...props} />}
+          <WorkspaceModal setModalType={setModalType}/>
+          {/* <WorkspaceDetails /> */}
           {/* stepper should be here  */}
-          {index === 1 && <InviteCollaborators {...props} />}
+          {/* {index === 1 && <InviteCollaborators {...props} />} */}
           {/* stepper should be here  */}
-          {index === 2 && <AddContent {...props} />}
+          {/* {index === 2 && <AddContent {...props} />} */}
         </div>
       </div>
     </div>

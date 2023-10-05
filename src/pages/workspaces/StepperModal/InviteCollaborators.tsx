@@ -6,7 +6,7 @@ import globalService from "@/services";
 import CollabService from "@/services/collaborator.service";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { setCollab, setSpaceId } from "@/redux/reducers/workspaceReducer";
+// import { setCollab, setSpaceId } from "@/redux/reducers/workspaceReducer";
 import Stages from "../components/Stepper";
 
 const InviteCollaborators = (props) => {
@@ -51,7 +51,7 @@ const InviteCollaborators = (props) => {
   };
   // Handle the invite button click
   const handleInvite = async () => {
-    dispatch(setCollab(selectedSuggestions));
+    // dispatch(setCollab(selectedSuggestions));
     try {
       let workspaceData = {
         spaceName: createspace?.workName,
@@ -62,7 +62,7 @@ const InviteCollaborators = (props) => {
         workspaceData,
       );
       console.log("Created workspace:", createdWorkspace);
-      dispatch(setSpaceId(createdWorkspace?.data?.spaceName));
+      // dispatch(setSpaceId(createdWorkspace?.data?.spaceName));
       Promise.all(
         selectedSuggestions.map(async (suggestion) => {
           let collabData = {

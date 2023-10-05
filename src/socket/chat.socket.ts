@@ -11,7 +11,8 @@ class SocketService {
   constructor() {
     this.socket = socketio;
   }
-  updateData(data: { uuid: string }) {
+
+  updateData(data: any) {
     try {
       this.socket.emit("update-data", data);
     } catch (err) {
@@ -31,11 +32,8 @@ class SocketService {
     }
   }
 
-  createWorkspace(data: {
-    spaceName: string;
-    description: string;
-    creatorId: string;
-  }) {
+  createWorkspace(data: any) {
+    console.log(data, 'workspace data')
     try {
       this.socket.emit("create-space", data);
     } catch (err) {
@@ -55,9 +53,20 @@ class SocketService {
     }
   }
 
-  getSelectedMsg(data: { userId: string; uuid: string }) {
+  getSelectedMsg(data: any) {
     try {
       this.socket.emit("get-msgs-selected", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+// get-msgs-selected-space
+
+  getSelectedspace(data: any) {
+    try {
+      this.socket.emit("get-msgs-selected-space", data);
     } catch (err) {
       NotificationService.error({
         message: err?.error?.message,
@@ -79,10 +88,83 @@ class SocketService {
     });
   }
 
+  createDoc(data: any) {
+    try {
+      this.socket.emit("get-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  getDocHistory(data: any) {
+    try {
+      this.socket.emit("get-docs-by-id", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
   // send single message
   sendMessage(data) {
     try {
       this.socket.emit("send-msg", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+  sendMessageSpace(data) {
+    console.log(data, 'chisommmmm')
+    try {
+      this.socket.emit("send-msg-space", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+
+  //get-all-spaces-by-id
+  allSpaceByUser(data) {
+    try {
+      this.socket.emit("get-all-spaces-by-id", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  //docs
+  // send single message
+  getDoc(data) {
+    try {
+      this.socket.emit("get-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+  saveDoc(data) {
+    try {
+      this.socket.emit("save-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  updateChanges(data) {
+    try {
+      this.socket.emit("doc-update-changes", data);
     } catch (err) {
       NotificationService.error({
         message: err?.error?.message,

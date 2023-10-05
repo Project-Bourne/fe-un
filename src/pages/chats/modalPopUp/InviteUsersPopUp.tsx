@@ -4,7 +4,7 @@ import { Checkbox } from "@mui/material";
 import CollabService from "../../../services/collaborator.service";
 import { useSelector, useDispatch } from "react-redux";
 import globalService from "../../../services";
-import { setCollab } from "../../../redux/reducers/workspaceReducer";
+// import { setCollab } from "../../../redux/reducers/workspaceReducer";
 import NotificationService from "../../../services/notification.service";
 
 function InviteUsersPopUp({ onHandleModalTwo, workspaceId }) {
@@ -47,7 +47,7 @@ function InviteUsersPopUp({ onHandleModalTwo, workspaceId }) {
 
   // Handle the invite button click
   const handleInvite = async () => {
-    dispatch(setCollab(selectedSuggestions));
+    // dispatch(setCollab(selectedSuggestions));
     try {
       Promise.all(
         selectedSuggestions.map(async (suggestion: any) => {

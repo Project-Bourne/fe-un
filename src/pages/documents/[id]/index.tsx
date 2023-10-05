@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Docs from "../components/Docs";
-import CallModal from "../components/CallModal";
+import CallModal from "@/components/ui/CallModal";
+import ImageList from "@/components/ui/ImageList";
 
 function viewDocument() {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
@@ -15,11 +16,11 @@ function viewDocument() {
     //   icon: "share.svg",
     //   id: 1,
     // },
-    {
-      name: "Comment",
-      icon: "comments.svg",
-      id: 2,
-    },
+    // {
+    //   name: "Comment",
+    //   icon: "comments.svg",
+    //   id: 2,
+    // },
     {
       name: "Call",
       icon: "call.svg",
@@ -64,17 +65,10 @@ function viewDocument() {
     <div className="w-full h-full doc">
       <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
         <div>
-          <Image
-            className="flex align-middle justify-center"
-            src={require(`../../../../public/icons/groupAvatar.svg`)}
-            alt="upload image"
-            width={200}
-            height={100}
-            priority
-          />
+        <ImageList users={data.collaborators} stopImageCountAt={5}/>
         </div>
         <div className=" flex items-center">
-          {DocumentsBar?.map((item, index) => (
+          {DocumentsBar?.map((item) => (
             <div
               key={item.id}
               className={` ${

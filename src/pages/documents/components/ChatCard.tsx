@@ -10,6 +10,9 @@ function ChatCard({ chat, setIsClicked, isClicked }) {
   const [showChat, setShowChat] = useState(false);
   const { uuid, firstName, lastName, messages, image } = chat;
   const dispatch = useDispatch();
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   const { activeChat } = useSelector((state: any) => state.chats);
   const handleClick = (data: any) => {
     console.log(data, "data");
@@ -23,7 +26,7 @@ function ChatCard({ chat, setIsClicked, isClicked }) {
     console.log("active chat", data);
     const useSocket = SocketService;
     useSocket.getSelectedMsg({
-      userId: "50bd293d-bd93-4557-bf86-c3bfefbc8917",
+      userId: userInfo.uuid,
       uuid: chat?.uuid,
     });
     if (activeChat.uuid === data) {

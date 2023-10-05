@@ -1,11 +1,40 @@
-import React, { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import SocketService from "../../../socket/chat.socket";
 import Image from "next/image";
+import socketio from "@/utils/socket";
+import { useSelector } from "react-redux";
+
 
 function ChatInput() {
+  const [toggleEmoji, setToggleEmoji] = useState<boolean>(false);
+  const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState(false);
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   const [textValue, setTextValue] = useState("");
+  const { activeChat } = useSelector((state: any) => state.chats);
 
-  const handleSendMessage = () => {};
+  useEffect(() => {
+    socketio.on("msg-sent", () => {
+      console.log("Message SENT");
+    });
+  }, [socketio]);
+
+  const handleSendMessage = async () => {
+    try {
+      console.log({ uuid: activeChat.uuid, data: textValue }, "text");
+      const useSocket = SocketService;
+      if (activeChat.spaceName) {
+        await useSocket.sendMessageSpace({ spaceId: activeChat.uuid, data: textValue, doc: false, img: false })
+      } else {
+        await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue, doc: false, img: false })
+      }
+      setTextValue("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Collaborate from "../modalPopUp/CollabratePopUp";
 import InviteUsers from "../modalPopUp/InviteUsersPopUp";
+import { useSelector } from "react-redux";
 
 type HeaderProps = {
   workspaceId?: any;
@@ -11,7 +12,7 @@ type HeaderProps = {
 
 function Header({ workspaceId }: HeaderProps) {
   const [modalType, setModalType] = useState(false);
-
+  const { activeChat } = useSelector((state: any) => state.chats);
   const handleModal = () => {
     setModalType(true);
   };
@@ -45,7 +46,7 @@ function Header({ workspaceId }: HeaderProps) {
                 <label className="text-white text-center">Add content</label>
               </div>
             }
-          />
+          /> 
           {/* Button to open the  modal */}
 
           <Button
@@ -72,9 +73,8 @@ function Header({ workspaceId }: HeaderProps) {
           {/* Button to open the Invite Users modal */}
         </div>
       </div>
-
       {/* Render the Collaborate modal */}
-      {modalType && (
+      {modalType &&  (
         <CustomModal
           style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}

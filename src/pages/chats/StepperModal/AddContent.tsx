@@ -71,6 +71,12 @@ const AddConten = (props) => {
 
   return (
     <div>
+      <div className="flex flex-col items-center justify-center pb-3">
+        <h1 className="text-3xl font-bold ml-5 text-black">Add Document</h1>
+        <p className="text-[14px] ml-5">
+          Fill the details below to add a new workspace
+        </p>
+      </div>
       <Stages steps={stages} step={index} />
       <div className="m-5">
         {isFileUploaded && !showReader ? (
@@ -181,7 +187,7 @@ const AddConten = (props) => {
                     Create workspace
                   </div>
                 }
-                // disabled
+              // disabled
               />
               {/* <Button
                 classNameStyle="flex border iteam-center justify-center text-center border-sirp-primary gap-x-1 items-center mt-2 mb-1 cursor-pointer rounded-[1rem]"

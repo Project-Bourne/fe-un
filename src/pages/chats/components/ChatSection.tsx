@@ -51,9 +51,6 @@ function ChatSection(props) {
       content_type: "audio",
       action: "sent",
     };
-    // let msgArr = allMessages;
-    // msgArr.push(newMessage);
-    // setAudioFile(msgArr);
   };
 
   // props

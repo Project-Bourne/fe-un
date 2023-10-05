@@ -1,22 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DocCard from "./components/docCards";
 import OverviewCard from "./components/overviewCard";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { CustomModal } from "@/components/ui";
+import CreateDocument from "./components/createDoc";
+import SocketService from "../../socket/chat.socket";
+import { useSelector } from "react-redux";
+import chatEmpty from "../../../public/icons/chat.empty.svg";
 
 function Documents() {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState('');
   const router = useRouter();
+  const [singleData, setSingleData] = useState({});
+  const [createDocModal, setCreateDocModal] = useState(false);
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
+  const { allDocs } = useSelector(
+    (state: any) => state?.docs,
+  );
+  const [singleDoc, setSingleDoc] = useState({})
+  useEffect(() => {
+    const fetchHistory = async () => {
+      const useSocket = SocketService;
+      await useSocket.getDocHistory({ uuid: userInfo?.uuid });
+    }
+    fetchHistory()
+  }, [])
 
   const handleClick = (num) => {
-    // alert(num)
-    setIsActive(true);
+    setIsActive(num);
+    const clickedDoc = allDocs.find((el) => el._id === num);
+    setSingleData(clickedDoc);
   };
-
-  const redirect = () => {
-    router.push("/documents/add-content");
+  const handleCloseModal = () => {
+    setCreateDocModal(false);
   };
-
   return (
     <div>
       <div className="fixed -mt-2.5 md:w-[80%] w-[85%] bg-white flex justify-between items-center border-b border-gray-300  py-3 px-5 documents">
@@ -25,7 +45,7 @@ function Documents() {
         </h1>
         <div className=" flex items-center justify-end">
           {/* filter group  */}
-          <div className="flex items-center justify-center gap-3 md:mr-10 mr-5">
+          {/* <div className="flex items-center justify-center gap-3 md:mr-10 mr-5">
             <span>
               <Image
                 src={require(`../../../public/icons/filter2.svg`)}
@@ -39,11 +59,11 @@ function Documents() {
                 alt="chevron-down"
               />
             </span>
-          </div>
+          </div> */}
 
           <div
             className="border-2 border-[#B2CBE6] rounded-2xl shadow flex  items-center justify-center md:py-3 py-2 px-5"
-            onClick={redirect}
+            onClick={() => setCreateDocModal(true)}
           >
             <Image
               src={require("../../../public/icons/plus.svg")}
@@ -52,35 +72,47 @@ function Documents() {
               alt="plus"
             />
             <span className="ml-2 text-[#4582C4] font-bold cursor-pointer">
-              Add content
+              New Document
             </span>
           </div>
         </div>
       </div>
-
+      {createDocModal && <CustomModal
+        style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
+        closeModal={handleCloseModal}><CreateDocument /></CustomModal>}
       <div
-        className={`w-full h-[100vh] pt-[50px] grid ${
-          isActive ? "md:grid-cols-2 grid-cols-1" : "grid-cols-1"
-        }`}
+        className={`w-full h-[100vh] pt-[50px] grid ${isActive ? "md:grid-cols-2 grid-cols-1" : "grid-cols-1"
+          }`}
       >
         <div
-          className={` ${
-            isActive && "border-r border-gray-300"
-          }  overflow-y-auto  p-5`}
+          className={`${isActive && "border-r border-gray-300"
+            }  overflow-y-auto  p-5`}
         >
           <div
-            className={`grid gap-x-7 gap-y-3 ${
-              !isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
-            } my-5`}
+            className={`grid gap-x-7 gap-y-3 ${!isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
+              } my-5`}
           >
-            <DocCard docCardClick={handleClick} />
-            <DocCard docCardClick={handleClick} />
-            <DocCard docCardClick={handleClick} />
-            <DocCard docCardClick={handleClick} />
-            <DocCard docCardClick={handleClick} />
-            <DocCard docCardClick={handleClick} />
-            <DocCard docCardClick={handleClick} />
-            <DocCard docCardClick={handleClick} />
+            {allDocs.map((el) => (
+              <DocCard docCardClick={handleClick} data={el} isActive={isActive}/>
+            ))}
+            {allDocs.length < 0 &&
+              <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
+                <div className="mx-auto">
+                  <Image src={chatEmpty} alt="empty-chats" />
+                </div>
+                <div className="grid gap-y-5 text-center">
+                  <div className="md:w-[20%] w-[80%] mx-auto grid gap-y-2">
+                    <h3 className="text-[17px] font-semibold">No Documents yet</h3>
+
+                    <p className="text-[15px] text-[#A1ADB5]">
+                      Your chats will appear here, click the button to begin
+                    </p>
+
+                  </div>
+
+                </div>
+              </div>
+            }
           </div>
         </div>
         <>
@@ -89,7 +121,8 @@ function Documents() {
               <div className="pb-[50px]">
                 <OverviewCard
                   backIcon={true}
-                  goBack={() => setIsActive(false)}
+                  goBack={() => setIsActive('')}
+                  data={singleData}
                 />
               </div>
             </div>

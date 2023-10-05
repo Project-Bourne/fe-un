@@ -6,17 +6,18 @@ export const NavBarContents = [
   //   route: "/dashboard",
   // },
   {
-    name: "History",
-    icon: "exports.svg",
-    id: 4,
-    route: "/documents",
-  },
-  {
     name: "Workspaces",
     icon: "home.svg",
     id: 2,
     route: "/chats",
   },
+  {
+    name: "Documents",
+    icon: "exports.svg",
+    id: 4,
+    route: "/documents",
+  },
+
   // {
   //   name: "Workspaces",
   //   icon: "starred.svg",

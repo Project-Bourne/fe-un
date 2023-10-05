@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import CollabService from "@/services/collaborator.service";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+
 import SocketService from "../../../socket/chat.socket";
 // import { setSpaceData } from "@/redux/reducers/workspaceReducer";
 import Stages from "../components/Stepper";
+import { userInfo } from "os";
 
 function WorkspaceDetails(props) {
   const service = new CollabService();
   const dispatch = useDispatch();
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   const [formData, setFormData] = useState({
     workName: "",
     workspaceDescription: "",
@@ -29,7 +33,7 @@ function WorkspaceDetails(props) {
       setIsDisabled(false);
     }
   };
-  const { stages, index, setIndex } = props;
+  const { stages, index, setIndex, setModalType } = props;
 
   const handleSubmit = async (event) => {
     try {
@@ -39,20 +43,15 @@ function WorkspaceDetails(props) {
       let workspaceData = {
         spaceName: formData?.workName,
         description: formData?.workspaceDescription,
-        creatorId: "50bd293d-bd93-4557-bf86-c3bfefbc8917",
+        creator: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+          designation: userInfo?.country[0]
+        }
       };
+      console.log(workspaceData)
       await useSocket.createWorkspace(workspaceData);
-      toast("Work Space Created", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setIndex(index + 1);
+      setModalType(null);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +67,7 @@ function WorkspaceDetails(props) {
       </div>
       <div className="flex flex-col gap-5 my-5">
         <h1 className="text-1xl font-bold ml-5 text-black">
-          <Stages steps={stages} step={index} />
+          {/* <Stages steps={stages} step={index} /> */}
           Workspace details
         </h1>
       </div>
@@ -92,7 +91,7 @@ function WorkspaceDetails(props) {
         <textarea
           name="workspaceDescription"
           id="workspaceDescription"
-          placeholder="Location"
+          placeholder="Description"
           required
           maxLength={500}
           className="border p-2 my-3 rounded-[.3rem] h-[100px]"
@@ -111,7 +110,7 @@ function WorkspaceDetails(props) {
             type="submit"
             value={
               <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
-                Continue
+                Add Workspace
               </div>
             }
           />

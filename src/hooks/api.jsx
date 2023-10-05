@@ -1,15 +1,19 @@
-// import { API_USER_URL } from '@env';
-
-import { loadGetInitialProps } from "next/dist/shared/lib/utils";
-
 /**
  * Object Request Header
  */
+import { Cookies } from "react-cookie";
+const cookies = new Cookies();
+let access = "";
+if (typeof window !== "undefined") {
+  access =
+    cookies.get("deep-access") ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwMTU0ODcwLWVhYjgtNGQyMy1hYjk2LWNkMDk5YjRmYmU5MyIsInJvbGUiOiI0IiwiaWF0IjoxNjk1NzQxMTAwLCJleHAiOjE2OTU4Mjc1MDB9.RCAnoAu0yR9mzKwyMoxtkSdriMXmIsSlz1bgXtdUlbg";
+}
 export const requestHeader = {
   Accept: "application/json",
   "Cache-Control": "no-cache",
   "Content-Type": "application/json",
-  "x-token": "",
+  "deep-token": access,
 };
 
 /**
@@ -23,12 +27,9 @@ export const requestHeader = {
  * @returns Response Data;
  */
 
-//deepsoul = "http://192.168.0.142:4040/"
-//deepsoul2 = "http://192.168.88.99:4000/"
-//micheals Iphone = "http://172.20.10.9:4000/api/v1/"
-// let API_USER_URL = "http://localhost:3010";
 
-const API_USER_URL = "http://localhost:3080/api/v1/";
+
+const API_USER_URL = "http://192.81.213.226:81/86/api/v1/";
 
 export async function request(url, method, payload, token, text, form) {
   requestHeader["Content-Type"] =
@@ -74,7 +75,10 @@ export async function request(url, method, payload, token, text, form) {
       });
   }
 }
-const API_USER_URL2 = "http://localhost:4040/";
+
+
+
+const API_USER_URL2 = "http://192.81.213.226:81/80/"
 export async function request2(url, method, payload, token, text, form) {
   requestHeader["Content-Type"] =
     form === true ? "multipart/form-data" : "application/json";

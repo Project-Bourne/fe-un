@@ -6,10 +6,10 @@ import Service from "../../../services/collaborator.service";
 import { getWorkspace } from "../../../models/types";
 import Loader from "../../../components/ui/loader";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setCollab,
-  setSpaceId,
-} from "../../../redux/reducers/workspaceReducer";
+// import {
+//   setCollab,
+//   setSpaceId,
+// } from "../../../redux/reducers/workspaceReducer";
 import InviteUsersPopUp from "../modalPopUp/InviteUsersPopUp";
 
 type RecentWorkspaceProps = {
@@ -44,7 +44,7 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
 
   const openUserModal = (id) => {
     setWorkspaceId(id);
-    dispatch(setSpaceId(id));
+    // dispatch(setSpaceId(id));
     setShowUserModal(true);
     console.log("modal", showUserModal);
   };

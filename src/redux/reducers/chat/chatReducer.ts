@@ -10,7 +10,9 @@ const chatSlice = createSlice({
   initialState: {
     activeChat: null,
     allRecentChats: [],
+    allWorkspaceByUser:[],
     selectedChat: [],
+    read:false,
   },
   reducers: {
     setActivechat: (state: any, action: SetActiveChatAction) => {
@@ -20,6 +22,15 @@ const chatSlice = createSlice({
       state.allRecentChats = action?.payload;
     },
     setSelectedChat: (state: any, action) => {
+      state.selectedChat = action?.payload;
+    },
+    anotherone: (state: any, action) => {
+      state.selectedChat.push(action?.payload)
+    },
+    setAllWorkspaceByUser: (state: any, action) => {
+      state.allWorkspaceByUser = action?.payload;
+    },
+    setRead: (state: any, action) => {
       state.selectedChat = action?.payload;
     },
     AddNewChat: (state: any, action) => {
@@ -35,6 +46,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setActivechat, setRecentChats, setSelectedChat, AddNewChat } =
+export const { setActivechat, setRead, setRecentChats,anotherone, setSelectedChat, AddNewChat, setAllWorkspaceByUser } =
   chatSlice.actions;
 export default chatSlice.reducer;

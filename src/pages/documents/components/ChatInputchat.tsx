@@ -23,7 +23,9 @@ function ChatInput(props) {
   const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState(false);
   const [textValue, setTextValue] = useState("");
-
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   const handleRecordedAudio = (data) => {
     showAudioFile(data);
   };
@@ -37,9 +39,9 @@ function ChatInput(props) {
     try {
       console.log({ uuid: activeChat.uuid, data: textValue }, "text");
       const useSocket = SocketService;
-      await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue });
+      await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue, doc:false, img:false });
       await useSocket.getSelectedMsg({
-        userId: "50bd293d-bd93-4557-bf86-c3bfefbc8917",
+        userId: userInfo?.uuid,
         uuid: activeChat?.uuid,
       });
       setTextValue("");
@@ -76,6 +78,12 @@ function ChatInput(props) {
               onChange={(e) => {
                 setTextValue(e.target.value);
                 setIsTyping(true);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault(); // Prevents adding a new line (default behavior for Enter key)
+                  handleSendMessage(); // Call your sendMessage function here
+                }
               }}
             />
           </div>

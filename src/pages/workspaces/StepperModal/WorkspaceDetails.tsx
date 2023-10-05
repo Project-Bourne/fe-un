@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import CollabService from "@/services/collaborator.service";
 import { useDispatch } from "react-redux";
-import { setSpace } from "@/redux/reducers/workspaceReducer";
+// import { setSpace } from "@/redux/reducers/workspaceReducer";
 import Stages from "../components/Stepper";
 
 function WorkspaceDetails(props) {
@@ -32,7 +32,7 @@ function WorkspaceDetails(props) {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      dispatch(setSpace(formData));
+      // dispatch(setSpace(formData));
       setIndex(index + 1);
     } catch (error) {
       console.log(error);

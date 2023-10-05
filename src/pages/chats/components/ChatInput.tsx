@@ -7,18 +7,22 @@ import { useEffect, useRef, useState } from "react";
 import AttachmentPopups from "./AttachmentPopups";
 import SocketService from "../../../socket/chat.socket";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import socketio from "@/utils/socket";
+import { anotherone } from "@/redux/reducers/chat/chatReducer";
 
 function ChatInput(props) {
+  const dispatch = useDispatch()
   //Socket emitter
   useEffect(() => {
     socketio.on("msg-sent", () => {
       console.log("Message SENT");
     });
   }, [socketio]);
-
-  const { showUploadPopup, showAttachment, setShowAttachment, showAudioFile } =
-    props;
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
+  const { showUploadPopup, showAttachment, setShowAttachment, showAudioFile } = props;
   const [toggleEmoji, setToggleEmoji] = useState<boolean>(false);
   const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -37,11 +41,34 @@ function ChatInput(props) {
     try {
       console.log({ uuid: activeChat.uuid, data: textValue }, "text");
       const useSocket = SocketService;
-      await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue });
-      await useSocket.getSelectedMsg({
-        userId: "50bd293d-bd93-4557-bf86-c3bfefbc8917",
+      console.log({
+        userId: userInfo?.uuid,
         uuid: activeChat?.uuid,
-      });
+      }, 'ids')
+      if (activeChat?.spaceName) {
+        await useSocket.sendMessageSpace({ spaceId: activeChat.uuid, data: textValue, doc: false, img: false })
+        // dispatch(anotherone({
+        //   message: {
+        //     text: textValue,
+        //     doc: 0,
+        //     img: 0,
+        //     read: 0,
+        //     status: false
+        //   }
+        // }))
+      } else {
+        await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue, doc: false, img: false })
+        dispatch(anotherone({
+          message: {
+            text: textValue,
+            doc: 0,
+            img: 0,
+            read: 0,
+            status: false
+          }
+        }))
+      }
+     
       setTextValue("");
     } catch (err) {
       console.log(err);
@@ -77,6 +104,12 @@ function ChatInput(props) {
                 setTextValue(e.target.value);
                 setIsTyping(true);
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault(); 
+                  handleSendMessage();
+                }
+              }}
             />
           </div>
           <div className="flex justify-between gap-x-1 md:gap-x-2  md:w-[14%] bg-[#F9FBFE] rounded-r-full">
@@ -89,7 +122,7 @@ function ChatInput(props) {
               className="px-[0.15rem] hover:cursor-pointer"
               priority
             />
-            <Image
+            {/* <Image
               src={require("../../../../public/icons/chat.mic.svg")}
               alt="audio"
               width={25}
@@ -97,13 +130,12 @@ function ChatInput(props) {
               className="px-[0.15rem] rounded-full hover:cursor-pointer"
               onClick={() => setToggleAudio((prevState) => !prevState)}
               priority
-            />
+            /> */}
             <Image
               src={require("../../../../public/icons/chat.send.svg")}
               alt="send"
-              className={`${
-                !isTyping ? "bg-[#B9C1C7]" : "bg-sirp-primary"
-              } p-2 md:p-3 my-auto rounded-full h[40px] w-[40px] md:h-[50px] md:w-[50px] hover:cursor-pointer`}
+              className={`${!isTyping ? "bg-[#B9C1C7]" : "bg-sirp-primary"
+                } p-2 md:p-3 my-auto rounded-full h[40px] w-[40px] md:h-[50px] md:w-[50px] hover:cursor-pointer`}
               onClick={handleSendMessage}
               priority
             />
