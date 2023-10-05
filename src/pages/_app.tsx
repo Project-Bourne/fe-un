@@ -25,7 +25,7 @@ import {
 } from "../redux/reducers/chat/chatReducer";
 import { useRouter } from "next/router";
 import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
-import { setAllDocs } from "@/redux/reducers/documents/documentReducer";
+import { setAllDocs, setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 
 function App({ Component, pageProps, ...appProps }) {
   return (
@@ -196,7 +196,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       console.log(res, 'load')
       let data = JSON.parse(res);
       console.log("load-doc", data.data);
-      // dispatch((data.data));
+      dispatch(setSingleDoc(data.data));
       toast("Document Created", {
         position: "bottom-right",
         autoClose: 2000,

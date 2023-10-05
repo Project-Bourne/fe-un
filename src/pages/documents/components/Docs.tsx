@@ -13,7 +13,7 @@ export default function Docs({
   setShowChat,
   showChat,
   showShare,
-  setShowShare,
+  setShowShare
 }) {
   const router = useRouter();
   console.log(showChat);

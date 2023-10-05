@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Docs from "../components/Docs";
 import CallModal from "@/components/ui/CallModal";
 import ImageList from "@/components/ui/ImageList";
+import { useRouter } from "next/router";
+import SocketService from "../../../socket/chat.socket";
+import { useSelector } from "react-redux";
+import AuthService from "@/services/auth.service";
 
 function viewDocument() {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
@@ -10,6 +14,27 @@ function viewDocument() {
   const [showCall, setShowCall] = useState(false);
   const [showChat, setShowChat] = useState(true);
   const [showShare, setShowShare] = useState(false);
+  const [users, setUsers] = useState([])
+  const { singleDoc } = useSelector(
+    (state: any) => state?.docs,
+  );
+
+  useEffect(() => {
+    const fetchCollaborators = async () => {
+      const docCollabPromises = singleDoc.collaborators.map(async (el) => {
+        const user = await AuthService.getusersbyId(el.id);
+        return user?.data;
+      });
+  
+      const docCollaborators = await Promise.all(docCollabPromises);
+      setUsers(docCollaborators)
+      // console.log(docCollaborators, "docCollaborators");
+    };
+  
+    fetchCollaborators();
+  }, []);
+
+
   const DocumentsBar = [
     // {
     //   name: "Share",
@@ -32,6 +57,7 @@ function viewDocument() {
       id: 4,
     },
   ];
+
 
   const handleClick = (id) => {
     setSelectedTab(id);
@@ -65,17 +91,16 @@ function viewDocument() {
     <div className="w-full h-full doc">
       <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
         <div>
-        <ImageList users={data.collaborators} stopImageCountAt={5}/>
+          <ImageList users={users} stopImageCountAt={5} />
         </div>
         <div className=" flex items-center">
           {DocumentsBar?.map((item) => (
             <div
               key={item.id}
-              className={` ${
-                selectedTab === item.id
-                  ? "flex items-center mr-5 bg-sirp-primaryLess2 p-1 rounded-lg cursor-pointer"
-                  : "flex items-center mr-5 p-1 cursor-pointer rounded-lg"
-              }`}
+              className={` ${selectedTab === item.id
+                ? "flex items-center mr-5 bg-sirp-primaryLess2 p-1 rounded-lg cursor-pointer"
+                : "flex items-center mr-5 p-1 cursor-pointer rounded-lg"
+                }`}
               onClick={() => handleClick(item.id)}
             >
               <span className="mr-2">

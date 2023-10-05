@@ -1,12 +1,27 @@
 import { ImageList } from "@/components/ui";
+import AuthService from "@/services/auth.service";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function DocCard({ docCardClick, data, isActive }: any) {
   const handleDocCardClick = (data) => {
     docCardClick(data);
   };
-
+  const [users, setUsers] = useState([])
+  useEffect(() => {
+    const fetchCollaborators = async () => {
+      const docCollabPromises = data.collaborators.map(async (el) => {
+        const user = await AuthService.getusersbyId(el.id);
+        return user?.data;
+      });
+  
+      const docCollaborators = await Promise.all(docCollabPromises);
+      setUsers(docCollaborators)
+      // console.log(docCollaborators, "docCollaborators");
+    };
+  
+    fetchCollaborators();
+  }, []);
   return (
     <div
       onClick={() => handleDocCardClick(data._id)}
@@ -20,7 +35,7 @@ function DocCard({ docCardClick, data, isActive }: any) {
         <span className="bg-white rounded-2xl border py-1 px-2 border-[#E8EAEC] text-[grey]">
          Document
         </span>
-        <ImageList users={data.collaborators} stopImageCountAt={5}/>
+        <ImageList users={users} stopImageCountAt={5}/>
       </div>
       <div className="w-full mt-2 text-[#322f2f]">
         {data.name}

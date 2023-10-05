@@ -30,8 +30,10 @@ function Documents() {
   }, [])
 
   const handleClick = (num) => {
+    console.log(allDocs, 'alldocs')
     setIsActive(num);
     const clickedDoc = allDocs.find((el) => el._id === num);
+    console.log(clickedDoc, 'clickedDoc')
     setSingleData(clickedDoc);
   };
   const handleCloseModal = () => {

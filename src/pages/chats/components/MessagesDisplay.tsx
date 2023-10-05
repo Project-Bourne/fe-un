@@ -90,7 +90,7 @@ function MessagesDisplay() {
               }
               <div className="clear-both table">
                 {/*  */}
-                <div
+                {/* <div
                   className={`${message?.sender !== activeChat?.uuid
                     ? "absolute right-2"
                     : "absolute left-2"
@@ -105,7 +105,7 @@ function MessagesDisplay() {
                     height={17}
                     width={17}
                   />
-                </div>
+                </div> */}
               </div>
             </li>
           ) : message.content_type === "audio" ? (

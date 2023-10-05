@@ -25,6 +25,22 @@ class AuthService {
       throw error;
     }
   }
+
+  static async getusersbyId(id) {
+    try {
+      const response = await request2(
+        `user/${id}`,
+        "GET",
+        {},
+        true,
+        false,
+        false,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 // Export the Service class.

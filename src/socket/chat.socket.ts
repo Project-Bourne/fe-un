@@ -153,6 +153,16 @@ class SocketService {
       });
     }
   }
+  
+  getDocById(data) {
+    try {
+      this.socket.emit("get-docs-by-id", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
   saveDoc(data) {
     try {
       this.socket.emit("save-doc", data);

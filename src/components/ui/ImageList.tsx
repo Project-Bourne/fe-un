@@ -8,32 +8,28 @@ type ImageListProps = {
 
 function ImageList({ users, stopImageCountAt }: ImageListProps) {
   const [remainderCount, setRemainderCount] = useState(0);
-
-  // calculates and sets the number of image items on which the loop does not apply
   useEffect(() => {
     if (users.length > stopImageCountAt) {
       setRemainderCount(users.length - stopImageCountAt);
     }
   }, [users, stopImageCountAt]);
 
+
   return (
     <div className="flex mt-3">
-      {/* loop through user object and render images  */}
       {users?.map((user, index) => (
         <React.Fragment key={index}>
-          {/* loop through user objects as long as each item index is one-less than the the specified 'stopImageCountAt' prop */}
           {index < stopImageCountAt && (
             <>
-              <Image
-                src={require("../../../public/images/user1.jpg")}
+              <img
+                src={user.image}
                 alt={user.alt}
-                className={`rounded-full border-[2px] h-[45px] w-[45px] -ml-[.8rem] 
-                                    ${
-                                      user.status === 0
-                                        ? "border-sirp-primaryBlue"
-                                        : "border-sirp-gray"
-                                    }
-                                `}
+                className={`rounded-full border-[2px] h-[33px] w-[45px] -ml-[.8rem] 
+                                    ${user.status === 0
+                    ? "border-sirp-primaryBlue"
+                    : "border-sirp-gray"
+                  }
+               `}
               />
             </>
           )}

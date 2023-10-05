@@ -35,12 +35,12 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
       <div className="flex flex-col gap-2">
         <span className="text-[#6F7A82]">Title</span>
         <span className="text-3xl text-[#1D2022] font-bold">
-        {data.name}
+        {data?.name}
         </span>
       </div>
       <div className="flex flex-col gap-2 mt-5">
       <span className="text-[#6F7A82]">content</span>
-      <span>{data.data || "No content to available yet"}</span>
+      {/* <span>{data?.data || "No content to available yet"}</span> */}
       </div>
 
       {/* <div className="flex flex-col gap-2 mt-5">
@@ -109,7 +109,7 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">Tags & Keywords </span>
         <div className="flex gap-3 md-flex-col flex-row">
-          {data.keywords.length> 0 && data.keywords.map((el)=> (<Tabs value={el} />))}
+          {data?.keywords?.length> 0 && data.keywords.map((el)=> (<Tabs value={el} />))}
         </div>
       </div>
 
