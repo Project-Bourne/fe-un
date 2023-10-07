@@ -1,9 +1,15 @@
 export const NavBarContents = [
+  // {
+  //   name: "Dashboard",
+  //   icon: "dashboard.svg",
+  //   id: 1,
+  //   route: "/dashboard",
+  // },
   {
-    name: "Dashboard",
-    icon: "dashboard.svg",
-    id: 1,
-    route: "/dashboard",
+    name: "Workspaces",
+    icon: "home.svg",
+    id: 2,
+    route: "/chats",
   },
   {
     name: "Documents",
@@ -11,18 +17,13 @@ export const NavBarContents = [
     id: 4,
     route: "/documents",
   },
-  {
-    name: "Chats",
-    icon: "home.svg",
-    id: 2,
-    route: "/chats",
-  },
-  {
-    name: "Workspaces",
-    icon: "starred.svg",
-    id: 3,
-    route: "/workspaces",
-  },
+
+  // {
+  //   name: "Workspaces",
+  //   icon: "starred.svg",
+  //   id: 3,
+  //   route: "/workspaces",
+  // },
   {
     name: "Help",
     icon: "training.svg",

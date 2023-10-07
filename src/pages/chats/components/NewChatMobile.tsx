@@ -20,7 +20,7 @@ function NewChatMobile() {
         onClick={handleNewChat}
         aria-label="new chat"
         title="new chat"
-        className="fixed z-20 bottom-5 md:left-[42.5rem] md:w-[55px] w-[40px] md:h-[55px] h-[45px] shadow-md shadow-[#909090e6] flex justify-center items-center text-white text-[14px] mx-auto bg-sirp-primary hover:bg-sirp-primary/[0.97]  rounded-2xl"
+        className="fixed z-20 bottom-5 md:left-[38rem] md:w-[55px] w-[40px] md:h-[55px] h-[45px] shadow-md shadow-[#909090e6] flex justify-center items-center text-white text-[14px] mx-auto bg-sirp-primary hover:bg-sirp-primary/[0.97]  rounded-2xl"
       >
         <Image src={plus1} alt="new chat" />
       </button>

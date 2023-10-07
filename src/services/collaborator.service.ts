@@ -106,6 +106,24 @@ class CollabService {
     }
   }
 
+  // http://localhost:3080/api/v1/space/3847b0b0-33d5-4f57-bd37-c02b39978b2c/collabs
+
+  static async getSpaceCollab(id) {
+    try {
+      const response = await request(
+        `space/${id}/collabs`,
+        "GET",
+        {},
+        true,
+        false,
+        false,
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /**
    * Create a new Collab.
    * @param {Object} collabData - The data of the new workspace.
@@ -122,7 +140,7 @@ class CollabService {
         false,
         false,
       );
-      return response;
+      return response.data;
     } catch (error) {
       throw error;
     }

@@ -31,6 +31,15 @@ class DocumentService {
       throw error;
     }
   }
+
+  static async getDoc(id) {
+    try {
+      const response = await request(`doc/${id}`, "GET", true, false, false);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 // Export the Service class.

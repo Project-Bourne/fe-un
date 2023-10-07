@@ -4,11 +4,12 @@ export interface ChatItemModel {
 }
 
 interface ItemModel {
+  uuid: string;
   status?: string;
   userId: number | string;
   firstName?: string;
   lastName?: string;
-  img?: string;
+  image?: string;
   messages?: any;
   newMessagesCount?: number;
 }

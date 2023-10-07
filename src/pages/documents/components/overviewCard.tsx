@@ -9,12 +9,13 @@ import { useRouter } from "next/router";
 type Props = {
   backIcon?: boolean;
   goBack?: any;
+  data?: any;
 };
 
-function OverviewCard({ backIcon, goBack }: Props) {
+function OverviewCard({ backIcon, goBack, data }: Props) {
   const router = useRouter();
   const handleClick = () => {
-    router.push("/documents/viewDocument");
+    router.push(`/documents/${data._id}`);
   };
 
   return (
@@ -33,11 +34,14 @@ function OverviewCard({ backIcon, goBack }: Props) {
       {/* Authors */}
       <div className="flex flex-col gap-2">
         <span className="text-[#6F7A82]">Title</span>
-        <span className="text-3xl text-[#1D2022] font-bold">
-          22 Insightful quotes from our speakers (link to recording at the end)
-        </span>
+        <span className="text-3xl text-[#1D2022] font-bold">{data?.name}</span>
       </div>
       <div className="flex flex-col gap-2 mt-5">
+        <span className="text-[#6F7A82]">content</span>
+        <span>{data?.ops || "No content to available yet"}</span>
+      </div>
+
+      {/* <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">Authors</span>
         <div className="grid grid-cols-2">
           <div className="flex items-center justify-start">
@@ -99,14 +103,12 @@ function OverviewCard({ backIcon, goBack }: Props) {
         <div className="flex">
           <Tabs value={"Twitter"} />
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">Tags & Keywords </span>
         <div className="flex gap-3 md-flex-col flex-row">
-          <Tabs value={"UI Design"} />
-          <Tabs value={"Web3 design"} />
-          <Tabs value={"Tutorials"} />
-          <Tabs value={"Twitter"} />
+          {data?.keywords?.length > 0 &&
+            data.keywords.map((el) => <Tabs value={el} />)}
         </div>
       </div>
 
