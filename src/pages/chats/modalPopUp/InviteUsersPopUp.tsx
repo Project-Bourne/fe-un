@@ -101,10 +101,11 @@ function InviteUsersPopUp({ onHandleModalTwo, workspaceId }) {
               /> */}
                 <div>
                   <p className="font-bold text-black">
-                    {" "}
                     {suggestion.firstName} {suggestion.lastName}
                   </p>
-                  <p className="text-gray-500 text-sm">{suggestion.email}</p>
+                  <p className="text-gray-500 text-sm capitalize">
+                    {suggestion.email}
+                  </p>
                 </div>
               </div>
             </div>

@@ -15,17 +15,20 @@ import SocketService from "../socket/chat.socket";
 import AuthService from "@/services/auth.service";
 import NotificationService from "@/services/notification.service";
 import { setUserInfo } from "@/redux/reducers/authReducer";
-import Head from 'next/head';
+import Head from "next/head";
 import {
   setRecentChats,
   setSelectedChat,
   setAllWorkspaceByUser,
   setRead,
-  anotherone
+  anotherone,
 } from "../redux/reducers/chat/chatReducer";
 import { useRouter } from "next/router";
 import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
-import { setAllDocs, setSingleDoc } from "@/redux/reducers/documents/documentReducer";
+import {
+  setAllDocs,
+  setSingleDoc,
+} from "@/redux/reducers/documents/documentReducer";
 
 function App({ Component, pageProps, ...appProps }) {
   return (
@@ -46,13 +49,15 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
+  const { singleDoc } = useSelector((state: any) => state?.docs);
   // State to hold the socket instance
   const [socket, setSocket] = useState<any | null>(null);
   const [newArr, setNewArr] = useState<any[]>([]);
+
   const [newMessages, setNewMessages] = useState();
   const userService = new globalService();
   const { allRecentChats, selectedChat } = useSelector(
-    (state: any) => state?.chats
+    (state: any) => state?.chats,
   );
   const dispatch = useDispatch();
   const { activeChat } = useSelector((state: any) => state.chats);
@@ -65,7 +70,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
   // initial user update using authenticated UUID on app mount
   const _constructor = async () => {
     const useSocket = SocketService;
-    const data = { uuid: userInfo?.uuid, country: userInfo?.country }
+    const data = { uuid: userInfo?.uuid, country: userInfo?.country };
     await useSocket.updateData(data);
     await useSocket.getRecentChats({ uuid: userInfo?.uuid });
     await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
@@ -100,8 +105,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
   useEffect(() => {
     // setLoading(true);
     try {
-      AuthService
-        .getUserViaAccessToken()
+      AuthService.getUserViaAccessToken()
         .then((response) => {
           // setLoading(false);
           if (response?.status) {
@@ -179,11 +183,40 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       });
     });
 
+    socketio.on("receive-comment", async (res) => {
+      console.log("receive-comment", res);
+      const useSocket = SocketService;
+      await useSocket.getComments({
+        docId: singleDoc?._id,
+        spaceId: singleDoc?.spaceId,
+      });
+    });
+
+    socketio.on("retrieved-comments-in-doc", async (res) => {
+      console.log("retrieved-comments-in-doc", res);
+      // const useSocket = SocketService;
+      // await useSocket.getSelectedMsg({
+      //   userId: userInfo?.uuid,
+      //   uuid: res?.uuid,
+      // });
+    });
+
     socketio.on("all-spaces-by-id", async (res) => {
       let response = JSON.parse(res);
       let data = JSON.parse(response?.data);
       console.log("all-spaces-by-id", data);
-      dispatch(setAllWorkspaceByUser(data))
+      dispatch(setAllWorkspaceByUser(data));
+    });
+
+    // new-message
+
+    socketio.on("new-message", async (res) => {
+      console.log("new-message", res);
+      const useSocket = SocketService;
+      await useSocket.getSelectedMsg({
+        userId: userInfo?.uuid,
+        uuid: res?.userId,
+      });
     });
 
     socketio.on("all-msgs-selected", (res) => {
@@ -192,12 +225,28 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       dispatch(setSelectedChat(data.data));
     });
 
-    socketio.on("load-doc", (res) => {
-      console.log(res, 'load')
+    // socketio.on("load-doc", (res) => {
+    //   console.log(res, 'load')
+    //   let data = JSON.parse(res);
+    //   console.log("load-doc", data.data);
+    //   dispatch(setSingleDoc(data.data));
+    //   toast("Document Created", {
+    //     position: "bottom-right",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // });
+
+    socketio.once("retrieved-docs", (res) => {
       let data = JSON.parse(res);
-      console.log("load-doc", data.data);
-      dispatch(setSingleDoc(data.data));
-      toast("Document Created", {
+      console.log("retrieved-docs", data);
+      dispatch(setAllDocs(data.data));
+      toast("All Documents", {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -207,14 +256,12 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
         progress: undefined,
         theme: "light",
       });
-      // router.push(`documents/${data?.data?._id}`)
     });
 
-    socketio.once("retrieved-docs", (res) => {
+    socketio.once("collabs-added", (res) => {
       let data = JSON.parse(res);
-      console.log("retrieved-docs", data);
-      dispatch(setAllDocs(data.data));
-      toast("All Documents", {
+      console.log("collabs-added", data);
+      toast("Collabs Added", {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,

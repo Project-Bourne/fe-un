@@ -27,8 +27,6 @@ export const requestHeader = {
  * @returns Response Data;
  */
 
-
-
 const API_USER_URL = "http://192.81.213.226:81/86/api/v1/";
 
 export async function request(url, method, payload, token, text, form) {
@@ -41,6 +39,16 @@ export async function request(url, method, payload, token, text, form) {
       headers: Object.assign(requestHeader),
     })
       .then((res) => {
+        if (
+          res.status === 403 &&
+          res.message === "Access Denied: Invalid Token"
+        ) {
+          // Token is invalid, remove it from client-side storage
+          removeAuthToken(); // Replace with your logic to remove the token
+          // Redirect to the home page if needed
+          router.push("/");
+          return Promise.reject("Invalid Token");
+        }
         if (text === true) {
           return res.text();
         } else if (res) {
@@ -51,8 +59,7 @@ export async function request(url, method, payload, token, text, form) {
       })
       .catch((err) => {
         console.error(`Request Error ${url}: `, err);
-        throw new Error(err);
-        // return err;
+        return err;
       });
   } else {
     return fetch(API_USER_URL + url, {
@@ -71,14 +78,11 @@ export async function request(url, method, payload, token, text, form) {
       })
       .catch((err) => {
         console.error(`Request Error ${url}: `, err);
-        throw new Error(err);
       });
   }
 }
 
-
-
-const API_USER_URL2 = "http://192.81.213.226:81/80/"
+const API_USER_URL2 = "http://192.81.213.226:81/80/";
 export async function request2(url, method, payload, token, text, form) {
   requestHeader["Content-Type"] =
     form === true ? "multipart/form-data" : "application/json";
@@ -89,6 +93,16 @@ export async function request2(url, method, payload, token, text, form) {
       headers: Object.assign(requestHeader),
     })
       .then((res) => {
+        if (
+          res.status === 403 &&
+          res.message === "Access Denied: Invalid Token"
+        ) {
+          // Token is invalid, remove it from client-side storage
+          removeAuthToken(); // Replace with your logic to remove the token
+          // Redirect to the home page if needed
+          router.push("/");
+          return Promise.reject("Invalid Token");
+        }
         if (text === true) {
           return res.text();
         } else if (res) {
@@ -99,7 +113,6 @@ export async function request2(url, method, payload, token, text, form) {
       })
       .catch((err) => {
         console.error(`Request Error ${url}: `, err);
-        // throw new Error(err);
         return err;
       });
   } else {

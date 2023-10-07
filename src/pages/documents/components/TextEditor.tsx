@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
-import Quill from "quill"
+import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { io, Socket } from "socket.io-client";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import socketio from "../../../utils/socket";
 import SocketService from "../../../socket/chat.socket";
+import { useSelector } from "react-redux";
+import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
+import { Console } from "console";
 
-const SAVE_INTERVAL_MS = 2000;
+const SAVE_INTERVAL_MS = 1000;
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   ["blockquote", "code-block"],
@@ -27,12 +30,12 @@ export default function TextEditor() {
   const ReactQuill = dynamic(() => import("quill"), {
     ssr: false, // Ensure Quill is not imported on the server side
   });
+  const { singleDoc } = useSelector((state: any) => state?.docs);
   const useSocket = SocketService;
   const router = useRouter();
   const { id: documentId } = router.query;
   // const [socket, setSocket] = useState<Socket | null>(null);
   const [quill, setQuill] = useState<Quill | null>(null);
-
 
   // // connect to socket
   // useEffect(() => {
@@ -46,66 +49,65 @@ export default function TextEditor() {
   //   }
   // }, [])
 
-
-
   useEffect(() => {
-    if (!socketio || !quill || !documentId) return
-    socketio.once("load-doc", document => {
-      quill.setContents(document)
-      quill.enable()
-    })
-    SocketService.getDoc({ id: documentId })
+    if (!socketio || !quill || !documentId) return;
+    // socketio.once("load-doc", document => {
+    //   quill.setContents(document)
+    //   quill.enable()
+    // })
+
+    if (singleDoc && singleDoc.data && singleDoc.data.ops) {
+      quill.setContents(singleDoc.data.ops);
+      quill.enable();
+    }
+    SocketService.getDoc({ id: documentId });
     // socketio.emit("get-doc", { id: documentId })
-  }, [socketio, quill, documentId])
-
-
+  }, [socketio, quill, documentId]);
 
   // save document changes at interval
   useEffect(() => {
-    if (!socketio || !quill) return
+    if (!socketio || !quill) return;
     const interval = setInterval(() => {
-      SocketService.saveDoc( quill.getContents())
-      // socketio.emit("save-doc", quill.getContents())
-    }, SAVE_INTERVAL_MS)
+      SocketService.saveDoc(quill.getContents());
+      socketio.emit("save-doc", quill.getContents());
+    }, SAVE_INTERVAL_MS);
 
     return () => {
-      clearInterval(interval)
-    }
-  }, [socketio, quill])
-
+      clearInterval(interval);
+    };
+  }, [socketio, quill]);
 
   // react to the update events
   useEffect(() => {
-    if (socketio == null || quill == null) return
+    if (socketio == null || quill == null) return;
 
-    const handler = delta => {
-      quill.updateContents(delta)
-    }
-    
-    socketio.on("updated-doc-changes", handler)
+    const handler = (delta) => {
+      console.log(delta, "delta");
+      quill.updateContents(delta);
+    };
+    // console.log(handler(), 'handler')
+    socketio.on("updated-doc-changes", handler);
 
     return () => {
-      socketio.off("updated-doc-changes", handler)
-    }
-  }, [socketio, quill])
-
+      socketio.off("updated-doc-changes", handler);
+    };
+  }, [socketio, quill]);
 
   // this is the update document functionality
   useEffect(() => {
-    if (socketio == null || quill == null) return
+    if (socketio == null || quill == null) return;
 
     const handler = (delta, oldDelta, source) => {
-      if (source !== "user") return
-      SocketService.updateChanges(delta)
+      if (source !== "user") return;
+      SocketService.updateChanges(delta);
       // socketio.emit("doc-update-changes", delta)
-    }
-    quill.on("text-change", handler)
+    };
+    quill.on("text-change", handler);
 
     return () => {
-      quill.off("text-change", handler)
-    }
-  }, [socketio, quill])
-
+      quill.off("text-change", handler);
+    };
+  }, [socketio, quill]);
 
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper == null) return;
@@ -117,10 +119,10 @@ export default function TextEditor() {
       const q = new Quill.default(editor, {
         theme: "snow",
         modules: { toolbar: TOOLBAR_OPTIONS },
-      })
-      q.disable()
-      q.setText("Loading...")
-      setQuill(q)
+      });
+      q.disable();
+      q.setText("Loading...");
+      setQuill(q);
     });
   }, []);
   return <div className="container" ref={wrapperRef}></div>;

@@ -20,12 +20,12 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
   const handleImageChange = (event) => {
     const files = event.target.files;
     const imagePreviews = [];
-    const imgFile = []
+    const imgFile = [];
     // Loop through each selected file to read its data using FileReader
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const reader = new FileReader();
-      imgFile.push(file)
+      imgFile.push(file);
       if (imgFile.length === files.length) {
         // For example, you can display the previews or process them further
         setSelectedImgFiles(imgFile);
@@ -47,7 +47,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
 
   const removeFile = (indexToRemove) => {
     setSelectedFiles((prevSelectedFiles) =>
-      prevSelectedFiles.filter((_, index) => index !== indexToRemove)
+      prevSelectedFiles.filter((_, index) => index !== indexToRemove),
     );
   };
 
@@ -55,11 +55,11 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     e.preventDefault();
     const formData = new FormData();
     const promises = selectedFiles.map(async (file) => {
-      formData.append('files', file);
-      console.log(file, 'file');
+      formData.append("files", file);
+      console.log(file, "file");
       try {
-        const res = await fetch('http://192.81.213.226:81/89/api/v1/uploads', {
-          method: 'POST',
+        const res = await fetch("http://192.81.213.226:81/89/api/v1/uploads", {
+          method: "POST",
           body: formData,
         });
 
@@ -68,7 +68,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
           console.log(response);
           // Handle the response, e.g., sending messages via Socket
           const newObj = {
-            text: `${file?.name}, ${file.size}, ${file.type}, ${response.data[0].uri}`,
+            text: `${file?.name}, ${file.size}, ${file.type}, ${response.data[0].uri}, ${response.data[0].text}`,
             uri: response.data[0].uri,
           };
           setSelectedFiles([]);
@@ -79,7 +79,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
               data: newObj.text,
               doc: true,
               img: false,
-            })
+            });
           } else {
             await useSocket.sendMessage({
               uuid: activeChat.uuid,
@@ -97,7 +97,6 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     await Promise.all(promises);
     setShowAttachment(false);
   };
-
 
   const removeImage = (indexToRemove) => {
     setSelectedImages((prevSelectedImages) =>
@@ -133,16 +132,16 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     e.preventDefault();
     const formData = new FormData();
     const promises = selectedImgFiles.map(async (el) => {
-      formData.append('files', el);
+      formData.append("files", el);
       try {
-        const res = await fetch('http://192.81.213.226:81/89/api/v1/uploads', {
-          method: 'POST',
+        const res = await fetch("http://192.81.213.226:81/89/api/v1/uploads", {
+          method: "POST",
           body: formData,
         });
         const response = await res.json();
-        console.log(response, 'pictures');
+        console.log(response, "pictures");
         if (response) {
-          console.log(response, 'pictures');
+          console.log(response, "pictures");
           const newObj = {
             text: `${el?.name}, ${el.size}, ${el.type}, ${response.data[0].uri}`,
             uri: response.data[0].uri,
@@ -155,7 +154,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
               data: newObj.text,
               doc: false,
               img: true,
-            })
+            });
           } else {
             await useSocket.sendMessage({
               uuid: activeChat.uuid,
@@ -164,7 +163,6 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
               img: true,
             });
           }
-
         }
       } catch (error) {
         console.error(error);
@@ -174,7 +172,6 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     await Promise.all(promises);
     setShowAttachment(false);
   };
-
 
   if (!showAttachment) {
     return null;

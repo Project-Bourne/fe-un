@@ -23,6 +23,7 @@ function ChatInput(props) {
   const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState(false);
   const [textValue, setTextValue] = useState("");
+  const { singleDoc } = useSelector((state: any) => state?.docs);
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
@@ -39,10 +40,11 @@ function ChatInput(props) {
     try {
       console.log({ uuid: activeChat.uuid, data: textValue }, "text");
       const useSocket = SocketService;
-      await useSocket.sendMessage({ uuid: activeChat.uuid, data: textValue, doc:false, img:false });
-      await useSocket.getSelectedMsg({
-        userId: userInfo?.uuid,
-        uuid: activeChat?.uuid,
+      await useSocket.sendComment({
+        spaceId: singleDoc.spaceId,
+        data: textValue,
+        docType: "text",
+        doc: singleDoc._id,
       });
       setTextValue("");
     } catch (err) {
@@ -97,7 +99,7 @@ function ChatInput(props) {
               className="px-[0.15rem] hover:cursor-pointer"
               priority
             />
-            <Image
+            {/* <Image
               src={require("../../../../public/icons/chat.mic.svg")}
               alt="audio"
               width={25}
@@ -105,7 +107,7 @@ function ChatInput(props) {
               className="px-[0.15rem] rounded-full hover:cursor-pointer"
               onClick={() => setToggleAudio((prevState) => !prevState)}
               priority
-            />
+            /> */}
             <Image
               src={require("../../../../public/icons/chat.send.svg")}
               alt="send"

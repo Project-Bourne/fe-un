@@ -10,30 +10,28 @@ import { useSelector } from "react-redux";
 import chatEmpty from "../../../public/icons/chat.empty.svg";
 
 function Documents() {
-  const [isActive, setIsActive] = useState('');
+  const [isActive, setIsActive] = useState("");
   const router = useRouter();
   const [singleData, setSingleData] = useState({});
   const [createDocModal, setCreateDocModal] = useState(false);
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
-  const { allDocs } = useSelector(
-    (state: any) => state?.docs,
-  );
-  const [singleDoc, setSingleDoc] = useState({})
+  const { allDocs } = useSelector((state: any) => state?.docs);
+  const [singleDoc, setSingleDoc] = useState({});
   useEffect(() => {
     const fetchHistory = async () => {
       const useSocket = SocketService;
       await useSocket.getDocHistory({ uuid: userInfo?.uuid });
-    }
-    fetchHistory()
-  }, [])
+    };
+    fetchHistory();
+  }, []);
 
   const handleClick = (num) => {
-    console.log(allDocs, 'alldocs')
+    console.log(allDocs, "alldocs");
     setIsActive(num);
     const clickedDoc = allDocs.find((el) => el._id === num);
-    console.log(clickedDoc, 'clickedDoc')
+    console.log(clickedDoc, "clickedDoc");
     setSingleData(clickedDoc);
   };
   const handleCloseModal = () => {
@@ -46,23 +44,6 @@ function Documents() {
           Documents
         </h1>
         <div className=" flex items-center justify-end">
-          {/* filter group  */}
-          {/* <div className="flex items-center justify-center gap-3 md:mr-10 mr-5">
-            <span>
-              <Image
-                src={require(`../../../public/icons/filter2.svg`)}
-                alt="avatar"
-              />
-            </span>
-            <span>Filter</span>
-            <span>
-              <Image
-                src={require(`../../../public/icons/chevron-down.svg`)}
-                alt="chevron-down"
-              />
-            </span>
-          </div> */}
-
           <div
             className="border-2 border-[#B2CBE6] rounded-2xl shadow flex  items-center justify-center md:py-3 py-2 px-5"
             onClick={() => setCreateDocModal(true)}
@@ -79,42 +60,54 @@ function Documents() {
           </div>
         </div>
       </div>
-      {createDocModal && <CustomModal
-        style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
-        closeModal={handleCloseModal}><CreateDocument /></CustomModal>}
+      {createDocModal && (
+        <CustomModal
+          style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
+          closeModal={handleCloseModal}
+        >
+          <CreateDocument />
+        </CustomModal>
+      )}
       <div
-        className={`w-full h-[100vh] pt-[50px] grid ${isActive ? "md:grid-cols-2 grid-cols-1" : "grid-cols-1"
-          }`}
+        className={`w-full h-[100vh] pt-[50px] grid ${
+          isActive ? "md:grid-cols-2 grid-cols-1" : "grid-cols-1"
+        }`}
       >
         <div
-          className={`${isActive && "border-r border-gray-300"
-            }  overflow-y-auto  p-5`}
+          className={`${
+            isActive && "border-r border-gray-300"
+          }  overflow-y-auto  p-5`}
         >
           <div
-            className={`grid gap-x-7 gap-y-3 ${!isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
-              } my-5`}
+            className={`grid gap-x-7 gap-y-3 ${
+              !isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
+            } my-5`}
           >
-            {allDocs.map((el) => (
-              <DocCard docCardClick={handleClick} data={el} isActive={isActive}/>
+            {allDocs?.map((el) => (
+              <DocCard
+                docCardClick={handleClick}
+                data={el}
+                isActive={isActive}
+              />
             ))}
-            {allDocs.length < 0 &&
+            {allDocs?.length < 0 && (
               <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
                 <div className="mx-auto">
                   <Image src={chatEmpty} alt="empty-chats" />
                 </div>
                 <div className="grid gap-y-5 text-center">
                   <div className="md:w-[20%] w-[80%] mx-auto grid gap-y-2">
-                    <h3 className="text-[17px] font-semibold">No Documents yet</h3>
+                    <h3 className="text-[17px] font-semibold">
+                      No Documents yet
+                    </h3>
 
                     <p className="text-[15px] text-[#A1ADB5]">
                       Your chats will appear here, click the button to begin
                     </p>
-
                   </div>
-
                 </div>
               </div>
-            }
+            )}
           </div>
         </div>
         <>
@@ -123,7 +116,7 @@ function Documents() {
               <div className="pb-[50px]">
                 <OverviewCard
                   backIcon={true}
-                  goBack={() => setIsActive('')}
+                  goBack={() => setIsActive("")}
                   data={singleData}
                 />
               </div>

@@ -33,7 +33,7 @@ class SocketService {
   }
 
   createWorkspace(data: any) {
-    console.log(data, 'workspace data')
+    console.log(data, "workspace data");
     try {
       this.socket.emit("create-space", data);
     } catch (err) {
@@ -53,6 +53,28 @@ class SocketService {
     }
   }
 
+  joinDocument(data: any) {
+    console.log(data, "dta");
+    try {
+      this.socket.emit("add-collabs-to-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  leaveDocument(data: any) {
+    console.log(data, "dta");
+    try {
+      this.socket.emit("remove-collab-from-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
   getSelectedMsg(data: any) {
     try {
       this.socket.emit("get-msgs-selected", data);
@@ -62,7 +84,7 @@ class SocketService {
       });
     }
   }
-// get-msgs-selected-space
+  // get-msgs-selected-space
 
   getSelectedspace(data: any) {
     try {
@@ -118,8 +140,28 @@ class SocketService {
       });
     }
   }
+  sendComment(data) {
+    console.log(data, "chisommmmm");
+    try {
+      this.socket.emit("send-comment", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+
+  getComments(data) {
+    console.log(data, "chisommmmm");
+    try {
+      this.socket.emit("get-comments-in-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
   sendMessageSpace(data) {
-    console.log(data, 'chisommmmm')
     try {
       this.socket.emit("send-msg-space", data);
     } catch (err) {
@@ -129,10 +171,9 @@ class SocketService {
     }
   }
 
-
   //get-all-spaces-by-id
   allSpaceByUser(data) {
-    console.log(data, 'all workspaces')
+    console.log(data, "all workspaces");
     try {
       this.socket.emit("get-all-spaces-by-id", data);
     } catch (err) {
@@ -153,7 +194,7 @@ class SocketService {
       });
     }
   }
-  
+
   getDocById(data) {
     try {
       this.socket.emit("get-docs-by-id", data);

@@ -13,7 +13,7 @@ export default function Docs({
   setShowChat,
   showChat,
   showShare,
-  setShowShare
+  setShowShare,
 }) {
   const router = useRouter();
   console.log(showChat);
@@ -84,7 +84,7 @@ export default function Docs({
 
           <TextEditor />
         </div>
-        {showComments && (
+        {/* {showComments && (
           <div className="w-1/4 border-l h-full">
             <div className="h-[70%] overflow-y-scroll">
               <Comments setShowComments={setShowComments} />
@@ -109,7 +109,7 @@ export default function Docs({
               </span>
             </div>
           </div>
-        )}
+        )} */}
         {showChat && (
           <div className="w-1/4 border-l h-full pb-10">
             <div className="h-[95%] overflow-y-scroll">

@@ -6,38 +6,48 @@ import {
   setSelectedChat,
 } from "@/redux/reducers/chat/chatReducer";
 import SocketService from "../../../socket/chat.socket";
+import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
 
 function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
   const [isClicked, setIsClicked] = useState(false);
   // const { allRecentChats } = useSelector((state: any) => state?.chats);
   const dispatch = useDispatch();
-  const [uuid, setUuid] = useState('')
+  const [uuid, setUuid] = useState("");
   const { activeChat, selectedChat } = useSelector((state: any) => state.chats);
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
   const handleClick = async (data: any) => {
-    setIsActive(true)
-    setUuid(data.uuid)
-    setIsClicked(true)
+    setIsActive(true);
+    setUuid(data.uuid);
+    setIsClicked(true);
     dispatch(setSelectedChat([]));
-    dispatch(
-      setActivechat(
-        data
-      ),
-    );
+    dispatch(setActivechat(data));
     console.log("active chat", {
       data,
-      chatsData
+      chatsData,
     });
+    // setNewWorkSpace
     const useSocket = SocketService;
-    console.log({userId: userInfo?.uuid,
-      uuid: data?.uuid,}, 'ids')
-    await useSocket.getSelectedMsg({
-      userId: userInfo?.uuid,
-      uuid: data.uuid,
-    });
-    
+    console.log(
+      {
+        userId: userInfo?.uuid,
+        uuid: data?.uuid,
+      },
+      "ids",
+    );
+    if (activeChat?.spaceName) {
+      await useSocket.getSelectedspace({
+        spaceId: data?.uuid,
+        uuid: userInfo?.uuid,
+      });
+      dispatch(setNewWorkSpace(data));
+    } else {
+      await useSocket.getSelectedMsg({
+        userId: userInfo?.uuid,
+        uuid: data.uuid,
+      });
+    }
   };
   return (
     <div
@@ -58,17 +68,19 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
               <div className="relative">
                 {/* user status dot (on image)  */}
                 <div
-                  className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${chat?.status === "inactive"
-                    ? "bg-red-300"
-                    : "bg-sirp-online"
-                    }`}
+                  className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${
+                    chat?.status === "inactive"
+                      ? "bg-red-300"
+                      : "bg-sirp-online"
+                  }`}
                 ></div>
                 {/* user status background  */}
                 <div
-                  className={`rounded-full p-[2.5px] ${status && status === "inactive"
-                    ? "bg-sirp-offline"
-                    : "bg-gradient-to-r from-red-300 to-yellow-200 "
-                    }`}
+                  className={`rounded-full p-[2.5px] ${
+                    status && status === "inactive"
+                      ? "bg-sirp-offline"
+                      : "bg-gradient-to-r from-red-300 to-yellow-200 "
+                  }`}
                 >
                   <img
                     src={chat?.image}
@@ -79,19 +91,27 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
               </div>
               {/* user name block  */}
               <div className="grid pt-2 ml-2">
-                {!chat.spaceName ? <h4 className="mb-0 md:text-[16px] text-[14px]">
-                  {useTruncate(chat?.firstName, 22)} {useTruncate(chat?.lastName, 22)}
-                </h4> : <h4 className="mb-0 md:text-[16px] text-[14px]">
-                  {chat.spaceName}
-                </h4>}
+                {!chat.spaceName ? (
+                  <h4 className="mb-0 md:text-[16px] text-[14px] capitalize">
+                    {useTruncate(chat?.firstName, 22)}{" "}
+                    {useTruncate(chat?.lastName, 22)}
+                  </h4>
+                ) : (
+                  <h4 className="mb-0 md:text-[16px] text-[14px] capitalize">
+                    {chat.spaceName}
+                  </h4>
+                )}
                 <p className="text-[14px] font-light">
-                  {chat?.messages && useTruncate(chat?.messages?.message?.text, 30)}
+                  {chat?.messages &&
+                    useTruncate(chat?.messages?.message?.text, 30)}
                 </p>
               </div>
             </div>
-            {selectedChat.length > 0 && <div className="rounded-full bg-sirp-primary py-[3px] w-[25px] my-auto text-white text-center items-center text-[12px] font-semibold">
-              0
-            </div>}
+            {selectedChat.length > 0 && (
+              <div className="rounded-full bg-sirp-primary py-[3px] w-[25px] my-auto text-white text-center items-center text-[12px] font-semibold">
+                0
+              </div>
+            )}
           </div>
         ))}
       {/* <NewChatMobile /> */}

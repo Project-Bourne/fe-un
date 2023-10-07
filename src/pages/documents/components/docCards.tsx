@@ -7,19 +7,18 @@ function DocCard({ docCardClick, data, isActive }: any) {
   const handleDocCardClick = (data) => {
     docCardClick(data);
   };
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     const fetchCollaborators = async () => {
       const docCollabPromises = data.collaborators.map(async (el) => {
         const user = await AuthService.getusersbyId(el.id);
         return user?.data;
       });
-  
+
       const docCollaborators = await Promise.all(docCollabPromises);
-      setUsers(docCollaborators)
+      setUsers(docCollaborators);
       // console.log(docCollaborators, "docCollaborators");
     };
-  
     fetchCollaborators();
   }, []);
   return (
@@ -33,13 +32,11 @@ function DocCard({ docCardClick, data, isActive }: any) {
     >
       <div className="flex items-center align-middle justify-between">
         <span className="bg-white rounded-2xl border py-1 px-2 border-[#E8EAEC] text-[grey]">
-         Document
+          Document
         </span>
-        <ImageList users={users} stopImageCountAt={5}/>
+        <ImageList users={users} stopImageCountAt={5} />
       </div>
-      <div className="w-full mt-2 text-[#322f2f]">
-        {data.name}
-      </div>
+      <div className="w-full mt-2 text-[#322f2f]">{data.name}</div>
     </div>
   );
 }
