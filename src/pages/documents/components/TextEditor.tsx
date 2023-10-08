@@ -34,34 +34,16 @@ export default function TextEditor() {
   const useSocket = SocketService;
   const router = useRouter();
   const { id: documentId } = router.query;
-  // const [socket, setSocket] = useState<Socket | null>(null);
   const [quill, setQuill] = useState<Quill | null>(null);
-
-  // // connect to socket
-  // useEffect(() => {
-  //   const s = io("http://192.81.213.226:86/", {
-  //     autoConnect: false,
-  //     // path: "/86"
-  //   });
-  //   setSocket(s)
-  //   return () => {
-  //     s.disconnect()
-  //   }
-  // }, [])
 
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
-    // socketio.once("load-doc", document => {
-    //   quill.setContents(document)
-    //   quill.enable()
-    // })
-
-    if (singleDoc && singleDoc.data && singleDoc.data.ops) {
-      quill.setContents(singleDoc.data.ops);
+    socketio.once("load-doc", (document) => {
+      quill.setContents(document);
       quill.enable();
-    }
+    });
+
     SocketService.getDoc({ id: documentId });
-    // socketio.emit("get-doc", { id: documentId })
   }, [socketio, quill, documentId]);
 
   // save document changes at interval
@@ -100,10 +82,8 @@ export default function TextEditor() {
     const handler = (delta, oldDelta, source) => {
       if (source !== "user") return;
       SocketService.updateChanges(delta);
-      // socketio.emit("doc-update-changes", delta)
     };
     quill.on("text-change", handler);
-
     return () => {
       quill.off("text-change", handler);
     };

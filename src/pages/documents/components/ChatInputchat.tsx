@@ -43,8 +43,11 @@ function ChatInput(props) {
       await useSocket.sendComment({
         spaceId: singleDoc.spaceId,
         data: textValue,
-        docType: "text",
-        doc: singleDoc._id,
+        docType: 0,
+        doc: {
+          id: singleDoc._id,
+          name: singleDoc.name,
+        },
       });
       setTextValue("");
     } catch (err) {

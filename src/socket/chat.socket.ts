@@ -33,7 +33,6 @@ class SocketService {
   }
 
   createWorkspace(data: any) {
-    console.log(data, "workspace data");
     try {
       this.socket.emit("create-space", data);
     } catch (err) {
@@ -54,7 +53,6 @@ class SocketService {
   }
 
   joinDocument(data: any) {
-    console.log(data, "dta");
     try {
       this.socket.emit("add-collabs-to-doc", data);
     } catch (err) {
@@ -65,7 +63,6 @@ class SocketService {
   }
 
   leaveDocument(data: any) {
-    console.log(data, "dta");
     try {
       this.socket.emit("remove-collab-from-doc", data);
     } catch (err) {
@@ -141,7 +138,6 @@ class SocketService {
     }
   }
   sendComment(data) {
-    console.log(data, "chisommmmm");
     try {
       this.socket.emit("send-comment", data);
     } catch (err) {
@@ -152,7 +148,6 @@ class SocketService {
   }
 
   getComments(data) {
-    console.log(data, "chisommmmm");
     try {
       this.socket.emit("get-comments-in-doc", data);
     } catch (err) {
@@ -173,7 +168,6 @@ class SocketService {
 
   //get-all-spaces-by-id
   allSpaceByUser(data) {
-    console.log(data, "all workspaces");
     try {
       this.socket.emit("get-all-spaces-by-id", data);
     } catch (err) {

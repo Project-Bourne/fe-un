@@ -1,21 +1,21 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import "../../../../styles/global.css";
 
 type TabCompType = {
   item: {
     name: string;
-    icon: string;
+    icon?: string;
     id: number;
-    route: string;
+    route?: string;
     selectedIcon: string;
   };
   index: number;
   route: string;
+  callback?: Function;
 };
 
-const TabComp = ({ item, index, route }: TabCompType) => {
+const TabComp = ({ item, index, route, callback }: TabCompType) => {
   const router = useRouter();
 
   // States
@@ -25,6 +25,8 @@ const TabComp = ({ item, index, route }: TabCompType) => {
   const updatePath = (e: any) => {
     // e.preventDefault();
     setPath(item.route);
+    console.log("item", item, route);
+    // callback();
     // console.log(route, path, route, `${path}` == `${route}`, )
     router.push(
       {
@@ -40,15 +42,15 @@ const TabComp = ({ item, index, route }: TabCompType) => {
   return (
     <div
       className={
-        router.pathname.includes(item.route)
-          ? "md:px-8 px-3 pt-3 flex flex-row items-center border-b-2 border-sirp-primary pb-2 md:pb-3 mb-[-2px] cursor-pointer"
-          : "md:px-8 px-3  pt-3 flex items-center pb-3 mb-[-2px] cursor-pointer text-sirp-grey"
+        item.route == router.pathname
+          ? "md:px-8 px-0 min-w-[max-content] h-full mx-5 pt-3 flex md:flex-row flex-wrap items-center border-b-2 text-sirp-primary border-sirp-primary pb-3 md:mr-10 mr-0 mb-[-2px] cursor-pointer"
+          : "md:px-8 px-1 pt-3 flex md:flex-row flex-wrap min-w-[max-content] h-full mx-5 items-center border-b pb-3 md:mr-15 mr-0 mb-[-2px] cursor-pointer text-sirp-grey"
       }
       onClick={updatePath}
     >
       <Image
         src={
-          router.pathname == item.route
+          router.pathname == `${item.route}`
             ? require(`../../../../../public/icons/${item.selectedIcon}`)
             : require(`../../../../../public/icons/${item.icon}`)
         }
@@ -62,8 +64,8 @@ const TabComp = ({ item, index, route }: TabCompType) => {
 
       <h2
         className={
-          router.pathname.includes(item.route)
-            ? "text-[12px] font-semibold text-sirp-primary"
+          router.pathname == `${item.route}`
+            ? "text-[12px] font-semibold"
             : "text-[12px] font-semibold "
         }
       >

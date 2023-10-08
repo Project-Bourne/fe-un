@@ -1,14 +1,16 @@
-import SettingsLayout from "../../../layout/SettingsLayout";
-import ActivityCard from "../../workspaces/components/ActivityCard";
-import { LogData } from "../../../utils/constants";
+import SettingsLayout from "@/layout/SettingsLayout";
+import { ActivityCard } from "@/components/card";
+import { LogData } from "@/utils/constants";
+import { SettingsData } from "@/utils/constants";
 import React from "react";
 
 const LogSettings = () => {
   return (
-    <SettingsLayout>
+    <SettingsLayout data={SettingsData}>
       <div className="w-full h-full overflow-y-scroll">
         {LogData.map((item, index) => (
           <ActivityCard
+            key={index}
             time={item.time}
             actionText={item.action}
             activityText={

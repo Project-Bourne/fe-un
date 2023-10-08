@@ -22,6 +22,7 @@ import {
   setAllWorkspaceByUser,
   setRead,
   anotherone,
+  setComments,
 } from "../redux/reducers/chat/chatReducer";
 import { useRouter } from "next/router";
 import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
@@ -193,12 +194,10 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     });
 
     socketio.on("retrieved-comments-in-doc", async (res) => {
-      console.log("retrieved-comments-in-doc", res);
-      // const useSocket = SocketService;
-      // await useSocket.getSelectedMsg({
-      //   userId: userInfo?.uuid,
-      //   uuid: res?.uuid,
-      // });
+      let response = JSON.parse(res);
+      console.log("retrieved-comments-in-doc", response);
+      // let data = JSON.parse(response?.data);
+      dispatch(setComments(response.data));
     });
 
     socketio.on("all-spaces-by-id", async (res) => {

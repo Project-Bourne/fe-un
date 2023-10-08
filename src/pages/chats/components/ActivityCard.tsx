@@ -1,14 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { ActivityCardModel } from "../../../models/users.module";
+// import { ActivityCardModel } from "../../../models/users.module";
 import { useTruncate } from "../../../components/custom-hooks";
 
-function ActivityCard({
-  time,
-  actionText,
-  activityText,
-  docId,
-}: ActivityCardModel) {
+function ActivityCard({ time, actionText, activityText, docId }) {
   return (
     <div className="w-[90%] mt-[2rem] grid md:flex gap-x-2 mx-auto">
       <h3 className="text-[14px] text-[#6F7A82]">{time}</h3>

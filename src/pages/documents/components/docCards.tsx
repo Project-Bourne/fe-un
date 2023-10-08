@@ -2,6 +2,7 @@ import { ImageList } from "@/components/ui";
 import AuthService from "@/services/auth.service";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function DocCard({ docCardClick, data, isActive }: any) {
   const handleDocCardClick = (data) => {
@@ -32,9 +33,19 @@ function DocCard({ docCardClick, data, isActive }: any) {
     >
       <div className="flex items-center align-middle justify-between">
         <span className="bg-white rounded-2xl border py-1 px-2 border-[#E8EAEC] text-[grey]">
-          Document
+          {data?.author?.name}
         </span>
-        <ImageList users={users} stopImageCountAt={5} />
+        <div>
+          <DeleteIcon
+            style={{
+              color: "#f72f35",
+              background: "",
+              padding: "5px",
+              fontSize: "30px",
+              borderRadius: "50%",
+            }}
+          />
+        </div>
       </div>
       <div className="w-full mt-2 text-[#322f2f]">{data.name}</div>
     </div>

@@ -3,9 +3,8 @@ import Image from "next/image";
 import socketio from "@/utils/socket";
 import { useDispatch, useSelector } from "react-redux";
 import SocketService from "../../../socket/chat.socket";
-// import { setAllMessages } from "@/redux/reducers/chat/chatReducer";
-import { MessageModel } from "../../../models/chat.model";
-
+import DoneIcon from "@mui/icons-material/Done";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { useCalculateTime } from "@/components/custom-hooks";
 import chatReceived from "../../../../public/icons/chat.received.svg";
 import chatRead from "../../../../public/icons/chat.read.svg";
@@ -149,7 +148,7 @@ function MessagesDisplay() {
               </div>
 
               <div className="flex items-center justify-end  gap-x-3">
-                {message?.message?.doc == 1 && (
+                {/* {message?.message?.doc == 1 && (
                   <Tooltip title="Edit File">
                     <BorderColorIcon
                       style={{
@@ -161,7 +160,7 @@ function MessagesDisplay() {
                       onClick={() => createDoc(textArr[4], textArr[0])}
                     />
                   </Tooltip>
-                )}
+                )} */}
                 <Tooltip title="Download file">
                   <a href={textArr[3]} download>
                     <DownloadIcon
@@ -220,22 +219,31 @@ function MessagesDisplay() {
                         message?.sender?._id !== activeChat?.uuid
                           ? "absolute right-2"
                           : "absolute left-2"
-                      } flex gap-x-2 p-2`}
+                      } flex gap-x-2 p-2 items-center`}
                     >
                       <div className="text-[11px] font-light">
                         {useCalculateTime(message?.updatedAt)}{" "}
                       </div>
                       {message?.sender?._id !== activeChat?.uuid && (
-                        <Image
-                          src={
-                            message?.message?.read === 0
-                              ? chatReceived
-                              : chatRead
-                          }
-                          alt="status"
-                          height={17}
-                          width={17}
-                        />
+                        <div>
+                          {message?.message?.read === 0 ? (
+                            <DoneIcon
+                              style={{
+                                color: "#4582C4",
+                                fontWeight: "100",
+                                fontSize: "18px",
+                              }}
+                            />
+                          ) : (
+                            <DoneAllIcon
+                              style={{
+                                color: "#4582C4",
+                                fontWeight: "100",
+                                fontSize: "18px",
+                              }}
+                            />
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -263,22 +271,31 @@ function MessagesDisplay() {
                         message?.sender !== activeChat?.uuid
                           ? "absolute right-2"
                           : "absolute left-2"
-                      } flex gap-x-2 p-2`}
+                      } flex gap-x-2 p-2 items-center`}
                     >
                       <div className="text-[11px] font-light">
                         {useCalculateTime(message?.updatedAt)}{" "}
                       </div>
                       {message?.sender !== activeChat?.uuid && (
-                        <Image
-                          src={
-                            message?.message?.read === 0
-                              ? chatReceived
-                              : chatRead
-                          }
-                          alt="status"
-                          height={17}
-                          width={17}
-                        />
+                        <div>
+                          {message?.message?.read === 0 ? (
+                            <DoneIcon
+                              style={{
+                                color: "#4582C4",
+                                fontWeight: "100",
+                                fontSize: "18px",
+                              }}
+                            />
+                          ) : (
+                            <DoneAllIcon
+                              style={{
+                                color: "#4582C4",
+                                fontWeight: "100",
+                                fontSize: "18px",
+                              }}
+                            />
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>

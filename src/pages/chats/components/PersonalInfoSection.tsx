@@ -1,11 +1,9 @@
 import React from "react";
 import { Button, Input } from "../../../components/ui";
 import Image from "next/image";
-import { PersonalInformationModel } from "../../../models/users.module";
+// import { PersonalInformationModel } from "../../../models/users.module";
 
-export default function PersonalInfoSection({
-  blockUser,
-}: PersonalInformationModel) {
+export default function PersonalInfoSection({ blockUser }) {
   const handleDeleteUser = () => {};
 
   return (
