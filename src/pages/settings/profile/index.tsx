@@ -1,11 +1,12 @@
-import SettingsLayout from "../../../layout/SettingsLayout";
+import SettingsLayout from "@/layout/SettingsLayout";
 import React from "react";
-import View1 from "../components/View1";
-import View2 from "../components/View2";
+import View1 from "../components/View1/index";
+import View2 from "../components/View2/index";
+import { SettingsData } from "@/utils/constants";
 
 const ProfileSettings = () => {
   return (
-    <SettingsLayout>
+    <SettingsLayout data={SettingsData}>
       {/* First View Component */}
       <View1 />
 

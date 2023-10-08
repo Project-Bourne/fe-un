@@ -79,7 +79,7 @@ function Documents() {
           }  overflow-y-auto  p-5`}
         >
           <div
-            className={`grid gap-x-7 gap-y-3 ${
+            className={`grid gap-x-7 gap-y-3 pb-[150px] ${
               !isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
             } my-5`}
           >

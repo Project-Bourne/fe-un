@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -13,7 +12,7 @@ function Settings() {
       undefined,
       { shallow: true },
     );
-  }, []);
+  });
 
   return <></>;
 }

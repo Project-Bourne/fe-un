@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { workspaceTab, workspaceGroupTab } from "../../../utils/constants";
 import RecentWorkspace from "./RecentWorkspace";
-import Collaboration from "../workspaces/Collaboration";
+// import Collaboration from "../workspaces/Collaboration";
 import Article from "../workspaces/Article";
 import Activites from "../workspaces/Activites";
 
@@ -71,7 +71,7 @@ function TabLayout({ layout }) {
         <div>
           {selectedTab === 1 && <Article />}
           {selectedTab === 2 && <Activites />}
-          {selectedTab === 3 && <Collaboration />}
+          {/* {selectedTab === 3 && <Collaboration />} */}
         </div>
       )}
     </div>

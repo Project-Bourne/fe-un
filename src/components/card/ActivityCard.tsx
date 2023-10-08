@@ -1,9 +1,8 @@
-import React from "react";
 import Link from "next/link";
-import { ActivityCardModel } from "../../../models/users.module";
-import { useTruncate } from "../../../components/custom-hooks";
+import { useTruncate } from "@/components/custom-hooks";
+import { ActivityCardModel } from "@/global/users.module";
 
-function ActivityCard({
+export function ActivityCard({
   time,
   actionText,
   activityText,
@@ -15,7 +14,7 @@ function ActivityCard({
       <div className="w-full grid rounded-2xl bg-[#F9F9F9] p-6">
         <div>
           <h2 className="inline-block rounded-2xl border-[1px] border-gray-300 bg-white mb-2 px-2 py-1 text-[14px]">
-            IRP
+            SIRP
           </h2>
         </div>
         <div className="grid md:flex justify-between items-center">
@@ -35,5 +34,3 @@ function ActivityCard({
     </div>
   );
 }
-
-export default ActivityCard;

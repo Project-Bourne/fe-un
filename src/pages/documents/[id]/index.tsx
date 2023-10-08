@@ -12,7 +12,7 @@ import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 import AuthService from "@/services/auth.service";
 import DocumentService from "@/services/document.service";
 
-function viewDocument() {
+const viewDocument = () => {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
   const [showComments, setShowComments] = useState(false);
   const router = useRouter();
@@ -157,6 +157,6 @@ function viewDocument() {
       {showCall && <CallModal setShowCall={setShowCall} />}
     </div>
   );
-}
+};
 
 export default viewDocument;

@@ -4,16 +4,28 @@ import React, { useState } from "react";
 import { UserRoles } from "@/utils/constants";
 import { useRouter } from "next/router";
 
+const countries = require("../../../../utils/countries.json");
+
 const View2 = () => {
   const router = useRouter();
 
-  const countries = require("@/utils/countries.json");
-
   const [country, setCountry] = useState(null);
   const [role, setRole] = useState("");
+  const [file, setFile] = useState();
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
+
+  const handleFileUpload = (e) => {
+    e.preventDefault();
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+
+    if (selectedFile) {
+      setIsFileUploaded(true);
+    }
+  };
 
   return (
-    <div className="py-4 w-full mt-3 border-b-[1.5px]">
+    <div className="py-4 md:w-full w-[70%]  mt-3 border-b-[1.5px]">
       <div className="flex flex-col w-full">
         <h2 className="font-semibold text-[13px] px-8">Profile Picture</h2>
         <div className="flex flex-row w-full items-center my-4 border-b px-8 pb-2">
@@ -34,6 +46,12 @@ const View2 = () => {
               />
 
               <div className="px-6 py-2 cursor-pointer border border-sirp-primaryLess1 rounded-md">
+                <input
+                  id="file-upload"
+                  type="file"
+                  accept=".txt,.rtf,.doc,.pdf,.svg,.mp4"
+                  className="hidden"
+                />
                 <p className="text-[11px] font-semibold text-sirp-primary">
                   Change
                 </p>
@@ -56,7 +74,7 @@ const View2 = () => {
       </div>
 
       {/* Roles */}
-      <div className="flex flex-row items-center my-[20px] w-full px-8">
+      <div className="flex flex-row items-start my-[20px] w-full px-8">
         <div className="w-[80px]">
           <label htmlFor="email" className="text-[12px] text-sirp-grey">
             Role:{" "}
