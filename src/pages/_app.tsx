@@ -194,22 +194,6 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       });
     });
 
-    socketio.on("receive-comment", async (res) => {
-      console.log("receive-comment", res);
-      const useSocket = SocketService;
-      await useSocket.getComments({
-        docId: singleDoc?._id,
-        spaceId: singleDoc?.spaceId,
-      });
-    });
-
-    socketio.on("retrieved-comments-in-doc", async (res) => {
-      let response = JSON.parse(res);
-      console.log("retrieved-comments-in-doc", response);
-      // let data = JSON.parse(response?.data);
-      dispatch(setComments(response.data));
-    });
-
     socketio.on("all-spaces-by-id", async (res) => {
       let response = JSON.parse(res);
       let data = JSON.parse(response?.data);
@@ -225,6 +209,10 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       await useSocket.getSelectedMsg({
         userId: userInfo?.uuid,
         uuid: res?.userId,
+      });
+      await useSocket.getSelectedspace({
+        spaceId: res?.space?.uuid,
+        uuid: userInfo?.uuid,
       });
     });
 

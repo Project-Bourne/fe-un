@@ -34,7 +34,7 @@ function NewChat({ closeModal }) {
         <ul className="h-[50vh] overflow-y-auto">
           {users?.map((user) => (
             <li
-              className="flex items-center gap-x-4 hover:cursor-pointer hover:bg-slate-100 rounded-md px-3 py-2.5"
+              className="flex items-center gap-x-4 hover:cursor-pointer bg-sirp-primaryLess2 mb-1 hover:bg-slate-100 rounded-md px-3 py-2.5"
               key={user.uuid}
               onClick={() =>
                 handleClick(

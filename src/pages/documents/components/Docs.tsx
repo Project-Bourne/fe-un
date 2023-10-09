@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Breadcrumbs from "../../../components/ui/Breadcrumbs";
@@ -6,7 +6,10 @@ import Comments from "./comments";
 import Chats from "./Chats";
 import TextEditor from "./TextEditor";
 import Share from "./share";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import socketio from "@/utils/socket";
+import SocketService from "../../../socket/chat.socket";
+import { setComments } from "@/redux/reducers/chat/chatReducer";
 
 export default function Docs({
   showComments,
@@ -22,6 +25,27 @@ export default function Docs({
     router.back();
   };
   const { singleDoc } = useSelector((state: any) => state?.docs);
+  const { comments } = useSelector((state: any) => state?.chats);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socketio.on("receive-comment", async (res) => {
+      console.log("receive-comment", res);
+      const useSocket = SocketService;
+      await useSocket.getComments({
+        docId: singleDoc?._id,
+        spaceId: singleDoc?.spaceId,
+      });
+    });
+
+    socketio.on("retrieved-comments-in-doc", async (res) => {
+      let response = JSON.parse(res);
+      console.log("retrieved-comments-in-doc", response);
+      // let data = JSON.parse(response?.data);
+      dispatch(setComments(response.data));
+    });
+  }, []);
+
   return (
     <div className="w-full h-[100vh]">
       <div
@@ -29,20 +53,33 @@ export default function Docs({
           !showChat ? "w-full h-full" : "flex h-full"
         }  ${!showShare ? "w-full h-full" : "flex h-full"}`}
       >
-        <div
+        {/* <div
           className={`${
             !showComments
               ? "m-10 mt-10 h-full overflow-y-scroll pb-[300px] rounded-[1rem] bg-[#F9F9F9]"
               : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 bg-[#F9F9F9]"
-          } ${
+          }
+          ${
             !showChat
               ? "m-10 mt-10 h-full overflow-y-scroll pb-[300px] rounded-[1rem] bg-[#F9F9F9]"
               : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 bg-[#F9F9F9]"
-          } ${
+          } 
+          ${
             !showShare
               ? "m-10 mt-10 h-full overflow-y-scroll pb-[300px] rounded-[1rem] bg-[#F9F9F9]"
               : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 bg-[#F9F9F9]"
-          }`}
+          }`
+        }
+        > */}
+        <div
+          className={`
+        
+          ${
+            !showChat
+              ? "m-10 mt-10 w-[90%]  h-[80vh] overflow-y-scroll pb-[300px] rounded-[1rem] bg-[#F9F9F9]"
+              : "w-3/4 h-full overflow-x-scroll rounded-[1rem] m-10 mt-10 bg-[#F9F9F9]"
+          } 
+`}
         >
           {/* <div className="w-full border-b cursor-pointer" onClick={goback}>
             <div className="flex items-center mb-3 align-middle justify-between">

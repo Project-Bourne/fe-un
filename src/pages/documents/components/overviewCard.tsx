@@ -19,7 +19,12 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
     console.log(data.data, "data");
     router.push(`/documents/${data._id}`);
   };
-
+  let snippet = () => {
+    if (data?.data?.ops[0].insert) {
+      return useTruncate(data?.data?.ops[0].insert, 1000);
+    }
+    return useTruncate(data?.data, 1000);
+  };
   return (
     <div className="w-full h-[100vh] p-5">
       {backIcon && (
@@ -46,9 +51,7 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
       </div>
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">content</span>
-        {data.data.ops.map((el) => (
-          <span className="">{useTruncate(el.insert, 1000)} ...</span>
-        ))}
+        <span className="">{} ...</span>
       </div>
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">Tags & Keywords </span>
