@@ -97,7 +97,9 @@ export default function WorkspaceModal({ setModalType }) {
                       className="h-[35px] w-[35px] rounded-full bg-red-400"
                     />
                     {/* </div> */}
-                    <p className="md:text-[16px] text-[14px]">{el.spaceName}</p>
+                    <p className="md:text-[16px] text-[14px] capitalize">
+                      {el.spaceName}
+                    </p>
                   </div>
 
                   <RemoveCircleIcon style={{ color: "#f72f35" }} />

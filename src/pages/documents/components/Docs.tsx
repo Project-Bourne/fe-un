@@ -6,6 +6,7 @@ import Comments from "./comments";
 import Chats from "./Chats";
 import TextEditor from "./TextEditor";
 import Share from "./share";
+import { useSelector } from "react-redux";
 
 export default function Docs({
   showComments,
@@ -20,7 +21,7 @@ export default function Docs({
   const goback = () => {
     router.back();
   };
-
+  const { singleDoc } = useSelector((state: any) => state?.docs);
   return (
     <div className="w-full h-[100vh]">
       <div
@@ -110,7 +111,7 @@ export default function Docs({
             </div>
           </div>
         )} */}
-        {showChat && (
+        {showChat && singleDoc?.spaceId && (
           <div className="w-1/4 border-l h-full pb-10">
             <div className="h-[95%] overflow-y-scroll">
               <Chats setShowChat={setShowChat} />

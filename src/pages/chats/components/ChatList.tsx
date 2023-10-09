@@ -107,11 +107,11 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
                 </p>
               </div>
             </div>
-            {selectedChat.length > 0 && (
+            {/* {selectedChat.length > 0 && (
               <div className="rounded-full bg-sirp-primary py-[3px] w-[25px] my-auto text-white text-center items-center text-[12px] font-semibold">
                 0
               </div>
-            )}
+            )} */}
           </div>
         ))}
       {/* <NewChatMobile /> */}

@@ -36,10 +36,11 @@ function MessagesDisplay() {
 
   useEffect(() => {}, []);
 
-  const createDoc = async (text, name) => {
+  const createDoc = async (event, text, name) => {
+    event.preventDefault();
+
     try {
-      event.preventDefault();
-      console.log("clicked1");
+      console.log("clicked1", text, name);
       const useSocket = SocketService;
       let docData = {
         name: name,
@@ -67,7 +68,7 @@ function MessagesDisplay() {
           progress: undefined,
           theme: "light",
         });
-        router.push(`documents/${data?.data?._id}`);
+        // router.push(`documents/${data?.data?._id}`);
       });
     } catch (error) {
       console.log(error);
@@ -111,7 +112,7 @@ function MessagesDisplay() {
                         color: "#1293BA",
                         cursor: "pointer",
                       }}
-                      onClick={() => createDoc(textArr[4], textArr[0])}
+                      onClick={(e) => createDoc(e, textArr[4], textArr[0])}
                     />
                   </Tooltip>
                 )}

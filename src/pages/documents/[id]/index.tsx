@@ -51,7 +51,7 @@ const viewDocument = () => {
   }, [id]);
 
   useEffect(() => {
-    if (singleDoc) {
+    if (singleDoc?.spaceId) {
       setDocumentsBar([
         // {
         //   name: "Share",
@@ -81,11 +81,6 @@ const viewDocument = () => {
           icon: "call.svg",
           id: 3,
         },
-        // {
-        //   name: "Chat",
-        //   icon: "chat.svg",
-        //   id: 4,
-        // },
       ]);
     }
   }, []);
@@ -121,6 +116,11 @@ const viewDocument = () => {
   return (
     <div className="w-full h-full doc">
       <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
+        <div className="flex items-center">
+          <span className="text-3xl text-[#1D2022] font-bold capitalize">
+            {singleDoc?.name}
+          </span>
+        </div>
         <div>
           <ImageList users={users} stopImageCountAt={5} />
         </div>

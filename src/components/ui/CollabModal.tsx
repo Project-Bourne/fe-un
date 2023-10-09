@@ -46,7 +46,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function CollabModal({ users }) {
+export default function CollabModal({ users, setShowCollabModal }) {
   const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -95,7 +95,7 @@ export default function CollabModal({ users }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <InviteCollaborators />
+        <InviteCollaborators setShowCollabModal={setShowCollabModal} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         {users?.length > 0 ? (

@@ -93,14 +93,32 @@ function InviteUsersPopUp({ onHandleModalTwo, workspaceId }) {
           >
             <div className="ml-5 md:w-[25rem] w-[10rem]">
               <div className="flex gap-3 items-center my-5 cursor-pointer">
-                {/* <Image
-                src={suggestion.imageUrl}
-                alt="documents"
-                className="cursor-pointer"
-                width={50}
-              /> */}
+                <div className="relative">
+                  {/* user status dot (on image)  */}
+                  <div
+                    className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${
+                      suggestion?.status === "inactive"
+                        ? "bg-red-300"
+                        : "bg-sirp-online"
+                    }`}
+                  ></div>
+                  {/* user status background  */}
+                  <div
+                    className={`rounded-full p-[2.5px] ${
+                      suggestion?.status === "inactive"
+                        ? "bg-sirp-offline"
+                        : "bg-gradient-to-r from-red-300 to-yellow-200 "
+                    }`}
+                  >
+                    <img
+                      src={suggestion?.image}
+                      alt={"user"}
+                      className="rounded-full border-[2px] border-white md:h-[43px] h-[30px] md:w-[43px] w-[30px]"
+                    />
+                  </div>
+                </div>
                 <div>
-                  <p className="font-bold text-black">
+                  <p className="font-bold text-black capi">
                     {suggestion.firstName} {suggestion.lastName}
                   </p>
                   <p className="text-gray-500 text-sm capitalize">
