@@ -6,11 +6,11 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import socketio from "../../../utils/socket";
 import SocketService from "../../../socket/chat.socket";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 import { Console } from "console";
 
-const SAVE_INTERVAL_MS = 1000;
+const SAVE_INTERVAL_MS = 500;
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   ["blockquote", "code-block"],
@@ -35,11 +35,15 @@ export default function TextEditor() {
   const router = useRouter();
   const { id: documentId } = router.query;
   const [quill, setQuill] = useState<Quill | null>(null);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
+    console.log(singleDoc, "singleDoc");
     socketio.once("load-doc", (document) => {
-      quill.setContents(document);
+      let data = JSON.parse(document);
+      dispatch(setSingleDoc(data.data));
+      console.log(data.data.data.ops[0].insert, "document");
+      quill.setContents(data.data.data);
       quill.enable();
     });
 
@@ -51,7 +55,6 @@ export default function TextEditor() {
     if (!socketio || !quill) return;
     const interval = setInterval(() => {
       SocketService.saveDoc(quill.getContents());
-      socketio.emit("save-doc", quill.getContents());
     }, SAVE_INTERVAL_MS);
 
     return () => {

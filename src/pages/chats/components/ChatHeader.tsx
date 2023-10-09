@@ -15,7 +15,7 @@ function Header(props) {
   const { showVideoCallModal, showAudioCallModal, status } = props;
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showCallModal, setShowCallModal] = useState(false);
-  const [showCollabModal, setSowCollabModal] = useState(false);
+  const [showCollabModal, setShowCollabModal] = useState(false);
   const { activeChat } = useSelector((state: any) => state.chats);
   const [collabs, setCollabs] = useState([]);
   const router = useRouter();
@@ -50,11 +50,11 @@ function Header(props) {
       {/* header bar  */}
       <div className="relative">
         {!activeChat?.spaceName ? (
-          <div className="font-bold text-secondary text-lg leading-4">
+          <div className="font-bold text-secondary text-lg leading-4 capitalize">
             {activeChat?.firstName} {activeChat?.lastName}
           </div>
         ) : (
-          <div className="font-bold text-secondary text-lg leading-4">
+          <div className="font-bold text-secondary text-lg leading-4 capitalize">
             {activeChat?.spaceName}
           </div>
         )}
@@ -69,7 +69,7 @@ function Header(props) {
                 alt="video-call"
                 width={35}
                 height={25}
-                onClick={() => setSowCollabModal(true)}
+                onClick={() => setShowCollabModal(true)}
               />
             </Tooltip>
           )}
@@ -92,9 +92,12 @@ function Header(props) {
         {showCollabModal && (
           <CustomModal
             style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
-            closeModal={() => setSowCollabModal(false)}
+            closeModal={() => setShowCollabModal(false)}
           >
-            <CollabModal users={collabs} />
+            <CollabModal
+              users={collabs}
+              setShowCollabModal={setShowCollabModal}
+            />
           </CustomModal>
         )}
       </div>

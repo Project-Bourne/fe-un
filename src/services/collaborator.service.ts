@@ -22,6 +22,22 @@ class CollabService {
       throw error;
     }
   }
+  static async deleteDoc(id) {
+    try {
+      const response = await request(
+        `doc/${id}`,
+        "DELETE",
+        {},
+        true,
+        false,
+        false,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // space
 
   /**
    * Delete a workspace by its ID.

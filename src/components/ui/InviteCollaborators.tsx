@@ -10,7 +10,7 @@ import SocketService from "../../socket/chat.socket";
 import { useRouter } from "next/router";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 
-const InviteCollaborators = () => {
+const InviteCollaborators = ({ setShowCollabModal }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const router = useRouter();
   const { pathname } = router;
@@ -79,6 +79,7 @@ const InviteCollaborators = () => {
             await useSocket.joinWorkspace(collabData);
           }),
         );
+        setShowCollabModal(false);
       }
 
       if (pathname.includes("/documents/")) {
@@ -87,6 +88,7 @@ const InviteCollaborators = () => {
           collabs: selectedSuggestions,
         };
         await useSocket.joinDocument(collabData);
+        setShowCollabModal(false);
       }
     } catch (error) {
       console.log(error);

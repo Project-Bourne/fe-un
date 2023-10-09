@@ -163,6 +163,16 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.on("space-joined", (res) => {
       let data = JSON.parse(res);
       console.log(" space-joined", data.data);
+      toast("Collaborator Added", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       // dispatch(setNewWorkSpace(data.data))
     });
 
@@ -275,7 +285,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.once("error", (err) => {
       let data = JSON.parse(err);
       console.log("socket error", data);
-      toast(`Something went wrong: ${data.message}`, {
+      toast(`Something went wrong: ${data?.message}`, {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,

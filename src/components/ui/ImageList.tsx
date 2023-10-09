@@ -52,7 +52,7 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
           closeModal={handleCloseModal}
         >
           {" "}
-          <CollabModal users={users} />
+          <CollabModal users={users} setShowCollabModal={setShowCollabModal} />
         </CustomModal>
       )}
       {remainderCount > 0 && (

@@ -90,21 +90,20 @@ function Documents() {
                 isActive={isActive}
               />
             ))}
-            {allDocs?.length < 0 && (
-              <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
+            {allDocs?.length < 1 && (
+              <div className="flex  flex-col justify-center w-[100vw] h-[60vh]">
                 <div className="mx-auto">
                   <Image src={chatEmpty} alt="empty-chats" />
                 </div>
-                <div className="grid gap-y-5 text-center">
-                  <div className="md:w-[20%] w-[80%] mx-auto grid gap-y-2">
-                    <h3 className="text-[17px] font-semibold">
-                      No Documents yet
-                    </h3>
+                <div className="text-center">
+                  <h3 className="text-[17px] font-semibold">
+                    No Documents yet
+                  </h3>
 
-                    <p className="text-[15px] text-[#A1ADB5]">
-                      Your chats will appear here, click the button to begin
-                    </p>
-                  </div>
+                  <p className="text-[15px] text-[#A1ADB5]">
+                    Your documents will appear here, click the button to create
+                    new Doc
+                  </p>
                 </div>
               </div>
             )}
