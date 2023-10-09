@@ -51,15 +51,13 @@ function NewChat({ closeModal }) {
                 {/* user status dot (on image)  */}
                 <div
                   className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${
-                    user?.status === "inactive"
-                      ? "bg-red-300"
-                      : "bg-sirp-online"
+                    user?.onlineStatus == "1" ? "bg-red-300" : "bg-sirp-online"
                   }`}
                 ></div>
                 {/* user status background  */}
                 <div
                   className={`rounded-full p-[2.5px] ${
-                    user?.status && status === "inactive"
+                    user?.onlineStatus == "1"
                       ? "bg-sirp-offline"
                       : "bg-gradient-to-r from-red-300 to-yellow-200 "
                   }`}
