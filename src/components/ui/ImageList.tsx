@@ -4,6 +4,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { Tooltip } from "@mui/material";
 import CustomModal from "./CustomModal";
 import CollabModal from "./CollabModal";
+import { useSelector } from "react-redux";
 
 type ImageListProps = {
   users: any[];
@@ -22,7 +23,9 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
   const handleCloseModal = () => {
     setShowCollabModal(false);
   };
-
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   return (
     <div className=" mt-3 flex items-center">
       <Tooltip title="Add new Collaborator">
@@ -34,13 +37,13 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
         </div>
       </Tooltip>
       {users?.map((user, index) => (
-        <Tooltip key={index} title={user?.email}>
+        <Tooltip key={index} title={user?.email || userInfo?.email}>
           {index < stopImageCountAt && (
             <>
               <img
-                src={user?.image}
+                src={user?.image || userInfo?.image}
                 alt={user?.alt}
-                className={`rounded-full border-[2px] h-[33px] w-[35px] -ml-[.8rem] "border-sirp-primaryBlue bg-red-100"`}
+                className={`rounded-full border-[2px] bg-white h-[33px] w-[35px] -ml-[.8rem] "border-sirp-primaryBlue bg-red-100"`}
               />
             </>
           )}
@@ -56,9 +59,14 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
         </CustomModal>
       )}
       {remainderCount > 0 && (
-        <div className="border-[2px] border-sirp-primaryBlue bg-sirp-primaryLess2 h-[45px] w-[45px] rounded-full flex items-center justify-center -ml-[.8rem]">
-          +{remainderCount}
-        </div>
+        <Tooltip title="Add new Collaborator">
+          <div
+            onClick={() => setShowCollabModal(true)}
+            className="border-[2px] border-sirp-primaryBlue cursor-pointer bg-sirp-primaryLess2 h-[45px] w-[45px] rounded-full flex items-center justify-center -ml-[.8rem]"
+          >
+            +{remainderCount}
+          </div>
+        </Tooltip>
       )}
     </div>
   );

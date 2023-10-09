@@ -13,6 +13,7 @@ import SocketService from "../../socket/chat.socket";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { toast } from "react-toastify";
 import socketio from "@/utils/socket";
+import { userInfo } from "os";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -81,7 +82,9 @@ export default function CollabModal({ users, setShowCollabModal }) {
       });
     }
   };
-
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -121,7 +124,7 @@ export default function CollabModal({ users, setShowCollabModal }) {
                       }`}
                     >
                       <img
-                        src={el?.image}
+                        src={el?.image || userInfo?.image}
                         alt={"user"}
                         className="rounded-full border-[2px] border-white md:h-[43px] h-[30px] md:w-[43px] w-[30px]"
                       />
@@ -129,9 +132,12 @@ export default function CollabModal({ users, setShowCollabModal }) {
                     <div className="tex-gray-400">
                       {/* </div> */}
                       <p className="text-[14px] font-bolder text-gray-500 capitalize">
-                        {el?.firstName} {el?.lastName} {el?.username}
+                        {el?.firstName || userInfo.firstName}{" "}
+                        {el?.lastName || userInfo.lastName} {el?.username}
                       </p>
-                      <span className="capitalize">{el?.email}</span>
+                      <span className="capitalize">
+                        {el?.email || userInfo.email}
+                      </span>
                     </div>
                   </div>
                   <RemoveCircleIcon

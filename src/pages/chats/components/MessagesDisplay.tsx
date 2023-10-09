@@ -38,7 +38,6 @@ function MessagesDisplay() {
 
   const createDoc = async (event, text, name) => {
     event.preventDefault();
-
     try {
       console.log("clicked1", text, name);
       const useSocket = SocketService;
@@ -68,7 +67,8 @@ function MessagesDisplay() {
           progress: undefined,
           theme: "light",
         });
-        // router.push(`documents/${data?.data?._id}`);
+
+        router.push(`documents/${data?.data?._id}`);
       });
     } catch (error) {
       console.log(error);
@@ -86,7 +86,7 @@ function MessagesDisplay() {
         {activeChat.spaceName ? (
           <div
             className={`${
-              message?.sender?._id !== activeChat?.uuid
+              message?.sender !== activeChat?.uuid
                 ? "float-right mr-3 rounded-l-xl rounded-tr-3xl bg-[#E9F1F9] "
                 : "float-left ml-3 rounded-r-xl rounded-tl-3xl bg-sirp-dashbordb1 "
             }
@@ -191,7 +191,7 @@ function MessagesDisplay() {
       <ul className="md:pb-[3rem] pb-[7rem]">
         {selectedChat?.map((message) => {
           return message?.message?.text ? (
-            <>
+            <div key={message._id}>
               {activeChat.spaceName ? (
                 <li key={message._id}>
                   {message?.message?.doc == 1 || message?.message?.img == 1 ? (
@@ -302,7 +302,7 @@ function MessagesDisplay() {
                   </div>
                 </li>
               )}{" "}
-            </>
+            </div>
           ) : message.content_type === "audio" ? (
             <div
               key={message.id}

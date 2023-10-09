@@ -34,7 +34,7 @@ function NewChat({ closeModal }) {
         <ul className="h-[50vh] overflow-y-auto">
           {users?.map((user) => (
             <li
-              className="flex items-center gap-x-4 hover:cursor-pointer hover:bg-slate-100 rounded-md px-3 py-2.5"
+              className="flex items-center gap-x-4 hover:cursor-pointer bg-sirp-primaryLess2 mb-1 hover:bg-slate-100 rounded-md px-3 py-2.5"
               key={user.uuid}
               onClick={() =>
                 handleClick(
@@ -51,15 +51,13 @@ function NewChat({ closeModal }) {
                 {/* user status dot (on image)  */}
                 <div
                   className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${
-                    user?.status === "inactive"
-                      ? "bg-red-300"
-                      : "bg-sirp-online"
+                    user?.onlineStatus == "1" ? "bg-red-300" : "bg-sirp-online"
                   }`}
                 ></div>
                 {/* user status background  */}
                 <div
                   className={`rounded-full p-[2.5px] ${
-                    user?.status && status === "inactive"
+                    user?.onlineStatus == "1"
                       ? "bg-sirp-offline"
                       : "bg-gradient-to-r from-red-300 to-yellow-200 "
                   }`}

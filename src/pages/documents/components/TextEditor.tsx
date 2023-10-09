@@ -42,7 +42,7 @@ export default function TextEditor() {
     socketio.once("load-doc", (document) => {
       let data = JSON.parse(document);
       dispatch(setSingleDoc(data.data));
-      console.log(data.data.data.ops[0].insert, "document");
+      console.log(data.data.data.ops[0].insert, "document", data.data);
       quill.setContents(data.data.data);
       quill.enable();
     });

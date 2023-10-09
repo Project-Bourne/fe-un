@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 import AuthService from "@/services/auth.service";
 import DocumentService from "@/services/document.service";
+import { useTruncate } from "@/components/custom-hooks";
 
 const viewDocument = () => {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
@@ -37,7 +38,8 @@ const viewDocument = () => {
           Array.isArray(singleDoc.collaborators)
         ) {
           const docCollabPromises = singleDoc.collaborators.map(async (el) => {
-            const user = await AuthService.getusersbyId(el.id);
+            console.log(el, "el chisommm");
+            const user = await AuthService.getusersbyId(el.uuid);
             return user?.data;
           });
 
@@ -118,7 +120,7 @@ const viewDocument = () => {
       <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
         <div className="flex items-center">
           <span className="text-3xl text-[#1D2022] font-bold capitalize">
-            {singleDoc?.name}
+            {useTruncate(singleDoc?.name, 20)}
           </span>
         </div>
         <div>
