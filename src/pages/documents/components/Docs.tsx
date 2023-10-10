@@ -28,24 +28,6 @@ export default function Docs({
   const { comments } = useSelector((state: any) => state?.chats);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    socketio.on("receive-comment", async (res) => {
-      console.log("receive-comment", res);
-      const useSocket = SocketService;
-      await useSocket.getComments({
-        docId: singleDoc?._id,
-        spaceId: singleDoc?.spaceId,
-      });
-    });
-
-    socketio.on("retrieved-comments-in-doc", async (res) => {
-      let response = JSON.parse(res);
-      console.log("retrieved-comments-in-doc", response);
-      // let data = JSON.parse(response?.data);
-      dispatch(setComments(response.data));
-    });
-  }, []);
-
   return (
     <div className="w-full h-[100vh]">
       <div

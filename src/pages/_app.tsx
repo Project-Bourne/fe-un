@@ -181,7 +181,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       const useSocket = SocketService;
       await useSocket.getSelectedMsg({
         userId: userInfo?.uuid,
-        uuid: res?.uuid,
+        uuid: res?.sender?.id,
       });
     });
 
@@ -200,8 +200,6 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       console.log("all-spaces-by-id", data);
       dispatch(setAllWorkspaceByUser(data));
     });
-
-    // new-message
 
     socketio.on("new-message", async (res) => {
       console.log("new-message", res);
@@ -243,16 +241,16 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       let data = JSON.parse(res);
       console.log("retrieved-docs", data);
       dispatch(setAllDocs(data.data));
-      toast("All Documents", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      // toast("All Documents", {
+      //   position: "bottom-right",
+      //   autoClose: 2000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      // });
     });
 
     socketio.once("collabs-added", (res) => {
@@ -271,9 +269,21 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     });
 
     socketio.once("error", (err) => {
-      let data = JSON.parse(err);
-      console.log("socket error", data);
-      toast(`Something went wrong: ${data?.message}`, {
+      let errorData = err;
+      console.log(err, "error socket");
+
+      if (typeof err === "string") {
+        try {
+          errorData = JSON.parse(err);
+        } catch (e) {
+          // Handle the case where `err` is a string but not valid JSON
+          console.error("Error parsing JSON:", e);
+        }
+      }
+
+      console.log("socket error", errorData);
+
+      toast(`Something went wrong: ${errorData?.message || errorData}`, {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -284,7 +294,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
         theme: "light",
       });
     });
-  }, [socketio]);
+  }, [socketio, dispatch]);
 
   const isLayoutNeeded = appProps.router.pathname.includes("/auth");
 

@@ -37,6 +37,37 @@ class CollabService {
       throw error;
     }
   }
+  static async deleteSpace(id) {
+    try {
+      const response = await request(
+        `space/${id}`,
+        "DELETE",
+        {},
+        true,
+        false,
+        false,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteCollab(id) {
+    try {
+      const response = await request(
+        `collab/remove/${id}`,
+        "DELETE",
+        {},
+        true,
+        false,
+        false,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   // space
 
   /**
