@@ -44,7 +44,8 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
                 src={user?.image || userInfo?.image}
                 alt={user?.alt}
                 className={`rounded-full border-[2px] bg-white h-[33px] w-[35px] -ml-[.8rem] "border-sirp-primaryBlue bg-red-100"`}
-              />
+              />{" "}
+              {/* eslint-disable-next-line */}
             </>
           )}
         </Tooltip>

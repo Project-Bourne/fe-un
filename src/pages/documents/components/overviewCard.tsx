@@ -21,9 +21,13 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
   };
   let snippet = () => {
     if (data?.data?.ops[0].insert) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       return useTruncate(data?.data?.ops[0].insert, 1000);
+      // eslint-disable-next-line react-hooks/rules-of-hooks
     }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     return useTruncate(data?.data, 1000);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   };
   return (
     <div className="w-full h-[100vh] p-5">
@@ -51,13 +55,13 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
       </div>
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">content</span>
-        <span className="">{} ...</span>
+        <span className="">{snippet()} ...</span>
       </div>
       <div className="flex flex-col gap-2 mt-5">
         <span className="text-[#6F7A82]">Tags & Keywords </span>
         <div className="flex gap-3 md-flex-col flex-row">
           {data?.keywords?.length > 0 &&
-            data.keywords.map((el) => <Tabs value={el} />)}
+            data.keywords.map((el, i) => <Tabs value={el} key={i} />)}
         </div>
       </div>
 

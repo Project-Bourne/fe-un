@@ -78,7 +78,10 @@ function Share({ setShowChat }) {
 
             <div className="flex items-centers justify-center gap-3 mt-3">
               {socials.map((item) => (
-                <div className=" flex flex-col items-center cursor-pointer justify-center">
+                <div
+                  key={item.icon}
+                  className=" flex flex-col items-center cursor-pointer justify-center"
+                >
                   <span className="h-[40px] w-[40px] rounded-full border-[8px] mb-3 border-gray-300">
                     <Image
                       src={require(`../../../../public/icons/${item.icon}`)}

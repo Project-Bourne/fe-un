@@ -36,6 +36,7 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCheck = (selected) => {

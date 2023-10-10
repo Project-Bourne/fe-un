@@ -96,6 +96,7 @@ export default function WorkspaceModal({ setModalType }) {
                       alt={el.spaceName}
                       className="h-[35px] w-[35px] rounded-full bg-red-400"
                     />
+                    {/* eslint-disable-next-line */}
                     {/* </div> */}
                     <p className="md:text-[16px] text-[14px] capitalize">
                       {el.spaceName}
