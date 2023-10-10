@@ -30,11 +30,8 @@ const viewDocument = () => {
   useEffect(() => {
     const fetchCollaborators = async () => {
       if (id) {
-        dispatch(setComments([]));
         const document = await DocumentService.getDoc(id);
         dispatch(setSingleDoc(document));
-
-        // Check if singleDoc and its collaborators array are defined and iterable
         if (
           singleDoc?.collaborators &&
           Array.isArray(singleDoc.collaborators)
@@ -50,9 +47,37 @@ const viewDocument = () => {
         }
       }
     };
-
     fetchCollaborators();
   }, [id]);
+
+  useEffect(() => {
+    const getComments = async () => {
+      const useSocket = SocketService;
+      dispatch(setComments([]));
+      await useSocket.getComments({
+        docId: singleDoc?._id,
+        spaceId: singleDoc?.spaceId,
+      });
+    };
+    getComments();
+  }, []);
+
+  useEffect(() => {
+    socketio.on("receive-comment", async (res) => {
+      console.log("receive-comment", res);
+      const useSocket = SocketService;
+      await useSocket.getComments({
+        docId: singleDoc?._id,
+        spaceId: singleDoc?.spaceId,
+      });
+    });
+
+    socketio.on("retrieved-comments-in-doc", async (res) => {
+      let response = JSON.parse(res);
+      console.log("retrieved-comments-in-doc", response);
+      dispatch(setComments(response.data));
+    });
+  }, [socketio]);
 
   useEffect(() => {
     if (singleDoc?.spaceId) {

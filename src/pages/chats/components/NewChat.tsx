@@ -47,32 +47,41 @@ function NewChat({ closeModal }) {
                 )
               }
             >
-              <div className="relative">
-                {/* user status dot (on image)  */}
+              <div className="flex gap-x-5 items-center relative">
                 <div
                   className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${
-                    user?.onlineStatus == "1" ? "bg-red-300" : "bg-sirp-online"
+                    user?.onlineStatus == 1 ? "bg-sirp-online" : "bg-red-300"
                   }`}
                 ></div>
-                {/* user status background  */}
                 <div
                   className={`rounded-full p-[2.5px] ${
-                    user?.onlineStatus == "1"
+                    user?.onlineStatus == 1
                       ? "bg-sirp-offline"
                       : "bg-gradient-to-r from-red-300 to-yellow-200 "
                   }`}
                 >
                   <img
-                    src={user?.image}
+                    src={user?.image || user?.image}
                     alt={"user"}
                     className="rounded-full border-[2px] border-white md:h-[43px] h-[30px] md:w-[43px] w-[30px]"
-                  />
+                  />{" "}
+                  {/* eslint-disable-next-line */}
+                </div>
+                <div className="tex-gray-400">
+                  {/* </div> */}
+                  <p className="text-[14px] font-bolder text-gray-500 capitalize">
+                    {user?.firstName || user.firstName}{" "}
+                    {user?.lastName || user.lastName} {user?.username}
+                  </p>
+                  <span className="capitalize">
+                    {user?.email || user.email}
+                  </span>
                 </div>
               </div>
               {/* </div> */}
-              <p className="md:text-[16px] text-[14px] capitalize">
+              {/* <p className="md:text-[16px] text-[14px] capitalize">
                 {user?.firstName} {user?.lastName}
-              </p>
+              </p> */}
             </li>
           ))}
         </ul>

@@ -77,9 +77,9 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
                 {/* user status background  */}
                 <div
                   className={`rounded-full p-[2.5px] ${
-                    status && status === "inactive"
-                      ? "bg-sirp-offline"
-                      : "bg-gradient-to-r from-red-300 to-yellow-200 "
+                    chat.status === "inactive"
+                      ? "bg-gradient-to-r from-red-300 to-yellow-200 "
+                      : "bg-sirp-offline"
                   }`}
                 >
                   <img

@@ -14,6 +14,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { toast } from "react-toastify";
 import socketio from "@/utils/socket";
 import { userInfo } from "os";
+import CollabService from "@/services/collaborator.service";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -81,10 +82,29 @@ export default function CollabModal({ users, setShowCollabModal }) {
         });
       });
     }
+    if (pathname.includes("/chats")) {
+      try {
+        await CollabService.deleteCollab(userId);
+        toast("Deleted", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
+
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

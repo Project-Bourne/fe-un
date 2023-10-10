@@ -9,6 +9,8 @@ import { AddNewChat } from "@/redux/reducers/chat/chatReducer";
 import chatEmpty from "../../../../public/icons/chat.empty.svg";
 import Image from "next/image";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import CollabService from "@/services/collaborator.service";
+import { toast } from "react-toastify";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -62,6 +64,26 @@ export default function WorkspaceModal({ setModalType }) {
     setModalType("");
   };
 
+  const deleteSpace = async (e, id) => {
+    e.stopPropagation();
+    try {
+      await CollabService.deleteSpace(id);
+      toast("Deleted", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setModalType("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -103,7 +125,10 @@ export default function WorkspaceModal({ setModalType }) {
                     </p>
                   </div>
 
-                  <RemoveCircleIcon style={{ color: "#f72f35" }} />
+                  <RemoveCircleIcon
+                    style={{ color: "#f72f35" }}
+                    onClick={(e) => deleteSpace(e, el.uuid)}
+                  />
                 </div>
               </li>
             ))}
