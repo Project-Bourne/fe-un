@@ -41,10 +41,22 @@ export default function TextEditor() {
     console.log(singleDoc, "singleDoc");
     socketio.once("load-doc", (document) => {
       let data = JSON.parse(document);
-      dispatch(setSingleDoc(data.data));
-      console.log(data.data.data.ops[0].insert, "document", data.data);
-      quill.setContents(data.data.data);
-      quill.enable();
+
+      if (
+        data &&
+        data.data &&
+        data.data.data &&
+        data.data.data.ops &&
+        data.data.data.ops.length > 0
+      ) {
+        dispatch(setSingleDoc(data.data));
+        const insert = data.data.data.ops[0].insert;
+        if (insert) {
+          console.log(insert, "document", data.data);
+          quill.setContents(data.data.data);
+          quill.enable();
+        }
+      }
     });
 
     SocketService.getDoc({ id: documentId });
@@ -106,7 +118,7 @@ export default function TextEditor() {
         modules: { toolbar: TOOLBAR_OPTIONS },
       });
       q.disable();
-      q.setText("Loading...");
+      // q.setText("Loading...");
       setQuill(q);
     });
   }, []);

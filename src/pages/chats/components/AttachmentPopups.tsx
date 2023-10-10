@@ -65,7 +65,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
 
         const response = await res.json();
         if (response) {
-          console.log(response);
+          console.log(response, response);
           // Handle the response, e.g., sending messages via Socket
           const newObj = {
             text: `${file?.name}, ${file.size}, ${file.type}, ${response.data[0].uri}, ${response.data[0].text}`,

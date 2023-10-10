@@ -20,15 +20,17 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
     router.push(`/documents/${data._id}`);
   };
   let snippet = () => {
-    if (data?.data?.ops[0].insert) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
+    if (data?.data?.ops && data.data.ops.length > 0) {
+      // Check if data.data.ops is defined and not an empty array
       return useTruncate(data?.data?.ops[0].insert, 1000);
-      // eslint-disable-next-line react-hooks/rules-of-hooks
+    } else if (data?.data) {
+      // If data.data.ops is not defined or empty, check if data.data is defined
+      return useTruncate(data?.data, 1000);
     }
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useTruncate(data?.data, 1000);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // Return a default value or handle the case when data is undefined
+    return "No content available";
   };
+
   return (
     <div className="w-full h-[100vh] p-5">
       {backIcon && (
