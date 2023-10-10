@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import ChatInput from "./ChatInput";
+// import ChatInput from "./ChatInput";
 
 function InCallParticipants({ setActiveScreen }) {
   return (
