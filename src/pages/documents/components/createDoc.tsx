@@ -55,7 +55,7 @@ function CreateDocument() {
           progress: undefined,
           theme: "light",
         });
-        router.push(`documents/${data?.data?._id}`);
+        // router.push(`documents/${data?.data?._id}`);
       });
     } catch (error) {
       console.log(error);

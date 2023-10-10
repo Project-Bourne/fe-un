@@ -12,6 +12,7 @@ import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 import AuthService from "@/services/auth.service";
 import DocumentService from "@/services/document.service";
 import { useTruncate } from "@/components/custom-hooks";
+import { setComments } from "@/redux/reducers/chat/chatReducer";
 
 const viewDocument = () => {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
@@ -29,6 +30,7 @@ const viewDocument = () => {
   useEffect(() => {
     const fetchCollaborators = async () => {
       if (id) {
+        dispatch(setComments([]));
         const document = await DocumentService.getDoc(id);
         dispatch(setSingleDoc(document));
 
@@ -71,7 +73,7 @@ const viewDocument = () => {
           id: 3,
         },
         {
-          name: "Chat",
+          name: "Comments",
           icon: "chat.svg",
           id: 4,
         },

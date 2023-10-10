@@ -39,11 +39,12 @@ function MessagesDisplay() {
   const createDoc = async (event, text, name) => {
     event.preventDefault();
     try {
-      console.log("clicked1", text, name);
       const useSocket = SocketService;
       let docData = {
         name: name,
-        data: text,
+        data: {
+          ops: [{ insert: text }],
+        },
         author: {
           id: userInfo?.uuid,
           name: userInfo?.email,
@@ -51,11 +52,9 @@ function MessagesDisplay() {
         spaceId: activeChat.uuid,
       };
       await useSocket.createDoc(docData);
-      console.log("clicked2");
       socketio.on("load-doc", (res) => {
-        console.log(res, "load");
         let data = JSON.parse(res);
-        console.log("load-doc", data.data);
+        console.log("load-doc", data);
         dispatch(setSingleDoc(data.data));
         toast("Document Created", {
           position: "bottom-right",
