@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import ChatInput from "./ChatInput";
+// import ChatInput from "./ChatInput";
 
 function InCallParticipants({ setActiveScreen }) {
   return (
@@ -23,9 +23,7 @@ function InCallParticipants({ setActiveScreen }) {
       {/* body */}
 
       {/* bottom */}
-      <div className="border-t h-[20%]">
-        <ChatInput />
-      </div>
+      <div className="border-t h-[20%]">{/* <ChatInput /> */}</div>
     </div>
   );
 }
