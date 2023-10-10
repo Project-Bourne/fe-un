@@ -127,7 +127,8 @@ export default function CollabModal({ users, setShowCollabModal }) {
                         src={el?.image || userInfo?.image}
                         alt={"user"}
                         className="rounded-full border-[2px] border-white md:h-[43px] h-[30px] md:w-[43px] w-[30px]"
-                      />
+                      />{" "}
+                      {/* eslint-disable-next-line */}
                     </div>
                     <div className="tex-gray-400">
                       {/* </div> */}

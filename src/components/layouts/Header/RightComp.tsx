@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import notification from "../../../../public/icons/notification.svg";
 import dashboard from "../../../../public/icons/dashboard.svg";
 import down from "../../../../public/icons/down.svg";
-import { Cookies, useCookies } from 'react-cookie';
+import { Cookies, useCookies } from "react-cookie";
 
 function RightComp() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function RightComp() {
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
-  const [cookies, setCookie, removeCookie] = useCookies(['deep-access']);
+  const [cookies, setCookie, removeCookie] = useCookies(["deep-access"]);
   const [dropdown, setDropdown] = useState(false);
 
   const handleLogout = async (event: any) => {
@@ -28,7 +28,7 @@ function RightComp() {
 
     removeCookie("deep-access", { path: "/" });
     router.push("/http://192.81.213.226/30/auth/login");
-    
+
     NotificationService.success({
       message: "Logout operation successful!",
     });
@@ -65,6 +65,7 @@ function RightComp() {
 
       <div className="relative bg-sirp-lightGrey flex flex-row mr-2 py-2 px-2 md:px-5 h-[45px] rounded-[12px] items-center justify-center cursor-pointer">
         <div className="flex flex-row items-center justify-center">
+          {/* eslint-disable-next-line */}
           <img
             src={userInfo?.image ?? userInitials()}
             alt="userImage"

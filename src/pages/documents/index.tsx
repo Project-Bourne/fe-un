@@ -83,10 +83,11 @@ function Documents() {
               !isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
             } my-5`}
           >
-            {allDocs?.map((el) => (
+            {allDocs?.map((el, i) => (
               <DocCard
                 docCardClick={handleClick}
                 data={el}
+                key={i}
                 isActive={isActive}
               />
             ))}

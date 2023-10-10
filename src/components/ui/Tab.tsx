@@ -22,6 +22,7 @@ function Tab({ tabHeaderContents, tabBodyContents, tabIndex }: TabModel) {
         <ul className="w-full md:w-[80%] flex flex-wrap md:flex-nowrap gap-x-1 md:gap-x-3">
           {tabHeaderContents.map((content) => (
             <li
+              key={content.id}
               onClick={() => handleTabClick(content.id)}
               className={`flex px-3 md:px-8 pb-2 pt-1 font-light text-xs hover:text-sirp-primary hover:border-b-2 hover:border-b-sirp-primary active:text-sirp-primary transition ease-in-out ${
                 toggleIndex === content.id

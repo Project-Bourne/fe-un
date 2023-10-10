@@ -85,7 +85,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     return () => {
       socketio.disconnect();
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     userService

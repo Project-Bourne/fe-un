@@ -34,6 +34,7 @@ const InviteCollaborators = ({ setSowCollabModal }) => {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCheck = (selected) => {
@@ -95,7 +96,9 @@ const InviteCollaborators = ({ setSowCollabModal }) => {
   return (
     <div className="relative">
       <div className="flex flex-col items-center justify-center pb-3">
-        <h1 className="text-3xl font-bold ml-5 text-black">Add Collaborators</h1>
+        <h1 className="text-3xl font-bold ml-5 text-black">
+          Add Collaborators
+        </h1>
         <p className="text-[14px] ml-5">
           Fill the details below to add Collaborators
         </p>

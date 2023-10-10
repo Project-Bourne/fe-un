@@ -48,6 +48,8 @@ export default function TextEditor() {
     });
 
     SocketService.getDoc({ id: documentId });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketio, quill, documentId]);
 
   // save document changes at interval
