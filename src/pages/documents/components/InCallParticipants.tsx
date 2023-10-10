@@ -23,9 +23,7 @@ function InCallParticipants({ setActiveScreen }) {
       {/* body */}
 
       {/* bottom */}
-      <div className="border-t h-[20%]">
-        <ChatInput />
-      </div>
+      <div className="border-t h-[20%]">{/* <ChatInput /> */}</div>
     </div>
   );
 }
