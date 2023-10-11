@@ -29,7 +29,7 @@ export default function Docs({
   const dispatch = useDispatch();
 
   return (
-    <div className="w-full h-[100vh]">
+    <div className="w-full h-[100vh] overflow-y-auto">
       <div
         className={`${!showComments ? "w-full h-full" : "flex h-full"} ${
           !showChat ? "w-full h-full" : "flex h-full"
@@ -131,8 +131,8 @@ export default function Docs({
           </div>
         )} */}
         {showChat && singleDoc?.spaceId && (
-          <div className="w-1/4 border-l h-full pb-10">
-            <div className="h-[95%] overflow-y-scroll">
+          <div className="w-1/4 border-l">
+            <div className="overflow-y-scroll">
               <Chats setShowChat={setShowChat} />
             </div>
           </div>

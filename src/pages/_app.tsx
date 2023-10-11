@@ -204,14 +204,17 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.on("new-message", async (res) => {
       console.log("new-message", res);
       const useSocket = SocketService;
-      await useSocket.getSelectedMsg({
-        userId: userInfo?.uuid,
-        uuid: res?.userId,
-      });
-      await useSocket.getSelectedspace({
-        spaceId: res?.space?.uuid,
-        uuid: userInfo?.uuid,
-      });
+      if (activeChat.spaceName) {
+        await useSocket.getSelectedspace({
+          spaceId: res?.space?.uuid,
+          uuid: userInfo?.uuid,
+        });
+      } else {
+        await useSocket.getSelectedMsg({
+          userId: userInfo?.uuid,
+          uuid: res?.userId,
+        });
+      }
     });
 
     socketio.on("all-msgs-selected", (res) => {
@@ -268,7 +271,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       });
     });
 
-    socketio.once("error", (err) => {
+    socketio.on("error", (err) => {
       let errorData = err;
       console.log(err, "error socket");
 
