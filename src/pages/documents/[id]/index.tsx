@@ -38,7 +38,7 @@ const viewDocument = () => {
         ) {
           const docCollabPromises = singleDoc.collaborators.map(async (el) => {
             console.log(el, "el chisommm");
-            const user = await AuthService.getusersbyId(el.uuid);
+            const user = await AuthService.getusersbyId(el.id);
             return user?.data;
           });
 
@@ -143,7 +143,7 @@ const viewDocument = () => {
   };
 
   return (
-    <div className="w-full h-full doc">
+    <div className="w-full h-full doc overflow-y-auto">
       <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
         <div className="flex items-center">
           <span className="text-3xl text-[#1D2022] font-bold capitalize">

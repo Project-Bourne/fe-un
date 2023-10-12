@@ -65,7 +65,7 @@ function Documents() {
           style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
         >
-          <CreateDocument />
+          <CreateDocument setCreateDocModal={setCreateDocModal} />
         </CustomModal>
       )}
       <div

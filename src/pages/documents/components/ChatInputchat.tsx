@@ -59,21 +59,7 @@ function ChatInput(props) {
     <>
       <div className="bg-white z-10 bottom-0 w-full py-3 border-t-[1px] border-t-[#F9F9F9]">
         <form className="flex relative justify-center w-[95%] mx-auto">
-          <div className="md:w-[7%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center">
-            <Image
-              src={require("../../../../public/icons/chat.attachment.svg")}
-              alt="attachment"
-              width={35}
-              height={35}
-              className="py-2 px-2 hover:cursor-pointer"
-              onClick={showUploadPopup}
-              priority
-            />
-            <AttachmentPopups
-              showAttachment={showAttachment}
-              setShowAttachment={setShowAttachment}
-            />
-          </div>
+          <div className="md:w-[7%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center"></div>
           <div className="w-[68%] flex items-center h-15 border-0 ">
             <textarea
               className={`w-full h-full py-3.5 px-1 md:pr-3 font-light border-l-0 text-[13px] bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none resize-none `}

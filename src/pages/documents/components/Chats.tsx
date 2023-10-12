@@ -7,7 +7,6 @@ import MessagesDisplay from "./MessagesDisplay";
 import ChatInput from "./ChatInputchat";
 
 function Chats({ setShowChat }) {
-  const [isClicked, setIsClicked] = useState(false);
   const closeChats = () => {
     setShowChat(false);
   };
@@ -31,12 +30,11 @@ function Chats({ setShowChat }) {
   const showUploadPopup = () => {
     setShowAttachment((prevState) => !prevState);
   };
-  const { activeChat } = useSelector((state: any) => state.chats);
   const chatInputProps = { showUploadPopup, showAttachment };
   return (
     <div>
-      <div className="w-full h-full">
-        <div className="w-full">
+      <div className="w-full h-[90vh]">
+        <div className="w-full h-full">
           <div className="flex justify-between border-b p-3">
             <span className="font-bold">Chats</span>
             <div className="cursor-pointer" onClick={closeChats}>
@@ -56,12 +54,6 @@ function Chats({ setShowChat }) {
             showAudioFile={showAudioFile}
             setShowAttachment={() => setShowAttachment(false)}
           />
-          {/* <div className="m-3 pb-20">
-            {allRecentChats.length > 0 &&
-              allRecentChats?.map((chat) => (
-                <ChatCard chat={chat} key={chat.uuid} isClicked={isClicked} setIsClicked={setIsClicked}/>
-              ))}
-          </div> */}
         </div>
       </div>
     </div>

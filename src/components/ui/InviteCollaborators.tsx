@@ -41,7 +41,6 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
 
   const handleCheck = (selected) => {
     setSelectedSuggestions((prevSelected) => {
-      // Toggle selection status
       if (prevSelected.includes(selected)) {
         return prevSelected.filter((selectedId) => selectedId !== selected);
       } else {
@@ -84,9 +83,14 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
       }
 
       if (pathname.includes("/documents/")) {
+        console.log(selectedSuggestions, "selectedSuggestions");
+        let newSuggestions = selectedSuggestions.map((el) => {
+          return { id: el.uuid };
+        });
+        console.log(newSuggestions, "newSuggestions");
         let collabData = {
           docId: singleDoc?._id,
-          collabs: selectedSuggestions,
+          collabs: newSuggestions,
         };
         await useSocket.joinDocument(collabData);
         setShowCollabModal(false);

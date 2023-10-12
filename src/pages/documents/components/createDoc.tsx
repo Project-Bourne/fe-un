@@ -6,7 +6,7 @@ import socketio from "@/utils/socket";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-function CreateDocument() {
+function CreateDocument(setCreateDocModal) {
   const [formData, setFormData] = useState({
     name: "",
   });
@@ -57,6 +57,7 @@ function CreateDocument() {
         });
         // router.push(`documents/${data?.data?._id}`);
       });
+      setCreateDocModal(false);
     } catch (error) {
       console.log(error);
     }
