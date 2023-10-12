@@ -77,9 +77,28 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
   };
 
+  useEffect(() => {
+    try {
+      AuthService.getUserViaAccessToken()
+        .then((response) => {
+          if (response?.status) {
+            dispatch(setUserInfo(response?.data));
+          }
+        })
+        .catch((err) => {
+          NotificationService.error({
+            message: "Error",
+            addedText: "Could not fetch user data",
+            position: "top-center",
+          });
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   // initiate socket connection
   useEffect(() => {
-    // Connect the socket instance
     socketio.connect();
     _constructor();
     return () => {
@@ -101,29 +120,6 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
         });
         console.error("Error fetching users:", error);
       });
-  }, []);
-
-  useEffect(() => {
-    // setLoading(true);
-    try {
-      AuthService.getUserViaAccessToken()
-        .then((response) => {
-          // setLoading(false);
-          if (response?.status) {
-            // console.log("user data via login", res);
-            dispatch(setUserInfo(response?.data));
-          }
-        })
-        .catch((err) => {
-          NotificationService.error({
-            message: "Error",
-            addedText: "Could not fetch user data",
-            position: "top-center",
-          });
-        });
-    } catch (err) {
-      console.log(err);
-    }
   }, []);
 
   useEffect(() => {
@@ -160,6 +156,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
         await useSocket.getRecentChats({ uuid: userInfo?.uuid });
       }
     });
+
     socketio.on("space-joined", (res) => {
       let data = JSON.parse(res);
       console.log(" space-joined", data.data);
@@ -173,7 +170,6 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
         progress: undefined,
         theme: "light",
       });
-      // dispatch(setNewWorkSpace(data.data))
     });
 
     socketio.on("msg-sent", async (res) => {
@@ -223,37 +219,10 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       dispatch(setSelectedChat(data.data));
     });
 
-    // socketio.on("load-doc", (res) => {
-    //   console.log(res, 'load')
-    //   let data = JSON.parse(res);
-    //   console.log("load-doc", data.data);
-    //   dispatch(setSingleDoc(data.data));
-    //   toast("Document Created", {
-    //     position: "bottom-right",
-    //     autoClose: 2000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    // });
-
     socketio.once("retrieved-docs", (res) => {
       let data = JSON.parse(res);
       console.log("retrieved-docs", data);
       dispatch(setAllDocs(data.data));
-      // toast("All Documents", {
-      //   position: "bottom-right",
-      //   autoClose: 2000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      // });
     });
 
     socketio.once("collabs-added", (res) => {
@@ -274,18 +243,14 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.on("error", (err) => {
       let errorData = err;
       console.log(err, "error socket");
-
       if (typeof err === "string") {
         try {
           errorData = JSON.parse(err);
         } catch (e) {
-          // Handle the case where `err` is a string but not valid JSON
           console.error("Error parsing JSON:", e);
         }
       }
-
       console.log("socket error", errorData);
-
       toast(`Something went wrong: ${errorData?.message || errorData}`, {
         position: "bottom-right",
         autoClose: 2000,
@@ -297,7 +262,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
         theme: "light",
       });
     });
-  }, [socketio, dispatch]);
+  }, [socketio]);
 
   const isLayoutNeeded = appProps.router.pathname.includes("/auth");
 

@@ -38,7 +38,7 @@ const viewDocument = () => {
         ) {
           const docCollabPromises = singleDoc.collaborators.map(async (el) => {
             console.log(el, "el chisommm");
-            const user = await AuthService.getusersbyId(el.uuid);
+            const user = await AuthService.getusersbyId(el.id);
             return user?.data;
           });
 

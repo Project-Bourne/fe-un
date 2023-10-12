@@ -57,23 +57,9 @@ function ChatInput(props) {
 
   return (
     <>
-      <div className="bg-white z-10 w-full relative py-3 border-t-[1px] border-t-[#F9F9F9]">
-        <form className="flex  items-center justify-center w-[1/3] mx-auto fixed bottom-0  ">
-          <div className="md:w-[7%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center">
-            <Image
-              src={require("../../../../public/icons/chat.attachment.svg")}
-              alt="attachment"
-              width={35}
-              height={35}
-              className="py-2 px-2 hover:cursor-pointer"
-              onClick={showUploadPopup}
-              priority
-            />
-            <AttachmentPopups
-              showAttachment={showAttachment}
-              setShowAttachment={setShowAttachment}
-            />
-          </div>
+      <div className="bg-white z-10 bottom-0 w-full py-3 border-t-[1px] border-t-[#F9F9F9]">
+        <form className="flex relative justify-center w-[95%] mx-auto">
+          <div className="md:w-[7%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center"></div>
           <div className="w-[68%] flex items-center h-15 border-0 ">
             <textarea
               className={`w-full h-full py-3.5 px-1 md:pr-3 font-light border-l-0 text-[13px] bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none resize-none `}
@@ -102,6 +88,15 @@ function ChatInput(props) {
               className="px-[0.15rem] hover:cursor-pointer"
               priority
             />
+            {/* <Image
+              src={require("../../../../public/icons/chat.mic.svg")}
+              alt="audio"
+              width={25}
+              height={25}
+              className="px-[0.15rem] rounded-full hover:cursor-pointer"
+              onClick={() => setToggleAudio((prevState) => !prevState)}
+              priority
+            /> */}
             <Image
               src={require("../../../../public/icons/chat.send.svg")}
               alt="send"

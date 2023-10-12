@@ -144,7 +144,7 @@ export default function CollabModal({ users, setShowCollabModal }) {
                       }`}
                     >
                       <img
-                        src={el?.image || userInfo?.image}
+                        src={el?.image}
                         alt={"user"}
                         className="rounded-full border-[2px] border-white md:h-[43px] h-[30px] md:w-[43px] w-[30px]"
                       />{" "}
@@ -153,12 +153,10 @@ export default function CollabModal({ users, setShowCollabModal }) {
                     <div className="tex-gray-400">
                       {/* </div> */}
                       <p className="text-[14px] font-bolder text-gray-500 capitalize">
-                        {el?.firstName || userInfo.firstName}{" "}
-                        {el?.lastName || userInfo.lastName} {el?.username}
+                        {el?.firstName}
+                        {el?.lastName}
                       </p>
-                      <span className="capitalize">
-                        {el?.email || userInfo.email}
-                      </span>
+                      <span className="capitalize">{el?.email}</span>
                     </div>
                   </div>
                   <RemoveCircleIcon
