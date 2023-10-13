@@ -44,7 +44,7 @@ class AuthService {
   static async queryUser(query) {
     try {
       const response = await request2(
-        `/search?search=${query}`,
+        `search?search=${query}`,
         "GET",
         {},
         true,

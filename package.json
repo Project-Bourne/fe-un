@@ -30,6 +30,7 @@
     "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
     "lib-jitsi-meet": "^1.0.6",
+    "lodash": "^4.17.21",
     "next": "13.4.7",
     "next-connect": "^1.0.0",
     "postcss": "8.4.24",

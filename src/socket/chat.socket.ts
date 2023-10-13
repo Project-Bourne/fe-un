@@ -207,7 +207,15 @@ class SocketService {
       });
     }
   }
-
+  updateDoc(data) {
+    try {
+      this.socket.emit("update-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
   updateChanges(data) {
     try {
       this.socket.emit("doc-update-changes", data);

@@ -6,19 +6,22 @@ import Image from "next/image";
 import { CustomModal } from "@/components/ui";
 import CreateDocument from "./components/createDoc";
 import SocketService from "../../socket/chat.socket";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import chatEmpty from "../../../public/icons/chat.empty.svg";
+import socketio from "@/utils/socket";
+import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
+import { toast } from "react-toastify";
 
 function Documents() {
   const [isActive, setIsActive] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
   const [singleData, setSingleData] = useState({});
   const [createDocModal, setCreateDocModal] = useState(false);
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
   const { allDocs } = useSelector((state: any) => state?.docs);
-  const [singleDoc, setSingleDoc] = useState({});
   useEffect(() => {
     const fetchHistory = async () => {
       const useSocket = SocketService;
@@ -78,37 +81,35 @@ function Documents() {
             isActive && "border-r border-gray-300"
           }  overflow-y-auto  p-5`}
         >
-          <div
-            className={`grid gap-x-7 gap-y-3 pb-[150px] ${
-              !isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
-            } my-5`}
-          >
-            {allDocs?.map((el, i) => (
-              <DocCard
-                docCardClick={handleClick}
-                data={el}
-                key={i}
-                isActive={isActive}
-              />
-            ))}
-            {allDocs?.length < 1 && (
-              <div className="flex  flex-col justify-center w-[100vw] h-[60vh]">
-                <div className="mx-auto">
-                  <Image src={chatEmpty} alt="empty-chats" />
-                </div>
-                <div className="text-center">
-                  <h3 className="text-[17px] font-semibold">
-                    No Documents yet
-                  </h3>
-
-                  <p className="text-[15px] text-[#A1ADB5]">
-                    Your documents will appear here, click the button to create
-                    new Doc
-                  </p>
-                </div>
+          {allDocs?.length > 0 ? (
+            <div
+              className={`grid gap-x-7 gap-y-3 pb-[150px] ${
+                !isActive ? "md:grid-cols-2 grid-cols-1" : "md:block hidden"
+              } my-5`}
+            >
+              {allDocs?.map((el, i) => (
+                <DocCard
+                  docCardClick={handleClick}
+                  data={el}
+                  key={i}
+                  isActive={isActive}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center w-full h-[60vh]">
+              <div>
+                <Image src={chatEmpty} alt="empty-chats" />
               </div>
-            )}
-          </div>
+              <div className="text-center">
+                <h3 className="text-[17px] font-semibold">No Documents yet</h3>
+                <p className="text-[15px] text-[#A1ADB5]">
+                  Your documents will appear here. Click the button to create a
+                  new Doc.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
         <>
           {isActive && (

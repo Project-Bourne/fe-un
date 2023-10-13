@@ -47,7 +47,6 @@ function Index() {
   };
   const closeNewChatModal = () => setNewChat(false);
 
-
   return (
     <div>
       <div className="flex md:justify-between md:px-7 px-3 pb-4 border-b-[1px] border-b-gray-100">
@@ -91,7 +90,10 @@ function Index() {
           style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
         >
-          <AddWorkspace onHandlAddeModal={handleCloseModal} setModalType={setModalType} />
+          <AddWorkspace
+            onHandlAddeModal={handleCloseModal}
+            setModalType={setModalType}
+          />
         </CustomModal>
       )}
 
@@ -107,7 +109,9 @@ function Index() {
           <div
             className={`${chatsMobileDisplay} md:block relative col-span-2 transition duration-500 ease-in-out`}
           >
-            {isActive ? <ChatSection /> :
+            {isActive ? (
+              <ChatSection />
+            ) : (
               <>
                 <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
                   <div className="mx-auto">
@@ -115,16 +119,17 @@ function Index() {
                   </div>
                   <div className="grid gap-y-5 text-center">
                     <div className="md:w-[20%] w-[100%] mx-auto grid gap-y-2">
-                      <h3 className="text-[17px] font-semibold">Click and Start chatting</h3>
+                      <h3 className="text-[17px] font-semibold">
+                        Click and Start chatting
+                      </h3>
 
                       {/* <p className="text-[15px] text-[#A1ADB5]">
                         Send Messages Seemlessly
                       </p> */}
-
                     </div>
                   </div>
                 </div>
-
+                {/* 
                 {newChat && (
                   <CustomModal
                     style="bg-white md:w-[30%] w-[80%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
@@ -132,9 +137,9 @@ function Index() {
                   >
                     <NewChat closeModal={closeNewChatModal} />
                   </CustomModal>
-                )}
+                )} */}
               </>
-            }
+            )}
           </div>
         </div>
       ) : (

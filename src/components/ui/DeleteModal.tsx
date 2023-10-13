@@ -6,11 +6,11 @@ function DeleteModal({ cancelblock, handleDelete, item }) {
   return (
     <>
       {/* <h1 className="font-semibold text-[24px] px-2 mb-3"> Delete Documents </h1> */}
-      <div className="grid pb-5 pt-2 px-2">
-        <p className="text-sm mb-3">
+      <div className="grid pb-1 pt-2 px-2">
+        {/* <p className="text-sm mb-3 mt-5">
           Are you sure you want to delete
           {/* <span className="text-[#09495D]">{user?.firstName} {user?.lastName}</span> ? */}
-        </p>
+        {/* </p> */}
 
         <Button
           value="No, don’t Delete"

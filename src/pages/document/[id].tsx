@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Docs from "../components/Docs";
+import Docs from "./components/Docs";
 import CallModal from "@/components/ui/CallModal";
 import ImageList from "@/components/ui/ImageList";
 import { useRouter } from "next/router";
-import SocketService from "../../../socket/chat.socket";
+import SocketService from "../../socket/chat.socket";
 import socketio from "@/utils/socket";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -13,10 +13,12 @@ import AuthService from "@/services/auth.service";
 import DocumentService from "@/services/document.service";
 import { useTruncate } from "@/components/custom-hooks";
 import { setComments } from "@/redux/reducers/chat/chatReducer";
-import EditableText from "../components/EditText";
+import EditableText from "./components/EditText";
+import { Cookies } from "react-cookie";
+import NotificationService from "@/services/notification.service";
 
 const viewDocument = () => {
-  const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
+  const [selectedTab, setSelectedTab] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const router = useRouter();
   const [showCall, setShowCall] = useState(false);
@@ -24,10 +26,133 @@ const viewDocument = () => {
   const [showShare, setShowShare] = useState(false);
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [documentsBar, setDocumentsBar] = useState([]);
   const { singleDoc } = useSelector((state: any) => state?.docs);
   const { comments } = useSelector((state: any) => state?.chats);
   const { id } = router.query;
+  const cookies = new Cookies();
+  const token = cookies.get("deep-access");
+  const headers = {
+    "deep-token": token,
+  };
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
+
+  const createDoc = async (data) => {
+    try {
+      const useSocket = SocketService;
+      let docData = {
+        name: useTruncate(data, 20),
+        author: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+        },
+      };
+      await useSocket.createDoc(docData);
+      socketio.once("load-doc", (res) => {
+        let data = JSON.parse(res);
+        console.log("load-doc", data);
+        dispatch(setSingleDoc(data?.data?.data));
+        toast("Document Created", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        //
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      if (typeof id === "string") {
+        try {
+          const [routeId, routeName] = id.split("&");
+          let url;
+
+          switch (routeName) {
+            case "summarizer":
+              url = `http://192.81.213.226:81/82/summary/${routeId}`;
+              break;
+            case "translator":
+              url = `http://192.81.213.226:81/83/translation/${routeId}`;
+              break;
+            case "irp":
+              url = `http://192.81.213.226:81/84/fact/${routeId}`;
+              break;
+            case "factcheck":
+              url = `http://192.81.213.226:81/84/fact/${routeId}`;
+              break;
+            case "deepchat":
+              url = `http://192.81.213.226:81/85/deepchat/${routeId}`;
+              break;
+            case "analyzer":
+              url = `http://192.81.213.226:81/81/analysis/${routeId}`;
+              break;
+            case "interrogator":
+              url = `http://192.81.213.226:81/837/interrogator/${routeId}`;
+              break;
+            case "collab":
+              url = `http://192.81.213.226:81/86/api/v1/${routeId}`;
+              break;
+            default:
+              throw new Error("Invalid routeName");
+          }
+
+          const response = await fetch(url, {
+            method: "GET",
+            headers: headers,
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response?.json();
+          switch (routeName) {
+            case "translator":
+              createDoc(data?.data?.textTranslation);
+              break;
+            case "factcheck":
+              createDoc(data?.data?.confidence?.content);
+              break;
+            case "irp":
+              createDoc(data?.data?.confidence?.content);
+              break;
+            case "analyzer":
+              createDoc(data?.data?.text);
+              break;
+            case "interrogator":
+            case "collab":
+            case "deepchat":
+              break;
+            default:
+              break;
+          }
+          setLoading(false);
+        } catch (error: any) {
+          NotificationService.error({
+            message: "Error!",
+            addedText: <p>{`${error.message}, please try again`}</p>,
+            position: "top-center",
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   useEffect(() => {
     const fetchCollaborators = async () => {
@@ -174,7 +299,7 @@ const viewDocument = () => {
             >
               <span className="mr-2">
                 <Image
-                  src={require(`../../../../public/icons/${item.icon}`)}
+                  src={require(`../../../public/icons/${item.icon}`)}
                   alt=""
                 />
               </span>

@@ -106,21 +106,21 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     };
   }, []);
 
-  useEffect(() => {
-    userService
-      .getUsers()
-      .then((data) => {
-        console.log("all users", data);
-        dispatch(setUsers(data));
-      })
-      .catch((error) => {
-        NotificationService.error({
-          message: "Failed!",
-          addedText: "could not fetch users",
-        });
-        console.error("Error fetching users:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   userService
+  //     .getUsers()
+  //     .then((data) => {
+  //       console.log("all users", data);
+  //       dispatch(setUsers(data));
+  //     })
+  //     .catch((error) => {
+  //       NotificationService.error({
+  //         message: "Failed!",
+  //         addedText: "could not fetch users",
+  //       });
+  //       console.error("Error fetching users:", error);
+  //     });
+  // }, []);
 
   useEffect(() => {
     // confirm socket connection
@@ -200,7 +200,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.on("new-message", async (res) => {
       console.log("new-message", res);
       const useSocket = SocketService;
-      if (activeChat.spaceName) {
+      if (activeChat?.spaceName) {
         await useSocket.getSelectedspace({
           spaceId: res?.space?.uuid,
           uuid: userInfo?.uuid,

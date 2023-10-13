@@ -253,28 +253,31 @@ const CallModal = ({ setShowCall }) => {
     return uuidv4();
   };
 
-  useEffect(() => {
-    let callRoute = () => {
-      let id = generateUniqueMeetingId();
-      const callLink = `${window.location.origin}/calls/${id}`;
-      setMeetingName(callLink);
-    };
-    callRoute();
-  }, []);
-
-  // const handleStartMeeting = () => {
-  //   const id = generateUniqueMeetingId();
-  //   router.push(`/calls/${id}`);
-  // };
+  const handleStartMeeting = () => {
+    if (meetingName) {
+      const id = generateUniqueMeetingId();
+      router.push(`/calls/${meetingName}`);
+    } else {
+      toast("Enter a meeting name", {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+    }
+  };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(meetingName).then(() => {
-      toast("Call link copied to clipboard", {
-        position: "bottom-right",
-        autoClose: 3000,
+    if (meetingName) {
+      const callLink = `${window.location.origin}/calls/${meetingName}`;
+      navigator.clipboard.writeText(callLink).then(() => {
+        toast("Call link copied to clipboard", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
       });
-    });
+    }
   };
+
+  // ...
 
   const renderScreen = () => {
     switch (activeScreen) {
@@ -297,17 +300,25 @@ const CallModal = ({ setShowCall }) => {
               <div className="bg-black absolute bottom-0 right-0 left-0 h-[150px] flex items-center justify-center rounded-t-[1rem] rounde-b">
                 <input
                   type="text"
-                  className="p-5 w-[60%]"
+                  className="p-5"
                   placeholder="Enter meeting name"
                   value={meetingName}
-                  readOnly
+                  onChange={(e) => setMeetingName(e.target.value)}
                 />
                 <button
-                  onClick={handleCopyLink}
-                  className="bg-sirp-primary  p-5 text-white ml-5"
+                  onClick={handleStartMeeting}
+                  className="bg-sirp-primary p-5 text-white "
                 >
-                  Copy Call Link
+                  Start Meeting
                 </button>
+                {meetingName && (
+                  <button
+                    onClick={handleCopyLink}
+                    className="bg-white p-5 text-sirp-primary ml-5"
+                  >
+                    Copy Call Link
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -337,7 +348,11 @@ const CallModal = ({ setShowCall }) => {
 
   return (
     <div className="fixed z-[1020] flex items-center justify-center backdrop-blur-sm w-full h-[100vh] top-0 left-0 bottom-0 bg-[#747474]/[0.1] backdrop-brightness-50">
-      <div className="grid">{renderScreen()}</div>
+      <div className="grid">
+        {renderScreen()}
+        {/* Start Call or Send Call Request Button */}
+        {/* ... */}
+      </div>
     </div>
   );
 };
