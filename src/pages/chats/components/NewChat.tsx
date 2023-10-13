@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from "react";
+import debounce from "lodash/debounce";
 import {
   AddNewChat,
   setRecentChats,
 } from "../../../redux/reducers/chat/chatReducer";
+import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import chatEmpty from "../../../../public/icons/chat.empty.svg";
+import AuthService from "@/services/auth.service";
+import { setUsers } from "@/redux/reducers/users/userReducers";
 
 function NewChat({ closeModal }) {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   let users = useSelector((state: any) => state?.users?.allUsers);
-  let recentChats = useSelector((state: any) => state?.chats?.allRecentChats);
+  const [query, setQuery] = useState("");
+
+  const debouncedSearch = debounce(async (query) => {
+    try {
+      const response = await AuthService.queryUser(query);
+      console.log(response, "query");
+      dispatch(setUsers(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  }, 300);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    debouncedSearch(value);
+  };
 
   const handleClick = (uuid, firstName, lastName, image, role, status) => {
-    console.log("hi");
     dispatch(
       AddNewChat({
         uuid,
@@ -27,9 +45,26 @@ function NewChat({ closeModal }) {
     );
     closeModal();
   };
+  const queryUsers = async () => {
+    debouncedSearch(query);
+  };
 
   return (
-    <>
+    <div>
+      <div className="flex items-center space-x-2 my-3">
+        <input
+          className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:border-blue-500 flex-grow"
+          type="text"
+          placeholder="Find User by Email or Name"
+          onChange={handleInputChange}
+        />
+        <button
+          className="bg-sirp-primary text-white rounded-lg p-2 hover:bg-blue-600 focus:outline-none focus:ring"
+          onClick={queryUsers}
+        >
+          <SearchIcon /> Search
+        </button>
+      </div>
       {users?.length > 0 ? (
         <ul className="h-[50vh] overflow-y-auto">
           {users?.map((user) => (
@@ -86,22 +121,20 @@ function NewChat({ closeModal }) {
           ))}
         </ul>
       ) : (
-        <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
+        <div className=" w-full h-full flex flex-col items-center justify-center my-5">
           <div className="mx-auto">
             <Image src={chatEmpty} alt="empty-chats" />
           </div>
-          <div className="grid gap-y-5 text-center">
-            <div className="md:w-[20%] w-[80%] mx-auto grid gap-y-2">
-              <h3 className="text-[17px] font-semibold">No Users to Show</h3>
-
-              <p className="text-[15px] text-[#A1ADB5]">
-                Users will show Here.
-              </p>
+          <div className="text-center">
+            <div className="w-[80%] mx-auto">
+              <h3 className="text-[17px] font-semibold">
+                No Users to Show yet
+              </h3>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

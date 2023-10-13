@@ -9,18 +9,17 @@ const docSlice = createSlice({
   name: "docs",
   initialState: {
     allDocs: [],
-    singleDoc: {}
+    singleDoc: null,
   },
   reducers: {
     setAllDocs: (state: any, action: SetActiveChatAction) => {
-        state.allDocs = action.payload
+      state.allDocs = action.payload;
     },
     setSingleDoc: (state: any, action: SetActiveChatAction) => {
-        state.singleDoc = action.payload
+      state.singleDoc = action.payload;
     },
   },
 });
 
-export const { setAllDocs, setSingleDoc } =
-docSlice.actions;
+export const { setAllDocs, setSingleDoc } = docSlice.actions;
 export default docSlice.reducer;

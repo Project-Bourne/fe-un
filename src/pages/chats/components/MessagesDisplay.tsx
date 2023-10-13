@@ -21,6 +21,7 @@ function MessagesDisplay() {
   const { selectedChat, activeChat } = useSelector(
     (state: any) => state?.chats,
   );
+  const [id, setId] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
   const messagesEndRef = useRef(null);
@@ -34,15 +35,14 @@ function MessagesDisplay() {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
     }
   };
-
-  useEffect(() => {}, []);
-
   const createDoc = async (event, text, name) => {
+    console.log(text, name, "scbdcbhdbcbdhbvhbd");
     event.preventDefault();
     try {
       const useSocket = SocketService;
       let docData = {
         name: name,
+
         data: {
           ops: [{ insert: text }],
         },
@@ -53,10 +53,11 @@ function MessagesDisplay() {
         spaceId: activeChat.uuid,
       };
       await useSocket.createDoc(docData);
-      socketio.on("load-doc", (res) => {
+      socketio.once("load-doc", (res) => {
         let data = JSON.parse(res);
         console.log("load-doc", data);
-        dispatch(setSingleDoc(data.data));
+        dispatch(setSingleDoc(data?.data?.data));
+        setId(data?.data?._id);
         toast("Document Created", {
           position: "bottom-right",
           autoClose: 2000,
@@ -67,9 +68,11 @@ function MessagesDisplay() {
           progress: undefined,
           theme: "light",
         });
-
-        router.push(`documents/${data?.data?._id}`);
+        //
       });
+      // if(id){
+      //   router.push(`documents/${id}`);
+      // }
     } catch (error) {
       console.log(error);
     }
