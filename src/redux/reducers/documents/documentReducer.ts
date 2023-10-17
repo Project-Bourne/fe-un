@@ -10,6 +10,7 @@ const docSlice = createSlice({
   initialState: {
     allDocs: [],
     singleDoc: null,
+    printContent: null,
   },
   reducers: {
     setAllDocs: (state: any, action: SetActiveChatAction) => {
@@ -18,8 +19,11 @@ const docSlice = createSlice({
     setSingleDoc: (state: any, action: SetActiveChatAction) => {
       state.singleDoc = action.payload;
     },
+    setPrintContent: (state: any, action: SetActiveChatAction) => {
+      state.printContent = action.payload;
+    },
   },
 });
 
-export const { setAllDocs, setSingleDoc } = docSlice.actions;
+export const { setAllDocs, setSingleDoc, setPrintContent } = docSlice.actions;
 export default docSlice.reducer;

@@ -132,7 +132,7 @@ export default function Docs({
         )} */}
         {showChat && singleDoc?.spaceId && (
           <div className="w-1/4 border-l">
-            <div className="overflow-y-scroll">
+            <div className=" overflow-y-scroll">
               <Chats setShowChat={setShowChat} />
             </div>
           </div>

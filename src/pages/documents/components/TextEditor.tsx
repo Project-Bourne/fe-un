@@ -7,35 +7,29 @@ import dynamic from "next/dynamic";
 import socketio from "../../../utils/socket";
 import SocketService from "../../../socket/chat.socket";
 import { useDispatch, useSelector } from "react-redux";
-import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
-import { Console } from "console";
-
-const SAVE_INTERVAL_MS = 500;
-const TOOLBAR_OPTIONS = [
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  ["blockquote", "code-block"],
-  [{ font: [] }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  ["bold", "italic", "underline"],
-  [{ color: [] }, { background: [] }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ align: [] }],
-  [{ size: ["small", false, "large", "huge"] }],
-  ["image", "blockquote", "code-block"],
-  ["clean"],
-];
+import {
+  setSingleDoc,
+  setPrintContent,
+} from "@/redux/reducers/documents/documentReducer";
+import PrintIcon from "@mui/icons-material/Print";
+import ReactDOM from "react-dom";
+import { Tooltip } from "@mui/material";
 
 export default function TextEditor() {
   const ReactQuill = dynamic(() => import("quill"), {
     ssr: false, // Ensure Quill is not imported on the server side
   });
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
+  const [cursorData, setCursorData] = useState({ index: 0, length: 0 });
   const { singleDoc } = useSelector((state: any) => state?.docs);
   const useSocket = SocketService;
   const router = useRouter();
   const { id: documentId } = router.query;
   const [quill, setQuill] = useState<Quill | null>(null);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
     console.log(singleDoc, "singleDoc");
@@ -64,6 +58,127 @@ export default function TextEditor() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketio, quill, documentId]);
 
+  const SAVE_INTERVAL_MS = 500;
+  const TOOLBAR_OPTIONS = [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["blockquote", "code-block"],
+    [{ font: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["bold", "italic", "underline"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    [{ indent: "-1" }, { indent: "+1" }],
+    [{ align: [] }],
+    [{ size: ["small", false, "large", "huge"] }],
+    ["image", "blockquote", "code-block"],
+    ["clean"],
+  ];
+
+  // const handlePrint = () => {
+  //   if (quill) {
+  //     const editorContent = quill.root.innerHTML;
+
+  //     // Create a new window with a print document
+  //     const printWindow = window.open("", "", "width=600,height=600");
+  //     printWindow.document.open();
+
+  //     // Create a new HTML template for printing
+  //     const watermarkHTML = `
+  //       <div class="watermark">DEEP SOUL</div>
+  //     `;
+
+  //     const printHTML = `
+  //       <html>
+  //       <head>
+  //         <style>
+  //           .watermark {
+  //             position: fixed;
+  //             top: 300;
+  //             left: 300;
+  //             width: 100%;
+  //             height: 100%;
+  //             text-align: center;
+  //             transform: rotate(-45deg);
+  //             font-size: 80px;
+  //             opacity: 0.2; /* Adjust the opacity as needed */
+  //             pointer-events: none; /* Allow clicks through the watermark */
+  //           }
+  //         </style>
+  //       </head>
+  //       <body>
+  //         <div class="quill-editor-print">${editorContent}</div>
+  //         ${watermarkHTML}
+  //       </body>
+  //       </html>
+  //     `;
+
+  //     printWindow.document.write(printHTML);
+  //     printWindow.document.close();
+
+  //     // Wait for the content to load, then trigger the print dialog
+  //     printWindow.onload = () => {
+  //       printWindow.print();
+  //       printWindow.close();
+  //     };
+  //   }
+  // };
+  const handlePrint = () => {
+    if (quill) {
+      const editorContent = quill.root.innerHTML;
+
+      // Create a new HTML template for printing
+      const watermarkHTML = `
+      <div class="watermark">DEEP SOUL</div>
+    `;
+
+      const printHTML = `
+      <html>
+      <head>
+        <style>
+          .watermark {
+            position: fixed;
+            top: 300;
+            left: 300;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transform: rotate(-45deg);
+            font-size: 80px;
+            opacity: 0.2; /* Adjust the opacity as needed */
+            pointer-events: none; /* Allow clicks through the watermark */
+          }
+        </style>
+      </head>
+      <body>
+        <div class="quill-editor-print">${editorContent}</div>
+        ${watermarkHTML}
+      </body>
+      </html>
+    `;
+
+      const printWindow = window.open("", "_blank", "width=600,height=600");
+      printWindow.document.open();
+      printWindow.document.write(printHTML);
+      printWindow.document.close();
+
+      // Wait for the content to load, then trigger the print dialog
+      printWindow.onload = () => {
+        printWindow.print();
+        printWindow.close();
+      };
+    }
+  };
+
+  useEffect(() => {
+    if (quill) {
+      const print = document.querySelector(".print-icon"); // Select the element after it's added to the DOM
+
+      if (print) {
+        print.addEventListener("click", handlePrint);
+      }
+    }
+  }, [quill]);
+
   // save document changes at interval
   useEffect(() => {
     if (!socketio || !quill) return;
@@ -76,6 +191,94 @@ export default function TextEditor() {
     };
   }, [socketio, quill]);
 
+  useEffect(() => {
+    if (!socketio || !quill || !documentId) return;
+
+    const updateCursor = () => {
+      if (!documentId) return;
+      if (quill) {
+        const selection = quill.getSelection();
+        console.log(selection, "selection");
+        if (selection) {
+          const { index, length } = selection;
+          SocketService.updateCursor({
+            user: { uuid: userInfo?.uuid, name: userInfo?.email },
+            docId: documentId,
+            cursorData: { index, length },
+          });
+          setCursorData({ index, length });
+        }
+      }
+    };
+    quill.on("selection-change", updateCursor);
+    socketio.on("doc-cursor-update", (data) => {
+      console.log(data, "cursor");
+      renderCursor(
+        data.user.id,
+        data.user.name,
+        data.cursorData.index,
+        data.cursorData.length,
+      );
+    });
+  }, [socketio, quill]);
+
+  const renderCursor = (userId, username, index, length) => {
+    console.log(userId, index, length, "renderCursor");
+    const cursorContainer = document.querySelector(".container") as HTMLElement;
+    cursorContainer.style.position = "relative";
+
+    if (cursorContainer) {
+      const existingCursor = cursorContainer.querySelector(`#cursor-${userId}`);
+      if (existingCursor) {
+        (existingCursor as HTMLElement).innerHTML = username;
+        (existingCursor as HTMLElement).style.background = "#E8F8FD";
+        (existingCursor as HTMLElement).style.padding = "2px 5px";
+        (existingCursor as HTMLElement).style.borderRadius = "5px";
+        (existingCursor as HTMLElement).style.position = "absolute";
+
+        // Adjust the offsets for more accurate positioning
+        const xOffset = 5; // Adjust this value as needed
+        const yOffset = 90; // Adjust this value as needed
+
+        (existingCursor as HTMLElement).style.left = `${
+          quill.getBounds(index, length).left + xOffset
+        }px`;
+        (existingCursor as HTMLElement).style.top = `${
+          quill.getBounds(index, length).top + yOffset
+        }px`;
+      } else {
+        const cursor = document.createElement("span");
+        cursor.id = `cursor-${userId}`;
+        (cursor as HTMLElement).style.background = "#E8F8FD";
+        (cursor as HTMLElement).innerHTML = username;
+        (cursor as HTMLElement).style.padding = "2px 5px";
+        (cursor as HTMLElement).style.borderRadius = "5px";
+        (cursor as HTMLElement).style.position = "absolute";
+
+        // Adjust the offsets for more accurate positioning
+        const xOffset = 5; // Adjust this value as needed
+        const yOffset = 90; // Adjust this value as needed
+
+        (cursor as HTMLElement).style.left = `${
+          quill.getBounds(index, length).left + xOffset
+        }px`;
+        (cursor as HTMLElement).style.top = `${
+          quill.getBounds(index, length).top + yOffset
+        }px`;
+        cursorContainer.appendChild(cursor);
+      }
+    }
+  };
+
+  const removeCursor = (userId) => {
+    const cursorContainer = document.querySelector(
+      ".cursor-container",
+    ) as HTMLElement;
+    const cursorToRemove = cursorContainer.querySelector(`#cursor-${userId}`);
+    if (cursorToRemove) {
+      cursorContainer.removeChild(cursorToRemove);
+    }
+  };
   // react to the update events
   useEffect(() => {
     if (socketio == null || quill == null) return;
@@ -108,19 +311,33 @@ export default function TextEditor() {
 
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper == null) return;
-    // Ensure Quill is loaded only on the client side
     import("quill").then((Quill) => {
       const editor = document.createElement("div");
+      const print = document.createElement("div");
+      print.setAttribute("class", "print-icon");
+      const printIcon = (
+        <Tooltip title="Preview and Print Document">
+          <PrintIcon style={{ fontSize: 30, color: "white" }} />
+        </Tooltip>
+      ); // Adjust the font size as needed
+
+      // Append the Material-UI PrintIcon component to the print div
+      ReactDOM.render(printIcon, print);
+
       wrapper.innerHTML = "";
-      wrapper.append(editor);
+      wrapper.appendChild(editor);
+      wrapper.appendChild(print);
       const q = new Quill.default(editor, {
         theme: "snow",
-        modules: { toolbar: TOOLBAR_OPTIONS },
+        modules: {
+          toolbar: TOOLBAR_OPTIONS,
+        },
       });
+
       q.disable();
-      // q.setText("Loading...");
       setQuill(q);
     });
   }, []);
-  return <div className="container" ref={wrapperRef}></div>;
+
+  return <div className="container relative" ref={wrapperRef}></div>;
 }

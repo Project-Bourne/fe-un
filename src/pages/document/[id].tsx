@@ -49,6 +49,9 @@ const viewDocument = () => {
           id: userInfo?.uuid,
           name: userInfo?.email,
         },
+        data: {
+          ops: [{ insert: data }],
+        },
       };
       await useSocket.createDoc(docData);
       socketio.once("load-doc", (res) => {
@@ -96,7 +99,7 @@ const viewDocument = () => {
             case "deepchat":
               url = `http://192.81.213.226:81/85/deepchat/${routeId}`;
               break;
-            case "analyzer":
+            case "analyser":
               url = `http://192.81.213.226:81/81/analysis/${routeId}`;
               break;
             case "interrogator":
@@ -122,13 +125,17 @@ const viewDocument = () => {
             case "translator":
               createDoc(data?.data?.textTranslation);
               break;
+            case "summarizer":
+              createDoc(data?.data?.summaryArray[0].summary);
+              break;
             case "factcheck":
               createDoc(data?.data?.confidence?.content);
               break;
             case "irp":
-              createDoc(data?.data?.confidence?.content);
+              // createDoc(data?.data?.confidence?.content);
+              createDoc(data?.data?.confidence?.content5wh);
               break;
-            case "analyzer":
+            case "analyser":
               createDoc(data?.data?.text);
               break;
             case "interrogator":

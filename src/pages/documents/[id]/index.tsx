@@ -89,7 +89,7 @@ const viewDocument = () => {
     if (singleDoc?.spaceId) {
       setDocumentsBar([
         // {
-        //   name: "Share",
+        //   name: "Preview",
         //   icon: "share.svg",
         //   id: 1,
         // },
@@ -112,6 +112,11 @@ const viewDocument = () => {
       setShowChat(true);
     } else {
       setDocumentsBar([
+        // {
+        //   name: "Preview",
+        //   icon: "share.svg",
+        //   id: 1,
+        // },
         {
           name: "Call",
           icon: "call.svg",

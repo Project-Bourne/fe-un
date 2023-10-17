@@ -5,9 +5,7 @@ import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 let access = "";
 if (typeof window !== "undefined") {
-  access =
-    cookies.get("deep-access") ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwMTU0ODcwLWVhYjgtNGQyMy1hYjk2LWNkMDk5YjRmYmU5MyIsInJvbGUiOiI0IiwiaWF0IjoxNjk1NzQxMTAwLCJleHAiOjE2OTU4Mjc1MDB9.RCAnoAu0yR9mzKwyMoxtkSdriMXmIsSlz1bgXtdUlbg";
+  access = cookies.get("deep-access");
 }
 export const requestHeader = {
   Accept: "application/json",
@@ -46,7 +44,7 @@ export async function request(url, method, payload, token, text, form) {
           // Token is invalid, remove it from client-side storage
           removeAuthToken(); // Replace with your logic to remove the token
           // Redirect to the home page if needed
-          router.push("/");
+          window.location.href = "/auth/login";
           return Promise.reject("Invalid Token");
         }
         if (text === true) {
@@ -100,7 +98,7 @@ export async function request2(url, method, payload, token, text, form) {
           // Token is invalid, remove it from client-side storage
           removeAuthToken(); // Replace with your logic to remove the token
           // Redirect to the home page if needed
-          router.push("/");
+          window.location.href = "/auth/login";
           return Promise.reject("Invalid Token");
         }
         if (text === true) {
