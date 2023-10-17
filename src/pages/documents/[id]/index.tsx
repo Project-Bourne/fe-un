@@ -75,7 +75,9 @@ const viewDocument = () => {
     });
 
     socketio.on("doc-updated", async (res) => {
-      console.log("doc-updata", res);
+      let response = JSON.parse(res);
+      console.log("doc-updata", response.data);
+      dispatch(setSingleDoc(response.data));
     });
 
     socketio.on("retrieved-comments-in-doc", async (res) => {

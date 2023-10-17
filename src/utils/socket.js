@@ -13,7 +13,7 @@ export const requestHeader = {
 
 const socketio = io("http://192.81.213.226:86/", {
   autoConnect: false,
-  // extraHeaders: requestHeader,
+  extraHeaders: requestHeader,
   // path: "/86"
 });
 
