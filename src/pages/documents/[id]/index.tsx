@@ -75,7 +75,9 @@ const viewDocument = () => {
     });
 
     socketio.on("doc-updated", async (res) => {
-      console.log("doc-updata", res);
+      let response = JSON.parse(res);
+      console.log("doc-updata", response.data);
+      dispatch(setSingleDoc(response.data));
     });
 
     socketio.on("retrieved-comments-in-doc", async (res) => {
@@ -89,7 +91,7 @@ const viewDocument = () => {
     if (singleDoc?.spaceId) {
       setDocumentsBar([
         // {
-        //   name: "Share",
+        //   name: "Preview",
         //   icon: "share.svg",
         //   id: 1,
         // },
@@ -112,6 +114,11 @@ const viewDocument = () => {
       setShowChat(true);
     } else {
       setDocumentsBar([
+        // {
+        //   name: "Preview",
+        //   icon: "share.svg",
+        //   id: 1,
+        // },
         {
           name: "Call",
           icon: "call.svg",

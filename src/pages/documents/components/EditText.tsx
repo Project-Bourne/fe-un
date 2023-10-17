@@ -15,8 +15,10 @@ function EditableText({ initialText }) {
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
+  const { singleDoc } = useSelector((state: any) => state?.docs);
   const handleSaveClick = async () => {
     let docData = {
+      id: singleDoc?._id,
       name: text,
       author: {
         id: userInfo?.uuid,
