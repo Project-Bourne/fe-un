@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import socketio from "@/utils/socket";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-function CreateDocument(setCreateDocModal) {
+function CreateDocument(setCreateDocModal, handleCloseModal) {
   const [formData, setFormData] = useState({
     name: "",
   });
@@ -38,7 +38,23 @@ function CreateDocument(setCreateDocModal) {
         },
       };
       await useSocket.createDoc(docData);
+      socketio.on("load-doc", async (res) => {
+        let data = JSON.parse(res);
+        console.log("load-doc", data);
+        toast("Document Created", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        await useSocket.getDocHistory({ uuid: userInfo?.uuid });
+      });
       setCreateDocModal(false);
+      handleCloseModal();
     } catch (error) {
       console.log(error);
     }

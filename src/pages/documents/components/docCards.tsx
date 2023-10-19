@@ -1,31 +1,19 @@
-import { CustomModal } from "../../../components/ui";
-import AuthService from "@/services/auth.service";
-import Image from "next/image";
+import SocketService from "../../../socket/chat.socket";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CollabService from "@/services/collaborator.service";
 import DeleteModal from "@/components/ui/DeleteModal";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function DocCard({ docCardClick, data, isActive }: any) {
   const handleDocCardClick = (data) => {
     docCardClick(data);
   };
   const [showDeleteModal, setshowDeleteModal] = useState(false);
-  // useEffect(() => {
-  //   const fetchCollaborators = async () => {
-  //     const docCollabPromises = data.collaborators.map(async (el) => {
-  //       const user = await AuthService.getusersbyId(el.id);
-  //       return user?.data;
-  //     });
-
-  //     const docCollaborators = await Promise.all(docCollabPromises);
-  //     setUsers(docCollaborators);
-  //     // console.log(docCollaborators, "docCollaborators");
-  //   };
-  //   fetchCollaborators();
-  // }, []);
-
+  const { userInfo, userAccessToken, refreshToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   const deleteDoc = async (e, id) => {
     e.stopPropagation();
     try {
@@ -41,6 +29,8 @@ function DocCard({ docCardClick, data, isActive }: any) {
         theme: "light",
       });
       setshowDeleteModal(false);
+      const useSocket = SocketService;
+      await useSocket.getDocHistory({ uuid: userInfo?.uuid });
     } catch (error) {
       console.log(error);
     }

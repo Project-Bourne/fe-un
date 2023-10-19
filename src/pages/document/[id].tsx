@@ -36,6 +36,7 @@ const viewDocument = () => {
   const headers = {
     "deep-token": token,
   };
+
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
@@ -132,7 +133,6 @@ const viewDocument = () => {
               createDoc(data?.data?.confidence?.content);
               break;
             case "irp":
-              // createDoc(data?.data?.confidence?.content);
               createDoc(data?.data?.confidence?.content5wh);
               break;
             case "analyser":

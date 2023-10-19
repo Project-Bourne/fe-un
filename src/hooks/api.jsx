@@ -44,7 +44,7 @@ export async function request(url, method, payload, token, text, form) {
           // Token is invalid, remove it from client-side storage
           removeAuthToken(); // Replace with your logic to remove the token
           // Redirect to the home page if needed
-          window.location.href = "/auth/login";
+          window.location.href = "http://192.81.213.226:30/auth/login";
           return Promise.reject("Invalid Token");
         }
         if (text === true) {
@@ -98,7 +98,7 @@ export async function request2(url, method, payload, token, text, form) {
           // Token is invalid, remove it from client-side storage
           removeAuthToken(); // Replace with your logic to remove the token
           // Redirect to the home page if needed
-          window.location.href = "/auth/login";
+          window.location.href = "http://192.81.213.226:30/auth/login";
           return Promise.reject("Invalid Token");
         }
         if (text === true) {
