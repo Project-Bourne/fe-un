@@ -12,6 +12,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import ReactDOMServer from "react-dom/server";
 import { toast } from "react-toastify";
 import { Tooltip } from "@mui/material";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
@@ -53,10 +54,10 @@ function MessagesDisplay() {
         spaceId: activeChat.uuid,
       };
       await useSocket.createDoc(docData);
-      socketio.once("load-doc", (res) => {
+      socketio.on("load-doc", (res) => {
         let data = JSON.parse(res);
         console.log("load-doc", data);
-        dispatch(setSingleDoc(data?.data?.data));
+        // dispatch(setSingleDoc(data?.data?.data));
         setId(data?.data?._id);
         toast("Document Created", {
           position: "bottom-right",
@@ -81,6 +82,22 @@ function MessagesDisplay() {
   useEffect(() => {
     scrollToBottom();
   }, [selectedChat]);
+
+  const replaceURLsInText = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, (url) => {
+      return ReactDOMServer.renderToString(
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sirp-primary underline"
+        >
+          {url}
+        </a>,
+      );
+    });
+  };
 
   const documentView = (message) => {
     const textArr = message?.message?.text.split(",");
@@ -173,14 +190,19 @@ function MessagesDisplay() {
                         ? "float-right mr-3 rounded-l-xl rounded-tr-3xl bg-[#E9F1F9] "
                         : "float-left ml-3 rounded-r-xl rounded-tl-3xl bg-sirp-dashbordb1 "
                     }
-                 text-sirp-grey font-light shadow p-3 text-[16px] font-normal max-w-[400px] w-auto  mt-[3rem]`}
+                 text-sirp-grey  shadow p-3 text-[16px] font-normal max-w-[400px] w-auto  mt-[3rem]`}
                   >
                     {activeChat.spaceName && (
                       <p className="text-[12.5px] font-semibold border-b mb-2 text-sirp-primary">
                         {message?.sender?.name}
                       </p>
                     )}
-                    <p>{message?.message?.text}</p>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: replaceURLsInText(message?.message?.text),
+                      }}
+                    />
+                    {/* <p>{replaceURLsInText(message?.message?.text)}</p> */}
                   </div>
                 )}
                 <div className="clear-both table">

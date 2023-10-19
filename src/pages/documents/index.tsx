@@ -14,13 +14,10 @@ import { toast } from "react-toastify";
 
 function Documents() {
   const [isActive, setIsActive] = useState("");
-  const router = useRouter();
-  const dispatch = useDispatch();
   const [singleData, setSingleData] = useState({});
   const [createDocModal, setCreateDocModal] = useState(false);
-  const { userInfo, userAccessToken, refreshToken } = useSelector(
-    (state: any) => state?.auth,
-  );
+  const { userInfo } = useSelector((state: any) => state?.auth);
+
   const { allDocs } = useSelector((state: any) => state?.docs);
   useEffect(() => {
     const fetchHistory = async () => {
@@ -37,6 +34,7 @@ function Documents() {
     console.log(clickedDoc, "clickedDoc");
     setSingleData(clickedDoc);
   };
+
   const handleCloseModal = () => {
     setCreateDocModal(false);
   };
@@ -68,7 +66,10 @@ function Documents() {
           style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
         >
-          <CreateDocument setCreateDocModal={setCreateDocModal} />
+          <CreateDocument
+            setCreateDocModal={setCreateDocModal}
+            handleCloseModal={handleCloseModal}
+          />
         </CustomModal>
       )}
       <div

@@ -35,7 +35,6 @@ function App({ Component, pageProps, ...appProps }) {
   return (
     <Provider store={store}>
       <Head>
-        {/* Add this script tag to load the Jitsi Meet library */}
         <script src="https://jitsi.deepsoul.pro/external_api.js"></script>
       </Head>
       <AppWrapper Component={Component} pageProps={pageProps} {...appProps} />
@@ -76,6 +75,12 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     await useSocket.getRecentChats({ uuid: userInfo?.uuid });
     await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
   };
+
+  useEffect(() => {
+    if (router.pathname === "/") {
+      router.push("/chats");
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -186,7 +191,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       const useSocket = SocketService;
       await useSocket.getSelectedspace({
         spaceId: res?.space?.uuid,
-        uuid: userInfo?.uuid,
+        uuid: res?.userId,
       });
     });
 
@@ -200,26 +205,27 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.on("new-message", async (res) => {
       console.log("new-message", res);
       const useSocket = SocketService;
-      if (activeChat?.spaceName) {
+      if (res?.space) {
         await useSocket.getSelectedspace({
           spaceId: res?.space?.uuid,
-          uuid: userInfo?.uuid,
-        });
-      } else {
-        await useSocket.getSelectedMsg({
-          userId: userInfo?.uuid,
-          uuid: res?.userId,
+          uuid: res?.sender.id,
         });
       }
+      await useSocket.getSelectedMsg({
+        userId: userInfo?.uuid,
+        uuid: res?.userId,
+      });
     });
 
     socketio.on("all-msgs-selected", (res) => {
       let data = JSON.parse(res);
       console.log("setSelectedChat", data);
-      dispatch(setSelectedChat(data.data));
+      if (data.data.length > 0) {
+        dispatch(setSelectedChat(data.data));
+      }
     });
 
-    socketio.once("retrieved-docs", (res) => {
+    socketio.on("retrieved-docs", (res) => {
       let data = JSON.parse(res);
       console.log("retrieved-docs", data);
       dispatch(setAllDocs(data.data));

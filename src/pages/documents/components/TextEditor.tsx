@@ -17,7 +17,7 @@ import { Tooltip } from "@mui/material";
 
 export default function TextEditor() {
   const ReactQuill = dynamic(() => import("quill"), {
-    ssr: false, // Ensure Quill is not imported on the server side
+    ssr: false,
   });
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
@@ -35,7 +35,6 @@ export default function TextEditor() {
     console.log(singleDoc, "singleDoc");
     socketio.once("load-doc", (document) => {
       let data = JSON.parse(document);
-
       if (
         data &&
         data.data &&
@@ -54,11 +53,10 @@ export default function TextEditor() {
     });
 
     SocketService.getDoc({ id: documentId });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketio, quill, documentId]);
 
-  const SAVE_INTERVAL_MS = 500;
+  const SAVE_INTERVAL_MS = 1000;
+
   const TOOLBAR_OPTIONS = [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
     ["blockquote", "code-block"],
@@ -74,59 +72,9 @@ export default function TextEditor() {
     ["clean"],
   ];
 
-  // const handlePrint = () => {
-  //   if (quill) {
-  //     const editorContent = quill.root.innerHTML;
-
-  //     // Create a new window with a print document
-  //     const printWindow = window.open("", "", "width=600,height=600");
-  //     printWindow.document.open();
-
-  //     // Create a new HTML template for printing
-  //     const watermarkHTML = `
-  //       <div class="watermark">DEEP SOUL</div>
-  //     `;
-
-  //     const printHTML = `
-  //       <html>
-  //       <head>
-  //         <style>
-  //           .watermark {
-  //             position: fixed;
-  //             top: 300;
-  //             left: 300;
-  //             width: 100%;
-  //             height: 100%;
-  //             text-align: center;
-  //             transform: rotate(-45deg);
-  //             font-size: 80px;
-  //             opacity: 0.2; /* Adjust the opacity as needed */
-  //             pointer-events: none; /* Allow clicks through the watermark */
-  //           }
-  //         </style>
-  //       </head>
-  //       <body>
-  //         <div class="quill-editor-print">${editorContent}</div>
-  //         ${watermarkHTML}
-  //       </body>
-  //       </html>
-  //     `;
-
-  //     printWindow.document.write(printHTML);
-  //     printWindow.document.close();
-
-  //     // Wait for the content to load, then trigger the print dialog
-  //     printWindow.onload = () => {
-  //       printWindow.print();
-  //       printWindow.close();
-  //     };
-  //   }
-  // };
   const handlePrint = () => {
     if (quill) {
       const editorContent = quill.root.innerHTML;
-
-      // Create a new HTML template for printing
       const watermarkHTML = `
       <div class="watermark">DEEP SOUL</div>
     `;
@@ -171,8 +119,7 @@ export default function TextEditor() {
 
   useEffect(() => {
     if (quill) {
-      const print = document.querySelector(".print-icon"); // Select the element after it's added to the DOM
-
+      const print = document.querySelector(".print-icon");
       if (print) {
         print.addEventListener("click", handlePrint);
       }
@@ -183,7 +130,12 @@ export default function TextEditor() {
   useEffect(() => {
     if (!socketio || !quill) return;
     const interval = setInterval(() => {
-      SocketService.saveDoc(quill.getContents());
+      const content = quill.getContents();
+      console.log(content, "contentcontent");
+      const allContent = content.ops.map((el) => el.insert);
+      if (allContent[0].length > 3) {
+        SocketService.saveDoc(content);
+      }
     }, SAVE_INTERVAL_MS);
 
     return () => {
@@ -270,15 +222,15 @@ export default function TextEditor() {
     }
   };
 
-  const removeCursor = (userId) => {
-    const cursorContainer = document.querySelector(
-      ".cursor-container",
-    ) as HTMLElement;
-    const cursorToRemove = cursorContainer.querySelector(`#cursor-${userId}`);
-    if (cursorToRemove) {
-      cursorContainer.removeChild(cursorToRemove);
-    }
-  };
+  // const removeCursor = (userId) => {
+  //   const cursorContainer = document.querySelector(
+  //     ".cursor-container",
+  //   ) as HTMLElement;
+  //   const cursorToRemove = cursorContainer.querySelector(`#cursor-${userId}`);
+  //   if (cursorToRemove) {
+  //     cursorContainer.removeChild(cursorToRemove);
+  //   }
+  // };
   // react to the update events
   useEffect(() => {
     if (socketio == null || quill == null) return;
@@ -300,6 +252,7 @@ export default function TextEditor() {
     if (socketio == null || quill == null) return;
 
     const handler = (delta, oldDelta, source) => {
+      console.log(delta, "delta");
       if (source !== "user") return;
       SocketService.updateChanges(delta);
     };

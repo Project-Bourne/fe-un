@@ -18,6 +18,7 @@ import { SearchInput } from "../../components/ui/Input";
 import AuthService from "@/services/auth.service";
 import { setUserInfo } from "@/redux/reducers/authReducer";
 import NotificationService from "@/services/notification.service";
+import { Tooltip } from "@mui/material";
 
 function Index() {
   const [listMobileDisplay, setListMobileDisplay] = useState("block");
@@ -66,18 +67,24 @@ function Index() {
           </div> */}
         </div>
         <div className="flex gap-2">
-          <span
+          <Tooltip
+            title="Start New Chat"
             className="bg-sirp-primary flex items-center cursor-pointer justify-center rounded-lg w-[50px] h-[50px]"
             onClick={handleNewChat}
           >
-            <AddCommentIcon style={{ color: "white" }} />
-          </span>
-          <span
+            <span>
+              <AddCommentIcon style={{ color: "white" }} />
+            </span>
+          </Tooltip>
+          <Tooltip
+            title="New Workspace"
             className="bg-sirp-primary flex items-center cursor-pointer justify-center rounded-lg w-[50px] h-[50px]"
             onClick={() => handleModal("AddWorkspace")}
           >
-            <GroupsIcon style={{ color: "white", fontSize: "40px" }} />
-          </span>
+            <span>
+              <GroupsIcon style={{ color: "white", fontSize: "40px" }} />
+            </span>
+          </Tooltip>
         </div>
       </div>
 

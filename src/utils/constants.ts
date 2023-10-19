@@ -24,18 +24,18 @@ export const NavBarContents = [
   //   id: 3,
   //   route: "/workspaces",
   // },
-  {
-    name: "Help",
-    icon: "training.svg",
-    id: 7,
-    route: "/help",
-  },
-  {
-    name: "Settings",
-    icon: "settings.svg",
-    id: 8,
-    route: "/settings",
-  },
+  // {
+  //   name: "Help",
+  //   icon: "training.svg",
+  //   id: 7,
+  //   route: "/help",
+  // },
+  // {
+  //   name: "Settings",
+  //   icon: "settings.svg",
+  //   id: 8,
+  //   route: "http://192.81.213.226:30/settings/profile",
+  // },
 ];
 
 export const HomeSubData = [
