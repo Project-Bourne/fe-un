@@ -262,10 +262,9 @@ const CallModal = ({ setShowCall }) => {
     callRoute();
   }, []);
 
-  // const handleStartMeeting = () => {
-  //   const id = generateUniqueMeetingId();
-  //   router.push(`/calls/${id}`);
-  // };
+  const startMeeting = () => {
+    router.push(`${meetingName}`);
+  };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(meetingName).then(() => {
@@ -297,16 +296,22 @@ const CallModal = ({ setShowCall }) => {
               <div className="bg-black absolute bottom-0 right-0 left-0 h-[150px] flex items-center justify-center rounded-t-[1rem] rounde-b">
                 <input
                   type="text"
-                  className="p-5 w-[60%]"
+                  className="p-5 w-[50%]"
                   placeholder="Enter meeting name"
                   value={meetingName}
                   readOnly
                 />
                 <button
                   onClick={handleCopyLink}
-                  className="bg-sirp-primary  p-5 text-white ml-5"
+                  className="bg-sirp-primary  p-5 text-white ml-5 w-[20%]"
                 >
-                  Copy Call Link
+                  Copy Link
+                </button>
+                <button
+                  onClick={startMeeting}
+                  className="text-sirp-primary  p-5 bg-white ml-5 w-[20%]"
+                >
+                  Start Meeting
                 </button>
               </div>
             </div>

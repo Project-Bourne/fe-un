@@ -73,6 +73,7 @@ class SocketService {
   }
 
   getSelectedMsg(data: any) {
+    // console.log("SELECTED MSG")
     try {
       this.socket.emit("get-msgs-selected", data);
     } catch (err) {
@@ -182,6 +183,15 @@ class SocketService {
   getDoc(data) {
     try {
       this.socket.emit("get-doc", data);
+    } catch (err) {
+      NotificationService.error({
+        message: err?.error?.message,
+      });
+    }
+  }
+  readMsg(data) {
+    try {
+      this.socket.emit("read-msg", data);
     } catch (err) {
       NotificationService.error({
         message: err?.error?.message,

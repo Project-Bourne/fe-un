@@ -39,17 +39,27 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
       {users?.map((user, index) => (
         <Tooltip key={index} title={user?.email || userInfo?.email}>
           {index < stopImageCountAt && (
-            <>
+            <span>
               <img
                 src={user?.image || userInfo?.image}
                 alt={user?.alt}
-                className={`rounded-full border-[2px] bg-white h-[33px] w-[35px] -ml-[.8rem] "border-sirp-primaryBlue bg-red-100"`}
-              />{" "}
-              {/* eslint-disable-next-line */}
-            </>
+                className={`rounded-full border-[2px] bg-white h-[33px] w-[42px] -ml-[.8rem] "border-sirp-primaryBlue bg-red-100"`}
+              />
+            </span>
           )}
         </Tooltip>
       ))}
+      {/* {users?.map((user, index) => (
+        <div key={index} className="relative group">
+          <img
+            src={user?.image}
+            className={`rounded-full  border-[2px] bg-white h-[32px] w-[3px] -ml-[.8rem] cursor-pointer`}
+          />
+          <span className="absolute bottom-0 left-0 hidden group-hover:block bg-white text-sm rounded text-black p-1">
+            {user?.email || userInfo?.email}
+          </span>
+        </div>
+      ))} */}
       {showCollabModal && (
         <CustomModal
           style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"

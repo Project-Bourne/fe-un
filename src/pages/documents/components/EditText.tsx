@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { useTruncate } from "@/components/custom-hooks";
@@ -17,6 +17,7 @@ function EditableText({ initialText }) {
   );
   const { singleDoc } = useSelector((state: any) => state?.docs);
   const handleSaveClick = async () => {
+    if (!singleDoc) return;
     let docData = {
       id: singleDoc?._id,
       name: text,
@@ -50,7 +51,7 @@ function EditableText({ initialText }) {
       ) : (
         <div className="flex items-center space-x-2">
           <span className="text-3xl text-[#1D2022] font-bold capitalize">
-            {useTruncate(text, 20)}
+            {useTruncate(singleDoc?.name, 20)}
           </span>
           <button
             onClick={handleEditClick}

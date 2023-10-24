@@ -57,7 +57,7 @@ const viewDocument = () => {
       await useSocket.createDoc(docData);
       socketio.once("load-doc", (res) => {
         let data = JSON.parse(res);
-        console.log("load-doc", data);
+        console.log("load-doc", data.data);
         dispatch(setSingleDoc(data?.data?.data));
         toast("Document Created", {
           position: "bottom-right",
@@ -69,7 +69,7 @@ const viewDocument = () => {
           progress: undefined,
           theme: "light",
         });
-        //
+        router.push(`/documents/${data?.data?._id}`);
       });
     } catch (error) {
       console.log(error);
