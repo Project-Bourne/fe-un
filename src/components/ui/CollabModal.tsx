@@ -69,6 +69,7 @@ export default function CollabModal({ users, setShowCollabModal }) {
         console.log(res, "load");
         let data = JSON.parse(res);
         console.log("collab-removed", data.data);
+        SocketService.getDoc({ id: data._id });
         // dispatch(setSingleDoc(data.data));
         toast("Document Created", {
           position: "bottom-right",

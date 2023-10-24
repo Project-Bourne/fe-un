@@ -46,11 +46,12 @@ function WorkspaceDetails(props) {
         creator: {
           id: userInfo?.uuid,
           name: userInfo?.email,
-          designation: userInfo?.country[0]
-        }
+          designation: userInfo?.country[0],
+        },
       };
-      console.log(workspaceData)
+      console.log(workspaceData);
       await useSocket.createWorkspace(workspaceData);
+      await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
       setModalType(null);
     } catch (error) {
       console.log(error);

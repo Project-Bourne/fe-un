@@ -73,6 +73,11 @@ const viewDocument = () => {
         spaceId: res?.spaceId,
       });
     });
+    // socketio.on("load-doc", (res) => {
+    //   let data = JSON.parse(res);
+    //   console.log("load-doc", data);
+    //   dispatch(setSingleDoc(data?.data?.data));
+    // });
 
     socketio.on("doc-updated", async (res) => {
       let response = JSON.parse(res);

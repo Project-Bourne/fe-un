@@ -74,6 +74,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     await useSocket.updateData(data);
     await useSocket.getRecentChats({ uuid: userInfo?.uuid });
     await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
+    await useSocket.readMsg({ senderId: userInfo?.uuid });
   };
 
   useEffect(() => {
@@ -128,19 +129,61 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
   // }, []);
 
   useEffect(() => {
-    // confirm socket connection
-    socketio.on("connected-id", (res) => {
+    socketio.once("connected-id", (res) => {
       console.log("connected-id", res);
     });
-
+    socketio.once("msg-read", (res) => {
+      console.log("msg-read", res);
+    });
     socketio.once("bot-new-msgs", (res) => {
       console.log("bot-new-msgs", res);
     });
     // get recent chats
-    socketio.on("recent-chats", (res) => {
+    socketio.once("recent-chats", (res) => {
       let data = JSON.parse(res);
       dispatch(setRecentChats(data.data));
     });
+    socketio.once("error", (err) => {
+      let errorData = err;
+      console.log(err, "error socket");
+      if (typeof err === "string") {
+        try {
+          errorData = JSON.parse(err);
+        } catch (e) {
+          console.error("Error parsing JSON:", e);
+        }
+      }
+      console.log("socket error", errorData);
+      toast(`Something went wrong: ${errorData?.message || errorData}`, {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    });
+  }, [socketio]);
+
+  useEffect(() => {
+    if (!userInfo) return;
+    // confirm socket connection
+    // socketio.once("connected-id", (res) => {
+    //   console.log("connected-id", res);
+    // });
+    // socketio.once("msg-read", (res) => {
+    //   console.log("msg-read", res);
+    // });
+    // socketio.once("bot-new-msgs", (res) => {
+    //   console.log("bot-new-msgs", res);
+    // });
+    // // get recent chats
+    // socketio.once("recent-chats", (res) => {
+    //   let data = JSON.parse(res);
+    //   dispatch(setRecentChats(data.data));
+    // });
 
     socketio.on("space-created", async (res) => {
       let data = JSON.parse(res);
@@ -205,16 +248,20 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.on("new-message", async (res) => {
       console.log("new-message", res);
       const useSocket = SocketService;
+      if (!userInfo) return;
       if (res?.space) {
         await useSocket.getSelectedspace({
           spaceId: res?.space?.uuid,
           uuid: res?.sender.id,
         });
+        await useSocket.readMsg({ senderId: userInfo?.uuid });
+      } else {
+        await useSocket.getSelectedMsg({
+          userId: userInfo?.uuid,
+          uuid: res?.userId,
+        });
+        await useSocket.readMsg({ senderId: userInfo?.uuid });
       }
-      await useSocket.getSelectedMsg({
-        userId: userInfo?.uuid,
-        uuid: res?.userId,
-      });
     });
 
     socketio.on("all-msgs-selected", (res) => {
@@ -234,30 +281,8 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.once("collabs-added", (res) => {
       let data = JSON.parse(res);
       console.log("collabs-added", data);
+      // SocketService.getDoc({ id: data._id });
       toast("Collabs Added", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    });
-
-    socketio.on("error", (err) => {
-      let errorData = err;
-      console.log(err, "error socket");
-      if (typeof err === "string") {
-        try {
-          errorData = JSON.parse(err);
-        } catch (e) {
-          console.error("Error parsing JSON:", e);
-        }
-      }
-      console.log("socket error", errorData);
-      toast(`Something went wrong: ${errorData?.message || errorData}`, {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,
