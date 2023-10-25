@@ -71,7 +71,7 @@ export default function CollabModal({ users, setShowCollabModal }) {
         console.log("collab-removed", data.data);
         SocketService.getDoc({ id: data._id });
         // dispatch(setSingleDoc(data.data));
-        toast("Document Created", {
+        toast("Collaborator Removed", {
           position: "bottom-right",
           autoClose: 2000,
           hideProgressBar: false,

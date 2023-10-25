@@ -242,6 +242,7 @@ import JitsiMeet from "react-jitsi";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
+import Link from "next/link";
 
 const CallModal = ({ setShowCall }) => {
   const [callId, setCallId] = useState(null);
@@ -261,10 +262,6 @@ const CallModal = ({ setShowCall }) => {
     };
     callRoute();
   }, []);
-
-  const startMeeting = () => {
-    router.push(`${meetingName}`);
-  };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(meetingName).then(() => {
@@ -307,12 +304,13 @@ const CallModal = ({ setShowCall }) => {
                 >
                   Copy Link
                 </button>
-                <button
-                  onClick={startMeeting}
+                <Link
+                  href={meetingName}
+                  target="_blank"
                   className="text-sirp-primary  p-5 bg-white ml-5 w-[20%]"
                 >
                   Start Meeting
-                </button>
+                </Link>
               </div>
             </div>
           </div>

@@ -41,7 +41,7 @@ function ChatInput(props) {
       console.log({ uuid: activeChat.uuid, data: textValue }, "text");
       const useSocket = SocketService;
       await useSocket.sendComment({
-        spaceId: singleDoc.spaceId,
+        // spaceId: singleDoc.spaceId,
         data: textValue,
         docType: 0,
         doc: {
@@ -56,50 +56,48 @@ function ChatInput(props) {
   };
 
   return (
-    <>
-      <div className="bg-white z-10 bottom-0 w-full py-3 border-t-[1px] border-t-[#F9F9F9]">
-        <form className="flex relative justify-center w-[95%] mx-auto">
-          <div className="md:w-[7%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center"></div>
-          <div className="w-[68%] flex items-center h-15 border-0 ">
-            <textarea
-              className={`w-full h-full py-3.5 px-1 md:pr-3 font-light border-l-0 text-[13px] bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none resize-none `}
-              placeholder="Type message here"
-              rows={1}
-              value={textValue}
-              onChange={(e) => {
-                setTextValue(e.target.value);
-                setIsTyping(true);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault(); // Prevents adding a new line (default behavior for Enter key)
-                  handleSendMessage(); // Call your sendMessage function here
-                }
-              }}
-            />
-          </div>
-          <div className="flex justify-between gap-x-1 md:gap-x-2  md:w-[14%] bg-[#F9FBFE] rounded-r-full">
-            <Image
-              src={require("../../../../public/icons/chat.emoji.svg")}
-              alt="emoji"
-              width={25}
-              height={25}
-              onClick={() => setToggleEmoji((prevState) => !prevState)}
-              className="px-[0.15rem] hover:cursor-pointer"
-              priority
-            />
-            <Image
-              src={require("../../../../public/icons/chat.send.svg")}
-              alt="send"
-              className={`${
-                !isTyping ? "bg-[#B9C1C7]" : "bg-sirp-primary"
-              } p-2 md:p-3 my-auto rounded-full h[40px] w-[40px] md:h-[50px] md:w-[50px] hover:cursor-pointer`}
-              onClick={handleSendMessage}
-              priority
-            />
-          </div>
-        </form>
-      </div>
+    <div className=" absolute bottom-[210px] w-full items-center bg-white h-[80px] border-l">
+      <form className="flex justify-center mt-5">
+        {/* <div className="md:w-[7%] rounded-l-full border-r-0  bg-[#F9FBFE] focus:border-[#F9FBFE] outline-none flex justify-center"></div> */}
+        <div className="w-[80%] flex items-center justify-center h-15 border-0 relative  rounded-l-full">
+          <textarea
+            className={`w-full h-full p-5 font-light text-[13px] bg-[#EEF4FB] focus:border-[#4070be] outline-none resize-none`}
+            placeholder="Type message here"
+            rows={1}
+            value={textValue}
+            onChange={(e) => {
+              setTextValue(e.target.value);
+              setIsTyping(true);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault(); // Prevents adding a new line (default behavior for Enter key)
+                handleSendMessage(); // Call your sendMessage function here
+              }
+            }}
+          />
+        </div>
+        <div className="flex justify-between w-[20%] bg-[#EEF4FB] rounded-r-full">
+          <Image
+            src={require("../../../../public/icons/chat.emoji.svg")}
+            alt="emoji"
+            width={20}
+            height={20}
+            onClick={() => setToggleEmoji((prevState) => !prevState)}
+            className="px-[0.15rem] hover:cursor-pointer"
+            priority
+          />
+          <Image
+            src={require("../../../../public/icons/chat.send.svg")}
+            alt="send"
+            className={`${
+              !isTyping ? "bg-[#B9C1C7]" : "bg-sirp-primary"
+            } p-2 md:p-3 my-auto rounded-full h[40px] w-[40px] md:h-[50px] md:w-[50px] hover:cursor-pointer`}
+            onClick={handleSendMessage}
+            priority
+          />
+        </div>
+      </form>
 
       {/* emoji selection popup    */}
       <CustomEmoji
@@ -113,7 +111,7 @@ function ChatInput(props) {
         setToggleAudio={setToggleAudio}
         handleRecordedAudio={handleRecordedAudio}
       />
-    </>
+    </div>
   );
 }
 
