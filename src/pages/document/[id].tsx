@@ -104,7 +104,7 @@ const viewDocument = () => {
               url = `http://192.81.213.226:81/81/analysis/${routeId}`;
               break;
             case "interrogator":
-              url = `http://192.81.213.226:81/837/interrogator/${routeId}`;
+              url = `http://192.81.213.226:81/87/interrogation/${routeId}`;
               break;
             case "collab":
               url = `http://192.81.213.226:81/86/api/v1/${routeId}`;
@@ -139,6 +139,8 @@ const viewDocument = () => {
               createDoc(data?.data?.text);
               break;
             case "interrogator":
+              createDoc(data?.data?.answer);
+              break;
             case "collab":
             case "deepchat":
               break;

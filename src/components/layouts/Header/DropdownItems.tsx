@@ -8,11 +8,18 @@ import translator from "../../../../public/icons/translator.svg";
 import collab from "../../../../public/icons/collab.svg";
 import fact_checker from "../../../../public/icons/checker.svg";
 import deep_chat from "../../../../public/icons/deep.svg";
+import admin from "../../../../public/icons/admin.svg";
 import Image from "next/image";
 
 const BASE_URL = "http://192.81.213.226";
 
 const dropdownItems = [
+  {
+    name: "Admin",
+    to: `${BASE_URL}:38/home`,
+    key: "admin",
+    icon: admin,
+  },
   {
     name: "IRP",
     to: `${BASE_URL}:30/home`,
