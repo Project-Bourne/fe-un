@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 import AuthService from "@/services/auth.service";
 import DocumentService from "@/services/document.service";
-import { useTruncate } from "@/components/custom-hooks";
 import { setComments } from "@/redux/reducers/chat/chatReducer";
 import EditableText from "../components/EditText";
 
@@ -39,6 +38,10 @@ const viewDocument = () => {
   const { singleDoc } = useSelector((state: any) => state?.docs);
   const { comments } = useSelector((state: any) => state?.chats);
   const { id } = router.query;
+  useEffect(() => {
+    dispatch(setComments([]));
+    dispatch(setSingleDoc(null));
+  }, []);
 
   useEffect(() => {
     const fetchCollaborators = async () => {
