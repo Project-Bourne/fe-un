@@ -8,9 +8,6 @@ import CreateDocument from "./components/createDoc";
 import SocketService from "../../socket/chat.socket";
 import { useDispatch, useSelector } from "react-redux";
 import chatEmpty from "../../../public/icons/chat.empty.svg";
-import socketio from "@/utils/socket";
-import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
-import { toast } from "react-toastify";
 
 function Documents() {
   const [isActive, setIsActive] = useState("");

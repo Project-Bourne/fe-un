@@ -17,14 +17,25 @@ import EditableText from "../components/EditText";
 
 const viewDocument = () => {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(true);
   const router = useRouter();
   const [showCall, setShowCall] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
-  const [documentsBar, setDocumentsBar] = useState([]);
+  const documentsBar = [
+    {
+      name: "Call",
+      icon: "call.svg",
+      id: 3,
+    },
+    {
+      name: "Comments",
+      icon: "chat.svg",
+      id: 4,
+    },
+  ];
   const { singleDoc } = useSelector((state: any) => state?.docs);
   const { comments } = useSelector((state: any) => state?.chats);
   const { id } = router.query;
@@ -43,7 +54,6 @@ const viewDocument = () => {
             const user = await AuthService.getusersbyId(el.id);
             return user?.data;
           });
-
           const docCollaborators = await Promise.all(docCollabPromises);
           setUsers(docCollaborators);
         }
@@ -70,14 +80,8 @@ const viewDocument = () => {
       const useSocket = SocketService;
       await useSocket.getComments({
         docId: res?.doc?.id,
-        spaceId: res?.spaceId,
       });
     });
-    // socketio.on("load-doc", (res) => {
-    //   let data = JSON.parse(res);
-    //   console.log("load-doc", data);
-    //   dispatch(setSingleDoc(data?.data?.data));
-    // });
 
     socketio.on("doc-updated", async (res) => {
       let response = JSON.parse(res);
@@ -92,72 +96,15 @@ const viewDocument = () => {
     });
   }, [socketio]);
 
-  useEffect(() => {
-    if (singleDoc?.spaceId) {
-      setDocumentsBar([
-        // {
-        //   name: "Preview",
-        //   icon: "share.svg",
-        //   id: 1,
-        // },
-        // {
-        //   name: "Comment",
-        //   icon: "comments.svg",
-        //   id: 2,
-        // },
-        {
-          name: "Call",
-          icon: "call.svg",
-          id: 3,
-        },
-        {
-          name: "Comments",
-          icon: "chat.svg",
-          id: 4,
-        },
-      ]);
-      setShowChat(true);
-    } else {
-      setDocumentsBar([
-        // {
-        //   name: "Preview",
-        //   icon: "share.svg",
-        //   id: 1,
-        // },
-        {
-          name: "Call",
-          icon: "call.svg",
-          id: 3,
-        },
-      ]);
-    }
-  }, []);
-
   const handleClick = (id) => {
     setSelectedTab(id);
-    if (id === 1) {
-      setShowComments(false);
-      setShowChat(false);
-      setShowCall(false);
-      setShowShare(true);
-    }
-    if (id === 2) {
-      setShowComments(true);
-      setShowChat(false);
-      setShowCall(false);
-      setShowShare(false);
-    }
     if (id == 3) {
       setShowComments(false);
       setShowCall(true);
-      setShowChat(false);
-      setShowShare(false);
     }
     if (id == 4) {
-      setShowComments(false);
-      setShowChat(true);
+      setShowComments(true);
       setShowCall(false);
-      setShowShare(false);
     }
   };
 
@@ -165,9 +112,6 @@ const viewDocument = () => {
     <div className="w-full h-full doc overflow-y-auto">
       <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
         <div className="flex items-center">
-          {/* <span className="text-3xl text-[#1D2022] font-bold capitalize">
-            {useTruncate(singleDoc?.name, 20)}
-          </span> */}
           <EditableText initialText={singleDoc?.name} />
         </div>
         <div>
@@ -176,33 +120,26 @@ const viewDocument = () => {
         <div className=" flex items-center">
           {documentsBar?.map((item) => (
             <div
-              key={item.id}
+              key={item?.id}
               className={` ${
-                selectedTab === item.id
+                selectedTab === item?.id
                   ? "flex items-center mr-5 bg-sirp-primaryLess2 p-1 rounded-lg cursor-pointer"
                   : "flex items-center mr-5 p-1 cursor-pointer rounded-lg"
               }`}
-              onClick={() => handleClick(item.id)}
+              onClick={() => handleClick(item?.id)}
             >
               <span className="mr-2">
                 <Image
-                  src={require(`../../../../public/icons/${item.icon}`)}
+                  src={require(`../../../../public/icons/${item?.icon}`)}
                   alt=""
                 />
               </span>
-              <span>{item.name}</span>
+              <span>{item?.name}</span>
             </div>
           ))}
         </div>
       </div>
-      <Docs
-        showComments={showComments}
-        setShowComments={setShowComments}
-        setShowChat={setShowChat}
-        showChat={showChat}
-        setShowShare={setShowShare}
-        showShare={showShare}
-      />
+      <Docs showComments={showComments} setShowComments={setShowComments} />
       {showCall && <CallModal setShowCall={setShowCall} />}
     </div>
   );
