@@ -14,6 +14,7 @@ import {
 import PrintIcon from "@mui/icons-material/Print";
 import ReactDOM from "react-dom";
 import { Tooltip } from "@mui/material";
+import { setComments } from "@/redux/reducers/chat/chatReducer";
 
 export default function TextEditor() {
   const ReactQuill = dynamic(() => import("quill"), {
@@ -22,6 +23,10 @@ export default function TextEditor() {
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
+  useEffect(() => {
+    dispatch(setComments(null));
+    dispatch(setSingleDoc(null));
+  }, []);
   const [cursorData, setCursorData] = useState({ index: 0, length: 0 });
   const { singleDoc } = useSelector((state: any) => state?.docs);
   const useSocket = SocketService;
@@ -43,19 +48,15 @@ export default function TextEditor() {
         data.data.data.ops.length > 0
       ) {
         dispatch(setSingleDoc(data.data));
-        const insert = data.data.data.ops[0].insert;
-        if (insert) {
-          console.log(insert, "document", data.data);
-          quill.setContents(data.data.data);
-          quill.enable();
-        }
+        quill.setContents(data.data.data);
+        quill.enable();
       }
     });
 
     SocketService.getDoc({ id: documentId });
   }, [socketio, quill, documentId]);
 
-  const SAVE_INTERVAL_MS = 1000;
+  const SAVE_INTERVAL_MS = 3000;
 
   const TOOLBAR_OPTIONS = [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -132,10 +133,7 @@ export default function TextEditor() {
     const interval = setInterval(() => {
       const content = quill.getContents();
       console.log(content, "contentcontent");
-      const allContent = content.ops.map((el) => el.insert);
-      if (allContent[0].length > 3) {
-        SocketService.saveDoc(content);
-      }
+      SocketService.saveDoc(content);
     }, SAVE_INTERVAL_MS);
 
     return () => {

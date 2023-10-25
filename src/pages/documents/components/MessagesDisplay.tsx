@@ -31,7 +31,7 @@ function MessagesDisplay() {
       className="h-[75vh] flex items-center flex-col px-3 overflow-y-auto py-20 overflow-x-hidden bg-[#efefef] border-l"
       ref={messagesEndRef}
     >
-      {comments.length > 0 ? (
+      {comments?.length > 0 ? (
         <>
           {comments?.map((message) => {
             return message?.comment?.text ? (

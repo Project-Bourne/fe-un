@@ -8,9 +8,12 @@ import CreateDocument from "./components/createDoc";
 import SocketService from "../../socket/chat.socket";
 import { useDispatch, useSelector } from "react-redux";
 import chatEmpty from "../../../public/icons/chat.empty.svg";
+import { setComments } from "@/redux/reducers/chat/chatReducer";
+import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 
 function Documents() {
   const [isActive, setIsActive] = useState("");
+  const dispatch = useDispatch();
   const [singleData, setSingleData] = useState({});
   const [createDocModal, setCreateDocModal] = useState(false);
   const { userInfo } = useSelector((state: any) => state?.auth);
@@ -23,7 +26,10 @@ function Documents() {
     };
     fetchHistory();
   }, []);
-
+  useEffect(() => {
+    dispatch(setComments([]));
+    dispatch(setSingleDoc(null));
+  }, []);
   const handleClick = (num) => {
     console.log(allDocs, "alldocs");
     setIsActive(num);

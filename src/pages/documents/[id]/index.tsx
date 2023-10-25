@@ -45,21 +45,17 @@ const viewDocument = () => {
 
   useEffect(() => {
     const fetchCollaborators = async () => {
-      if (id) {
-        const document = await DocumentService.getDoc(id);
-        dispatch(setSingleDoc(document));
-        if (
-          singleDoc?.collaborators &&
-          Array.isArray(singleDoc.collaborators)
-        ) {
-          const docCollabPromises = singleDoc.collaborators.map(async (el) => {
-            console.log(el, "el chisommm");
-            const user = await AuthService.getusersbyId(el.id);
-            return user?.data;
-          });
-          const docCollaborators = await Promise.all(docCollabPromises);
-          setUsers(docCollaborators);
-        }
+      if (!id) return;
+      const document = await DocumentService.getDoc(id);
+      dispatch(setSingleDoc(document));
+      if (singleDoc?.collaborators && Array.isArray(singleDoc.collaborators)) {
+        const docCollabPromises = singleDoc.collaborators.map(async (el) => {
+          console.log(el, "el chisommm");
+          const user = await AuthService.getusersbyId(el.id);
+          return user?.data;
+        });
+        const docCollaborators = await Promise.all(docCollabPromises);
+        setUsers(docCollaborators);
       }
     };
     fetchCollaborators();
