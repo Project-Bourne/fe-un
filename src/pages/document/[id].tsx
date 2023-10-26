@@ -109,6 +109,9 @@ const viewDocument = () => {
             case "collab":
               url = `http://192.81.213.226:81/86/api/v1/${routeId}`;
               break;
+            case "digest":
+              url = `http://192.81.213.226:81/84/digest/${routeId}`;
+              break;
             default:
               throw new Error("Invalid routeName");
           }
@@ -140,6 +143,9 @@ const viewDocument = () => {
               break;
             case "interrogator":
               createDoc(data?.data?.answer);
+              break;
+            case "digest":
+              createDoc(data?.data?.report);
               break;
             case "collab":
             case "deepchat":
