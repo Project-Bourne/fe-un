@@ -178,83 +178,72 @@ function MessagesDisplay() {
       )}
       <ul className="md:pb-[3rem] pb-[7rem]">
         {selectedChat?.map((message) => {
-          return message?.message?.text ? (
-            <div key={message._id}>
-              <li key={message._id}>
-                {message?.message?.doc == 1 || message?.message?.img == 1 ? (
-                  documentView(message)
-                ) : (
-                  <div
-                    className={`${
-                      message?.sender?.id !== activeChat?.uuid
-                        ? "float-right mr-3 rounded-l-xl rounded-tr-3xl bg-[#E9F1F9] "
-                        : "float-left ml-3 rounded-r-xl rounded-tl-3xl bg-sirp-dashbordb1 "
-                    }
-                 text-sirp-grey  shadow p-3 text-[16px] font-normal max-w-[400px] w-auto  mt-[3rem]`}
-                  >
-                    {activeChat.spaceName && (
-                      <p className="text-[12.5px] font-semibold border-b mb-2 text-sirp-primary">
-                        {message?.sender?.name}
-                      </p>
-                    )}
+          return (
+            message?.message?.text && (
+              <div key={message._id}>
+                <li key={message._id}>
+                  {message?.message?.doc == 1 || message?.message?.img == 1 ? (
+                    documentView(message)
+                  ) : (
                     <div
-                      dangerouslySetInnerHTML={{
-                        __html: replaceURLsInText(message?.message?.text),
-                      }}
-                    />
-                    {/* <p>{replaceURLsInText(message?.message?.text)}</p> */}
-                  </div>
-                )}
-                <div className="clear-both table">
-                  {/*  */}
-                  <div
-                    className={`${
-                      message?.sender?.id !== activeChat?.uuid
-                        ? "absolute right-2"
-                        : "absolute left-2"
-                    } flex gap-x-2 p-2 items-center`}
-                  >
-                    <div className="text-[11px] font-light">
-                      {useCalculateTime(message?.updatedAt)}{" "}
+                      className={`${
+                        message?.sender?.id !== activeChat?.uuid
+                          ? "float-right mr-3 rounded-l-xl rounded-tr-3xl bg-[#E9F1F9] "
+                          : "float-left ml-3 rounded-r-xl rounded-tl-3xl bg-sirp-dashbordb1 "
+                      }
+                 text-sirp-grey  shadow p-3 text-[16px] font-normal max-w-[400px] w-auto  mt-[3rem]`}
+                    >
+                      {activeChat.spaceName && (
+                        <p className="text-[12.5px] font-semibold border-b mb-2 text-sirp-primary">
+                          {message?.sender?.name}
+                        </p>
+                      )}
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: replaceURLsInText(message?.message?.text),
+                        }}
+                      />
+                      {/* <p>{replaceURLsInText(message?.message?.text)}</p> */}
                     </div>
-                    {message?.sender?.id !== activeChat?.uuid && (
-                      <div>
-                        {message?.message?.read === 0 ? (
-                          <DoneIcon
-                            style={{
-                              color: "#4582C4",
-                              fontWeight: "100",
-                              fontSize: "18px",
-                            }}
-                          />
-                        ) : (
-                          <DoneAllIcon
-                            style={{
-                              color: "#4582C4",
-                              fontWeight: "100",
-                              fontSize: "18px",
-                            }}
-                          />
-                        )}
+                  )}
+                  <div className="clear-both table">
+                    {/*  */}
+                    <div
+                      className={`${
+                        message?.sender?.id !== activeChat?.uuid
+                          ? "absolute right-2"
+                          : "absolute left-2"
+                      } flex gap-x-2 p-2 items-center`}
+                    >
+                      <div className="text-[11px] font-light">
+                        {useCalculateTime(message?.updatedAt)}{" "}
                       </div>
-                    )}
+                      {message?.sender?.id !== activeChat?.uuid && (
+                        <div>
+                          {message?.message?.read === 0 ? (
+                            <DoneIcon
+                              style={{
+                                color: "#4582C4",
+                                fontWeight: "100",
+                                fontSize: "18px",
+                              }}
+                            />
+                          ) : (
+                            <DoneAllIcon
+                              style={{
+                                color: "#4582C4",
+                                fontWeight: "100",
+                                fontSize: "18px",
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </li>
-            </div>
-          ) : message.content_type === "audio" ? (
-            <div
-              key={message.id}
-              className={`${
-                message.action === "sent"
-                  ? "float-right mr-3 clear-both"
-                  : "float-left ml-3 clear-both"
-              } text-sirp-grey font-light text-[14px] max-w-[400px] w-auto  mt-[1rem]`}
-            >
-              <audio src={message.content} controls></audio>
-            </div>
-          ) : (
-            <div className="mt-[3rem]">New Message type?</div>
+                </li>
+              </div>
+            )
           );
         })}
       </ul>

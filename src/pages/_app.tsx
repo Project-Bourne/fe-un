@@ -9,8 +9,6 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import socketio from "../utils/socket";
-import { setUsers } from "../redux/reducers/users/userReducers";
-import globalService from "../services";
 import SocketService from "../socket/chat.socket";
 import AuthService from "@/services/auth.service";
 import NotificationService from "@/services/notification.service";
@@ -23,6 +21,9 @@ import {
   setRead,
   anotherone,
   setComments,
+  updateChat,
+  setLoading,
+  IncreementChat,
 } from "../redux/reducers/chat/chatReducer";
 import { useRouter } from "next/router";
 import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
@@ -46,21 +47,8 @@ function App({ Component, pageProps, ...appProps }) {
 
 const AppWrapper = ({ Component, pageProps, ...appProps }) => {
   const router = useRouter();
-  const { userInfo, userAccessToken, refreshToken } = useSelector(
-    (state: any) => state?.auth,
-  );
-  const { singleDoc } = useSelector((state: any) => state?.docs);
-  // State to hold the socket instance
-  const [socket, setSocket] = useState<any | null>(null);
-  const [newArr, setNewArr] = useState<any[]>([]);
-
-  const [newMessages, setNewMessages] = useState();
-  const userService = new globalService();
-  const { allRecentChats, selectedChat } = useSelector(
-    (state: any) => state?.chats,
-  );
+  const { userInfo } = useSelector((state: any) => state?.auth);
   const dispatch = useDispatch();
-  const { activeChat } = useSelector((state: any) => state.chats);
   const pageAnimationVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -112,29 +100,16 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   userService
-  //     .getUsers()
-  //     .then((data) => {
-  //       console.log("all users", data);
-  //       dispatch(setUsers(data));
-  //     })
-  //     .catch((error) => {
-  //       NotificationService.error({
-  //         message: "Failed!",
-  //         addedText: "could not fetch users",
-  //       });
-  //       console.error("Error fetching users:", error);
-  //     });
-  // }, []);
-
   useEffect(() => {
     socketio.once("connected-id", (res) => {
       console.log("connected-id", res);
     });
-    socketio.once("msg-read", (res) => {
+
+    socketio.on("msg-read", (res) => {
       console.log("msg-read", res);
+      dispatch(updateChat(res?.senderId));
     });
+
     socketio.once("bot-new-msgs", (res) => {
       console.log("bot-new-msgs", res);
     });
@@ -169,26 +144,12 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
 
   useEffect(() => {
     if (!userInfo) return;
-    // confirm socket connection
-    // socketio.once("connected-id", (res) => {
-    //   console.log("connected-id", res);
-    // });
-    // socketio.once("msg-read", (res) => {
-    //   console.log("msg-read", res);
-    // });
-    // socketio.once("bot-new-msgs", (res) => {
-    //   console.log("bot-new-msgs", res);
-    // });
-    // // get recent chats
-    // socketio.once("recent-chats", (res) => {
-    //   let data = JSON.parse(res);
-    //   dispatch(setRecentChats(data.data));
-    // });
 
     socketio.on("space-created", async (res) => {
       let data = JSON.parse(res);
       console.log("space-created", data.data, data);
       if (data.data) {
+        const useSocket = SocketService;
         dispatch(setNewWorkSpace(data.data));
         toast("Work Space Created", {
           position: "bottom-right",
@@ -200,8 +161,8 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
           progress: undefined,
           theme: "light",
         });
-        const useSocket = SocketService;
         await useSocket.getRecentChats({ uuid: userInfo?.uuid });
+        await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
       }
     });
 
@@ -264,11 +225,24 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       }
     });
 
-    socketio.on("all-msgs-selected", (res) => {
-      let data = JSON.parse(res);
-      console.log("setSelectedChat", data);
-      if (data.data.length > 0) {
-        dispatch(setSelectedChat(data.data));
+    socketio.on("all-msgs-selected", async (res) => {
+      dispatch(setSelectedChat([]));
+      dispatch(IncreementChat(null));
+      try {
+        let data = JSON.parse(res);
+        console.log("setSelectedChat", data);
+        if (data.data.length > 0) {
+          dispatch(setSelectedChat(data.data));
+          for (let i = data.data.length; i < 1; i--) {
+            dispatch(IncreementChat(data.data[i]));
+          }
+        } else {
+          return;
+        }
+        dispatch(setLoading(false));
+      } catch (error) {
+        console.log(error);
+        dispatch(setLoading(false));
       }
     });
 
