@@ -14,13 +14,7 @@ const AddWorkspacePopUp = ({ onHandlAddeModal, setModalType }) => {
     <div>
       <div className="flex flex-col gap-2 my-5">
         <div className="max-h-[70vh] overflow-y-scroll">
-          {/* stepper should be here  */}
-          <WorkspaceModal setModalType={setModalType}/>
-          {/* <WorkspaceDetails /> */}
-          {/* stepper should be here  */}
-          {/* {index === 1 && <InviteCollaborators {...props} />} */}
-          {/* stepper should be here  */}
-          {/* {index === 2 && <AddContent {...props} />} */}
+          <WorkspaceModal setModalType={setModalType} />
         </div>
       </div>
     </div>

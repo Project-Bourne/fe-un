@@ -15,7 +15,9 @@ function NewChat({ closeModal }) {
   const dispatch = useDispatch();
   let users = useSelector((state: any) => state?.users?.allUsers);
   const [query, setQuery] = useState("");
-
+  useEffect(() => {
+    dispatch(setUsers([]));
+  }, []);
   const debouncedSearch = debounce(async (query) => {
     try {
       const response = await AuthService.queryUser(query);

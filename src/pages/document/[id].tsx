@@ -104,7 +104,7 @@ const viewDocument = () => {
               url = `http://192.81.213.226:81/81/analysis/${routeId}`;
               break;
             case "interrogator":
-              url = `http://192.81.213.226:81/87/interrogation/${routeId}`;
+              url = `http://192.81.213.226:81/87/interrogation/message/${routeId}`;
               break;
             case "collab":
               url = `http://192.81.213.226:81/86/api/v1/${routeId}`;
@@ -130,7 +130,7 @@ const viewDocument = () => {
               createDoc(data?.data?.summaryArray[0].summary);
               break;
             case "factcheck":
-              createDoc(data?.data?.confidence?.content);
+              createDoc(data?.data?.confidence?.content5wh);
               break;
             case "irp":
               createDoc(data?.data?.confidence?.content5wh);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTruncate } from "../../../components/custom-hooks";
 import {
@@ -7,16 +7,18 @@ import {
 } from "@/redux/reducers/chat/chatReducer";
 import SocketService from "../../../socket/chat.socket";
 import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
+import { CircularProgress } from "@mui/material";
 
 function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
   const [isClicked, setIsClicked] = useState(false);
   // const { allRecentChats } = useSelector((state: any) => state?.chats);
   const dispatch = useDispatch();
   const [uuid, setUuid] = useState("");
-  const { activeChat, selectedChat } = useSelector((state: any) => state.chats);
+  const { activeChat, page } = useSelector((state: any) => state.chats);
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
+
   const handleClick = async (data: any) => {
     setIsActive(true);
     setUuid(data.uuid);
@@ -40,15 +42,18 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
       await useSocket.getSelectedspace({
         spaceId: data?.uuid,
         uuid: userInfo?.uuid,
+        page,
       });
       dispatch(setNewWorkSpace(data));
     } else {
       await useSocket.getSelectedMsg({
         userId: userInfo?.uuid,
         uuid: data.uuid,
+        page: 0,
       });
     }
   };
+
   return (
     <div
       className={`${listMobileDisplay} md:block relative  h-[100%] overflow-y-auto border-r-[1px] border-r-gray-100 transition duration-500 ease-in-out`}
@@ -107,11 +112,11 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
                 </p>
               </div>
             </div>
-            {/* {selectedChat.length > 0 && (
+            {chat.unreadLength > 0 && (
               <div className="rounded-full bg-sirp-primary py-[3px] w-[25px] my-auto text-white text-center items-center text-[12px] font-semibold">
-                0
+                {chat.unreadLength}
               </div>
-            )} */}
+            )}
           </div>
         ))}
       {/* <NewChatMobile /> */}
