@@ -53,20 +53,7 @@ function Index() {
     <div>
       <div className="flex md:justify-between md:px-7 px-3 pb-4 border-b-[1px] border-b-gray-100">
         <h1 className="text-[20px] md:text-[27px] font-semibold pt-3">Chats</h1>
-        <div className="flex md:gap-x-2">
-          {/* search input */}
-          {/* <SearchInput placeholder={"Search chats"} /> */}
-          {/* options dropdown  */}
-          {/* <div
-            onClick={() => setToggleMenu((prevState) => !prevState)}
-            className="h-[40px] w-[45px] md:w-[60px] rounded-full bg-sirp-lightGrey flex justify-center items-center hover:cursor-pointer"
-          >
-            <Image
-              src={require("../../../public/icons/chat.collapse.svg")}
-              alt="collapse-btn"
-            />
-          </div> */}
-        </div>
+        <div className="flex md:gap-x-2"></div>
         <div className="flex gap-2">
           <Tooltip
             title="Start New Chat"
@@ -88,11 +75,6 @@ function Index() {
           </Tooltip>
         </div>
       </div>
-
-      {/* tab section  */}
-      {/* <TabLayout layout={1} /> */}
-
-      {/* Render the add workspace  modal */}
       {modalType === "AddWorkspace" && (
         <CustomModal
           style="bg-white md:w-[50%] w-[90%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
@@ -130,22 +112,9 @@ function Index() {
                       <h3 className="text-[17px] font-semibold">
                         Click and Start chatting
                       </h3>
-
-                      {/* <p className="text-[15px] text-[#A1ADB5]">
-                        Send Messages Seemlessly
-                      </p> */}
                     </div>
                   </div>
                 </div>
-                {/* 
-                {newChat && (
-                  <CustomModal
-                    style="bg-white md:w-[30%] w-[80%] relative rounded-xl mx-auto pt-3 px-3 pb-5"
-                    closeModal={closeNewChatModal}
-                  >
-                    <NewChat closeModal={closeNewChatModal} />
-                  </CustomModal>
-                )} */}
               </>
             )}
           </div>

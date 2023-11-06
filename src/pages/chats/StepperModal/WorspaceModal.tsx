@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddNewChat } from "@/redux/reducers/chat/chatReducer";
 import chatEmpty from "../../../../public/icons/chat.empty.svg";
 import Image from "next/image";
+import SocketService from "../../../socket/chat.socket";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import CollabService from "@/services/collaborator.service";
 import { toast } from "react-toastify";
@@ -51,6 +52,7 @@ export default function WorkspaceModal({ setModalType }) {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const { userInfo } = useSelector((state: any) => state?.auth);
 
   const handleClick = (uuid, spaceName, image, spaceStatus) => {
     dispatch(
@@ -66,6 +68,7 @@ export default function WorkspaceModal({ setModalType }) {
 
   const deleteSpace = async (e, id) => {
     e.stopPropagation();
+    const useSocket = SocketService;
     try {
       await CollabService.deleteSpace(id);
       toast("Deleted", {
@@ -78,6 +81,7 @@ export default function WorkspaceModal({ setModalType }) {
         progress: undefined,
         theme: "light",
       });
+      await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
       setModalType("");
     } catch (error) {
       console.log(error);
