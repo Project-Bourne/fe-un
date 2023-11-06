@@ -13,6 +13,7 @@ import AuthService from "@/services/auth.service";
 import DocumentService from "@/services/document.service";
 import { setComments } from "@/redux/reducers/chat/chatReducer";
 import EditableText from "../components/EditText";
+// import setCollaborators  from "@/redux/reducers/users/userReducers";
 
 const viewDocument = () => {
   const [selectedTab, setSelectedTab] = useState(null); // Initially select the first tab
@@ -22,6 +23,7 @@ const viewDocument = () => {
   const [showChat, setShowChat] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [users, setUsers] = useState([]);
+  const [collaborators, setCollaborators] = useState([]);
   const dispatch = useDispatch();
   const documentsBar = [
     {
@@ -44,18 +46,38 @@ const viewDocument = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Users", users);
+  }, [users]);
+
+  useEffect(() => {
     const fetchCollaborators = async () => {
       if (!id) return;
       const document = await DocumentService.getDoc(id);
+      console.log("DOC", document);
       dispatch(setSingleDoc(document));
+      let collabs = [];
       if (singleDoc?.collaborators && Array.isArray(singleDoc.collaborators)) {
-        const docCollabPromises = singleDoc.collaborators.map(async (el) => {
-          console.log(el, "el chisommm");
-          const user = await AuthService.getusersbyId(el.id);
-          return user?.data;
+        // const docCollabPromises = document.collaborators.map(async (el) => {
+        //   console.log(el, "el chisommm");
+        //   const user = await AuthService.getusersbyId(el.id);
+        //   return user?.data;
+        // });
+        // const docCollaborators = await Promise.all(docCollabPromises);
+
+        for (const key in document.collaborators) {
+          if (
+            Object.prototype.hasOwnProperty.call(document.collaborators, key)
+          ) {
+            const collaborator = document.collaborators[key];
+            collabs.push(collaborator);
+          }
+        }
+        collabs.forEach(async (collabID) => {
+          const user = await AuthService.getusersbyId(collabID);
+          setCollaborators([...collaborators, user]);
         });
-        const docCollaborators = await Promise.all(docCollabPromises);
-        setUsers(docCollaborators);
+        setUsers(collabs);
+        // setCollaborators(collabs);
       }
     };
     fetchCollaborators();

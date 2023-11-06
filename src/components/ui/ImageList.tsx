@@ -18,6 +18,7 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
     if (users.length > stopImageCountAt) {
       setRemainderCount(users.length - stopImageCountAt);
     }
+    console.log("IL, Users", users);
   }, [users, stopImageCountAt]);
 
   const handleCloseModal = () => {
