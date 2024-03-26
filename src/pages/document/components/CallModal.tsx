@@ -256,7 +256,7 @@ const CallModal = ({ setShowCall }) => {
   const handleStartMeeting = () => {
     if (meetingName) {
       const id = generateUniqueMeetingId();
-      router.push(`/calls/${meetingName}`);
+      router.replace(`/calls/${meetingName}`);
     } else {
       toast("Enter a meeting name", {
         position: "bottom-right",

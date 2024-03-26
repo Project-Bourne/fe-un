@@ -41,7 +41,7 @@ const UploadfromCollab = (props) => {
     const selectedSuggestions = suggestions.filter(
       (suggestion) => suggestion.isChecked,
     );
-    router.push("/collaborators/workspaces/2");
+    router.replace("/collaborators/workspaces/2");
     console.log("Selected Suggestions:", selectedSuggestions);
   };
 

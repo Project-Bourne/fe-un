@@ -67,7 +67,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
 
   useEffect(() => {
     if (router.pathname === "/") {
-      router.push("/chats");
+      router.replace("/chats");
     }
   }, []);
 

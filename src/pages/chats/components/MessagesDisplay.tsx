@@ -72,7 +72,7 @@ function MessagesDisplay() {
         //
       });
       // if(id){
-      //   router.push(`documents/${id}`);
+      //   router.replace(`documents/${id}`);
       // }
     } catch (error) {
       console.log(error);

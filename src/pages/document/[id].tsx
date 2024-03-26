@@ -69,7 +69,7 @@ const viewDocument = () => {
           progress: undefined,
           theme: "light",
         });
-        router.push(`/documents/${data?.data?._id}`);
+        router.replace(`/documents/${data?.data?._id}`);
       });
     } catch (error) {
       console.log(error);

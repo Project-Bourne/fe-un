@@ -12,7 +12,7 @@ function NavBar() {
       <div
         className="flex flex-row items-center mb-20 cursor-pointer"
         onClick={() => {
-          router.push("http://192.81.213.226:30");
+          router.replace("http://192.81.213.226:30");
         }}
       >
         <Image

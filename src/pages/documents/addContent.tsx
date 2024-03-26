@@ -120,7 +120,7 @@ const FileUpload = () => {
                   <div className="p-5 cursor-pointer flex w-[30%] align-middle justify-center bg-[#4582C4]  border-2 text-white rounded-[15px] font-extrabold">
                     <span
                       className="ml-3"
-                      onClick={() => router.push("/documents/viewDocument")}
+                      onClick={() => router.replace("/documents/viewDocument")}
                     >
                       View content
                     </span>

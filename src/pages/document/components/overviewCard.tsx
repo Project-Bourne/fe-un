@@ -17,7 +17,7 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
   const router = useRouter();
   const handleClick = () => {
     console.log(data.data, "data");
-    router.push(`/documents/${data._id}`);
+    router.replace(`/documents/${data._id}`);
   };
   let snippet = () => {
     if (data?.data?.ops && data.data.ops.length > 0) {

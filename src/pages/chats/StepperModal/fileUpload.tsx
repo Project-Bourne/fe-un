@@ -30,7 +30,7 @@ const FileUploadSection = ({ file, handleDeleteFile, isLoading }) => {
     try {
       const { data } = await docService.createDocument(documentData);
       console.log(data, "data");
-      router.push(`/workspaces/workspaces/${workSpaceId}`);
+      router.replace(`/workspaces/workspaces/${workSpaceId}`);
     } catch (error) {}
   };
 

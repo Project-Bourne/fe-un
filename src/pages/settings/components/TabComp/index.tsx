@@ -28,7 +28,7 @@ const TabComp = ({ item, index, route, callback }: TabCompType) => {
     console.log("item", item, route);
     // callback();
     // console.log(route, path, route, `${path}` == `${route}`, )
-    router.push(
+    router.replace(
       {
         pathname: item.route,
       },

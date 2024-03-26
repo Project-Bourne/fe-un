@@ -7,7 +7,7 @@ export default function IndexPage() {
 
   // function
   // const constructor = async() => {
-  //   router.push(
+  //   router.replace(
   //     {
   //       pathname: "/dashboard",
   //     },

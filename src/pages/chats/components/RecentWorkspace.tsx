@@ -55,7 +55,7 @@ function RecentWorkspace({ onHandleModalTwo }: RecentWorkspaceProps) {
   };
 
   const goToSingleWorkspace = (id) => {
-    router.push(`/workspaces/workspaces/${id}`);
+    router.replace(`/workspaces/workspaces/${id}`);
   };
 
   return (
