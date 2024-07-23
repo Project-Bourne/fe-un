@@ -267,7 +267,7 @@ export default function TextEditor() {
       const print = document.createElement("div");
       print.setAttribute("class", "print-icon");
       const printIcon = (
-        <Tooltip title="Preview and Print Document">
+        <Tooltip title="Preview and Print Document" className="">
           <PrintIcon style={{ fontSize: 30, color: "white" }} />
         </Tooltip>
       ); // Adjust the font size as needed
