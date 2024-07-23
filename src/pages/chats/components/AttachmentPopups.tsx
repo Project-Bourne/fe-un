@@ -54,8 +54,11 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
   const uploadFiles = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    const user_name = userInfo.firstName + userInfo.lastName;
     const promises = selectedFiles.map(async (file) => {
       formData.append("files", file);
+      formData.append("userID", userInfo.uuid);
+      formData.append("userName", user_name);
       console.log(file, "file");
       try {
         const res = await fetch("http://192.81.213.226:81/89/api/v1/uploads", {
@@ -131,7 +134,10 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
   const uploadPreview = async (e) => {
     e.preventDefault();
     console.log("Files: ", selectedImgFiles);
+    const user_name = userInfo.firstName + userInfo.lastName;
     const formData = new FormData();
+    formData.append("userID", userInfo.uuid);
+    formData.append("userName", user_name);
     const promises = selectedImgFiles.map(async (el) => {
       formData.append("files", el);
       try {
@@ -144,7 +150,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
         if (response) {
           console.log(response, "pictures");
           const newObj = {
-            text: `${el?.name}, ${el.size}, ${el.type}, ${response.data[0].uri}`,
+            text: `${el?.name}, ${el?.size}, ${el?.type}, ${response?.data[0]?.uri}`,
             uri: response.data[0].uri,
           };
           setSelectedImgFiles([]);
