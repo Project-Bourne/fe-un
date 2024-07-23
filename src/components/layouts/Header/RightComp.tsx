@@ -8,31 +8,50 @@ import { useDispatch, useSelector } from "react-redux";
 import notification from "../../../../public/icons/notification.svg";
 import dashboard from "../../../../public/icons/dashboard.svg";
 import down from "../../../../public/icons/down.svg";
-import { useCookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import DropdownItems from "./DropdownItems";
 import CustomModal from "@/components/ui/CustomModal";
 import { logout } from "@/redux/reducers/authReducer";
 
 function RightComp() {
-  const [, removeCookie] = useCookies(["deep-access"]);
+  const [, removeCookie] = useCookies(["deep-access", "uuid"]);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { userInfo } = useSelector((state: any) => state?.auth);
+  const { userInfo, userAccessToken } = useSelector(
+    (state: any) => state?.auth,
+  );
   const [dropdown, setDropdown] = useState(false);
   const [toggleDashboard, setToggleDashboard] = useState(false);
   const [logoutConfirmation, setLogoutConfirmation] = useState(false);
+  const cookies = new Cookies();
+  const authService = new AuthService();
 
   const handleLogout = async (event: any) => {
     event.stopPropagation();
-    dispatch(logout());
-    localStorage.clear();
 
-    removeCookie("deep-access", { path: "/" });
-    router.replace("http://192.81.213.226:30/auth/login");
+    const access = cookies.get("deep-access");
 
-    NotificationService.success({
-      message: "Logout operation successful!",
+    const refreshToken = userAccessToken || access;
+
+    authService.logout({ refreshToken }).then((res) => {
+      if (res) {
+        dispatch(logout());
+        localStorage.clear();
+
+        removeCookie("deep-access", { path: "/" });
+        removeCookie("uuid", { path: "/" });
+        router.replace("http://192.81.213.226:30/auth/login");
+
+        NotificationService.success({
+          message: "Logout operation successful!",
+        });
+      } else {
+        NotificationService.error({
+          message: "Failed to logout. Please try again later.",
+        });
+      }
     });
+
     setDropdown(false);
   };
 
@@ -57,18 +76,6 @@ function RightComp() {
 
   return (
     <div className="flex flex-row items-center self-start">
-      {/* <div className={`${styles.view1} bg-white`}>
-        <Image
-          src={notification}
-          alt="notification"
-          width={20}
-          height={20}
-          className="self-center"
-          style={{ alignSelf: "center" }}
-          priority
-        />
-      </div> */}
-
       <div className="relative">
         <div
           className="grid justify-center mt-3.5"
@@ -95,22 +102,6 @@ function RightComp() {
         </div>
         {toggleDashboard && <DropdownItems />}
       </div>
-
-      {/* <div
-        className={`${styles.view1} hidden md:flex relative`}
-        onClick={handleDashboardToggle}
-      >
-        <Image
-          src={dashboard}
-          alt="dashboard"
-          width={20}
-          height={20}
-          className="self-center"
-          style={{ alignSelf: 'center' }}
-          priority
-        />
-        {toggleDashboard && <DropdownItems />}
-      </div> */}
 
       <div className="relative bg-sirp-lightGrey flex flex-row mr-2 py-2 px-2 md:px-5 h-[45px] rounded-[12px] items-center justify-center cursor-pointer">
         <div

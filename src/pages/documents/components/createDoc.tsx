@@ -53,8 +53,8 @@ function CreateDocument(setCreateDocModal, handleCloseModal) {
         });
         await useSocket.getDocHistory({ uuid: userInfo?.uuid });
       });
-      setCreateDocModal(false);
-      handleCloseModal();
+      setCreateDocModal;
+      handleCloseModal;
     } catch (error) {
       console.log(error);
     }

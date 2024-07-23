@@ -12,6 +12,11 @@ class SocketService {
     this.socket = socketio;
   }
 
+  /**
+   * Emits an update event to the server with the given data.
+   *
+   * @param data - The data to send to the server.
+   */
   updateData(data: any) {
     try {
       this.socket.emit("update-data", data);

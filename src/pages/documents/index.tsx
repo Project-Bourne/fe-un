@@ -70,7 +70,7 @@ function Documents() {
           closeModal={handleCloseModal}
         >
           <CreateDocument
-            setCreateDocModal={setCreateDocModal}
+            setCreateDocModal={() => setCreateDocModal(false)}
             handleCloseModal={handleCloseModal}
           />
         </CustomModal>

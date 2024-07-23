@@ -29,6 +29,7 @@ import { useRouter } from "next/router";
 import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
 import {
   setAllDocs,
+  setCollaborators,
   setSingleDoc,
 } from "@/redux/reducers/documents/documentReducer";
 
@@ -255,6 +256,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     socketio.once("collabs-added", (res) => {
       let data = JSON.parse(res);
       console.log("collabs-added", data);
+      dispatch(setCollaborators(data?.data?.collaborators));
       // SocketService.getDoc({ id: data._id });
       toast("Collabs Added", {
         position: "bottom-right",

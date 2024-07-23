@@ -19,11 +19,15 @@ const docSlice = createSlice({
     setSingleDoc: (state: any, action: SetActiveChatAction) => {
       state.singleDoc = action.payload;
     },
+    setCollaborators: (state: any, action: any) => {
+      state.singleDoc.collaborators = action.payload;
+    },
     setPrintContent: (state: any, action: SetActiveChatAction) => {
       state.printContent = action.payload;
     },
   },
 });
 
-export const { setAllDocs, setSingleDoc, setPrintContent } = docSlice.actions;
+export const { setAllDocs, setSingleDoc, setPrintContent, setCollaborators } =
+  docSlice.actions;
 export default docSlice.reducer;
