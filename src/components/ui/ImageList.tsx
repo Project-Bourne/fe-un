@@ -14,12 +14,19 @@ type ImageListProps = {
 function ImageList({ users, stopImageCountAt }: ImageListProps) {
   const [remainderCount, setRemainderCount] = useState(0);
   const [showCollabModal, setShowCollabModal] = useState(false);
+  const [collaborators, setCollaborators] = useState([]);
+  const doc = useSelector((state: any) => {
+    // console.log('State: ', state);
+    return state.docs.singleDoc;
+  });
   useEffect(() => {
+    setCollaborators(doc.collaborators);
     if (users.length > stopImageCountAt) {
+      console.log("Collabs: ", users);
       setRemainderCount(users.length - stopImageCountAt);
     }
     console.log("IL, Users", users);
-  }, [users, stopImageCountAt]);
+  }, [users, stopImageCountAt, doc]);
 
   const handleCloseModal = () => {
     setShowCollabModal(false);
@@ -28,7 +35,20 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
     (state: any) => state?.auth,
   );
   return (
-    <div className=" mt-3 flex items-center">
+    <div className="flex flex-row gap-x-1 justify-center items-center">
+      {collaborators?.map((user, index) => (
+        <Tooltip key={index} title={user?.email || userInfo?.email}>
+          {index < stopImageCountAt && (
+            <span>
+              <img
+                src={user.image ? user.image : "/images/logo.png"}
+                alt={user?.alt}
+                className={`rounded-full border-[2px] bg-white h-[30px] w-[42px] -ml-[.8rem] "border-sirp-primaryBlue bg-red-100"`}
+              />
+            </span>
+          )}
+        </Tooltip>
+      ))}
       <Tooltip title="Add new Collaborator">
         <div
           className="flex p-2 bg-sirp-primaryLess2 mr-5 rounded-lg"
@@ -37,19 +57,6 @@ function ImageList({ users, stopImageCountAt }: ImageListProps) {
           <GroupAddIcon style={{ color: "#4582C4" }} />
         </div>
       </Tooltip>
-      {users?.map((user, index) => (
-        <Tooltip key={index} title={user?.email || userInfo?.email}>
-          {index < stopImageCountAt && (
-            <span>
-              <img
-                src={user?.image || userInfo?.image}
-                alt={user?.alt}
-                className={`rounded-full border-[2px] bg-white h-[33px] w-[42px] -ml-[.8rem] "border-sirp-primaryBlue bg-red-100"`}
-              />
-            </span>
-          )}
-        </Tooltip>
-      ))}
       {/* {users?.map((user, index) => (
         <div key={index} className="relative group">
           <img

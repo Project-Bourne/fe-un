@@ -135,10 +135,10 @@ const viewDocument = () => {
         <div className="flex items-center">
           <EditableText initialText={singleDoc?.name} />
         </div>
-        <div>
-          <ImageList users={users} stopImageCountAt={5} />
-        </div>
-        <div className=" flex items-center">
+        {/* <div>
+        </div> */}
+        <div className=" flex flex-row gap-x-3 items-center justify-end">
+          <ImageList users={collaborators} stopImageCountAt={5} />
           {documentsBar?.map((item) => (
             <div
               key={item?.id}

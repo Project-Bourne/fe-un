@@ -6,6 +6,8 @@ import Tabs from "./tabs";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 import { useTruncate } from "@/components/custom-hooks";
+import { useDispatch } from "react-redux";
+import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 
 type Props = {
   backIcon?: boolean;
@@ -15,7 +17,10 @@ type Props = {
 
 function OverviewCard({ backIcon, goBack, data }: Props) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const handleClick = () => {
+    dispatch(setSingleDoc(data.data));
     console.log(data.data, "data");
     router.replace(`/documents/${data._id}`);
   };
