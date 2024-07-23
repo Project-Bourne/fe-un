@@ -23,7 +23,9 @@ function Header(props) {
   useEffect(() => {
     const getCollabs = async () => {
       if (activeChat?.uuid) {
-        const collabs = await CollabService.getSpaceCollab(activeChat.uuid);
+        const collabs = await CollabService.getSpaceCollab(
+          activeChat?.CollabUuidModel?.uuid || activeChat?.uuid,
+        );
 
         // Check if collabs is defined and an iterable array
         if (collabs && Array.isArray(collabs)) {

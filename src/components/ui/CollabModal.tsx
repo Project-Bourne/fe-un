@@ -73,7 +73,7 @@ export default function CollabModal({ users, setShowCollabModal }) {
       const useSocket = SocketService;
       await useSocket.leaveDocument({ docId: singleDoc._id, collabId: userId });
 
-      await socketio.on("collab-removed", (res) => {
+      await socketio.once("collab-removed", (res) => {
         console.log(res, "load");
         let data = JSON.parse(res);
         console.log("collab-removed", data.data);

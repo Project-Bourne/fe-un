@@ -160,22 +160,23 @@ function MessagesDisplay() {
       className=" relative h-[65vh] md:h-[56.8vh] overflow-y-auto"
       ref={messagesEndRef}
     >
-      {selectedChat.length < 1 && (
-        <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
-          <div className="mx-auto">
-            <Image src={chatEmpty} alt="empty-chats" />
-          </div>
-          <div className="grid gap-y-5 text-center">
-            <div className="md:w-[20%] w-[100%] mx-auto grid gap-y-2">
-              <h3 className="text-[17px] font-semibold">Start chatting</h3>
+      {selectedChat.length < 1 ||
+        (!selectedChat.data && (
+          <div className="grid gap-y-10 mt-[2rem] md:mt-[5rem]">
+            <div className="mx-auto">
+              <Image src={chatEmpty} alt="empty-chats" />
+            </div>
+            <div className="grid gap-y-5 text-center">
+              <div className="md:w-[20%] w-[100%] mx-auto grid gap-y-2">
+                <h3 className="text-[17px] font-semibold">Start chatting</h3>
 
-              {/* <p className="text-[15px] text-[#A1ADB5]">
+                {/* <p className="text-[15px] text-[#A1ADB5]">
                   Send Messages Seemlessly
                 </p> */}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        ))}
       <ul className="md:pb-[3rem] pb-[7rem]">
         {selectedChat?.map((message) => {
           return (

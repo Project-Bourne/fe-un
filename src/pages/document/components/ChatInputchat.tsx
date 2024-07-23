@@ -40,15 +40,17 @@ function ChatInput(props) {
     try {
       console.log({ uuid: activeChat.uuid, data: textValue }, "text");
       const useSocket = SocketService;
-      await useSocket.sendComment({
-        spaceId: singleDoc.spaceId,
-        data: textValue,
-        docType: 0,
-        doc: {
-          id: singleDoc._id,
-          name: singleDoc.name,
-        },
-      });
+      if (singleDoc.spaceId) {
+        await useSocket.sendComment({
+          spaceId: singleDoc.spaceId,
+          data: textValue,
+          docType: 0,
+          doc: {
+            id: singleDoc._id,
+            name: singleDoc.name,
+          },
+        });
+      }
       setTextValue("");
     } catch (err) {
       console.log(err);

@@ -130,6 +130,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
 
   const uploadPreview = async (e) => {
     e.preventDefault();
+    console.log("Files: ", selectedImgFiles);
     const formData = new FormData();
     const promises = selectedImgFiles.map(async (el) => {
       formData.append("files", el);
