@@ -83,7 +83,11 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
       if (pathname.includes("/documents/")) {
         console.log(selectedSuggestions, "selectedSuggestions");
         let newSuggestions = selectedSuggestions.map((el) => {
-          return { id: el.uuid };
+          return {
+            id: el.uuid,
+            email: el.email,
+            username: `${el.firstName} ${el.lastName}`,
+          };
         });
         console.log(newSuggestions, "newSuggestions");
         let collabData = {

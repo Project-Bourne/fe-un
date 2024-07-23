@@ -8,21 +8,23 @@ import { setComments } from "@/redux/reducers/chat/chatReducer";
 export default function Docs({ showComments, setShowComments }) {
   const router = useRouter();
   return (
-    <div className="w-full h-[100vh] overflow-y-hidden flex items-center justify-center">
-      <div
-        className={
-          showComments
-            ? "w-[65%]"
-            : "w-[80%]" + " h-full shadow overflow-y-auto my-10 pb-[300px]"
-        }
-      >
-        <TextEditor />
-      </div>
-      {showComments && (
-        <div className="w-[33%] h-full ">
-          <Chats setShowChat={setShowComments} />
+    <>
+      <div className="w-full h-[100vh] overflow-y-auto flex items-start justify-start">
+        <div
+          className={
+            showComments
+              ? "w-[100%]"
+              : "w-[100%]" + " h-full shadow overflow-y-scroll mb-10 pb-[50px]"
+          }
+        >
+          <TextEditor />
         </div>
-      )}
-    </div>
+        {showComments && (
+          <div className="absolute right-0 z-[1000099] bg-white pb-4 w-[33%] h-full ">
+            <Chats setShowChat={setShowComments} />
+          </div>
+        )}
+      </div>
+    </>
   );
 }

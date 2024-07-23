@@ -30,7 +30,7 @@ function ChatInput(props) {
   const handleRecordedAudio = (data) => {
     showAudioFile(data);
   };
-  const { activeChat } = useSelector((state: any) => state.chats);
+  const { activeChat } = useSelector((state: any) => state?.chats);
   const handleEmojiClick = (emoji) => {
     // Get the emoji from the emojiObject and concatenate with textarea text
     setTextValue((prevState) => prevState + emoji);

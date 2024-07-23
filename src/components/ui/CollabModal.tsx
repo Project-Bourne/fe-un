@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import socketio from "@/utils/socket";
 import { userInfo } from "os";
 import CollabService from "@/services/collaborator.service";
+import { useEffect } from "react";
+import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -58,30 +60,37 @@ export default function CollabModal({ users, setShowCollabModal }) {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const [collaborators, setCollaborators] = React.useState([]);
+
+  useEffect(() => {
+    setCollaborators(singleDoc?.collaborators);
+  }, [singleDoc]);
 
   const removeCollaborator = async (event, userId) => {
     event.stopPropagation();
     if (pathname.includes("/documents/")) {
+      console.log("REM: ", userId);
       const useSocket = SocketService;
       await useSocket.leaveDocument({ docId: singleDoc._id, collabId: userId });
 
-      socketio.on("collab-removed", (res) => {
+      await socketio.on("collab-removed", (res) => {
         console.log(res, "load");
         let data = JSON.parse(res);
         console.log("collab-removed", data.data);
         SocketService.getDoc({ id: data._id });
-        // dispatch(setSingleDoc(data.data));
-        toast("Collaborator Removed", {
-          position: "bottom-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        dispatch(setSingleDoc(data.data));
       });
+
+      // toast("Collaborator Removed", {
+      //   position: "bottom-right",
+      //   autoClose: 2000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      // });
     }
     if (pathname.includes("/chats")) {
       try {
@@ -122,9 +131,9 @@ export default function CollabModal({ users, setShowCollabModal }) {
         <InviteCollaborators setShowCollabModal={setShowCollabModal} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        {users?.length > 0 ? (
+        {collaborators && collaborators?.length > 0 ? (
           <ul className="h-[50vh] overflow-y-auto">
-            {users?.map((el) => (
+            {collaborators?.map((el) => (
               <li
                 className="flex items-center gap-x-4 hover:cursor-pointer hover:bg-slate-100 rounded-md mb-1 px-3 py-2.5 bg-sirp-primaryLess2 border-x-sirp-grey"
                 key={el?.uuid}
@@ -134,7 +143,9 @@ export default function CollabModal({ users, setShowCollabModal }) {
                   <div className="flex gap-x-5 items-center relative">
                     <div
                       className={`absolute md:ml-9 ml-[1.75rem] mt-[0.07rem] z-10 h-[12px] w-[12px] rounded-full  ${
-                        el?.onlineStatus == 1 ? "bg-sirp-online" : "bg-red-300"
+                        el?.onlineStatus == 1
+                          ? "bg-sirp-online"
+                          : "bg-yellow-300"
                       }`}
                     ></div>
                     <div
@@ -145,7 +156,7 @@ export default function CollabModal({ users, setShowCollabModal }) {
                       }`}
                     >
                       <img
-                        src={el?.image}
+                        src={el?.image || "/images/logo.png"}
                         alt={"user"}
                         className="rounded-full border-[2px] border-white md:h-[43px] h-[30px] md:w-[43px] w-[30px]"
                       />{" "}
@@ -153,16 +164,19 @@ export default function CollabModal({ users, setShowCollabModal }) {
                     </div>
                     <div className="tex-gray-400">
                       {/* </div> */}
-                      <p className="text-[14px] font-bolder text-gray-500 capitalize">
-                        {el?.firstName}
-                        {el?.lastName}
+                      <p className="text-[14px] font-bolder text-black capitalize">
+                        {`${el?.name || el?.id}`.toLowerCase()}
                       </p>
-                      <span className="capitalize">{el?.email}</span>
+                      {el?.email && (
+                        <span className="capitalize">
+                          {el.email && `${el?.email}`.toLowerCase()}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <RemoveCircleIcon
                     style={{ color: "#f72f35" }}
-                    onClick={(e) => removeCollaborator(e, el?.uuid)}
+                    onClick={(e) => removeCollaborator(e, el?.id)}
                   />
                 </div>
               </li>

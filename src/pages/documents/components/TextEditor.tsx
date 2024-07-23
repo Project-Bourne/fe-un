@@ -50,6 +50,10 @@ export default function TextEditor() {
         dispatch(setSingleDoc(data.data));
         quill.setContents(data.data.data);
         quill.enable();
+      } else {
+        dispatch(setSingleDoc(data.data));
+        quill.setContents(data.data.data);
+        quill.enable();
       }
     });
 
