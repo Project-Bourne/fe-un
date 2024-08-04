@@ -15,10 +15,14 @@ const chatSlice = createSlice({
     comments: [],
     loading: false,
     page: 0,
+    reload: false,
   },
   reducers: {
     setActivechat: (state: any, action: SetActiveChatAction) => {
       state.activeChat = action?.payload;
+    },
+    setReload: (state: any, action: any) => {
+      state.reload = action.payload;
     },
     updateChat: (state, action) => {
       const chatUuidToUpdate = action.payload; // Assuming you pass the uuid as payload
@@ -93,5 +97,6 @@ export const {
   setAllWorkspaceByUser,
   setLoading,
   setPage,
+  setReload,
 } = chatSlice.actions;
 export default chatSlice.reducer;

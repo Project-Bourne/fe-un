@@ -6,6 +6,12 @@ import imageUpload from "../../../../public/icons/chat.image-upload.svg";
 import SocketService from "../../../socket/chat.socket";
 import { useSelector } from "react-redux";
 import DocumentsPreview from "./DocumentsPreview";
+import {
+  setReload,
+  setSelectedChat,
+  updateChat,
+} from "@/redux/reducers/chat/chatReducer";
+import { useRouter } from "next/router";
 
 function AttachmentPopups({ showAttachment, setShowAttachment }) {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -43,6 +49,12 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
       // Read the current file as a data URL
       reader.readAsDataURL(file);
     }
+  };
+
+  const onDone = () => {
+    const router = useRouter();
+
+    router.reload();
   };
 
   const removeFile = (indexToRemove) => {
@@ -83,6 +95,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
               doc: true,
               img: false,
             });
+            onDone();
           } else {
             await useSocket.sendMessage({
               uuid: activeChat.uuid,
@@ -90,6 +103,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
               doc: true,
               img: false,
             });
+            onDone();
           }
         }
       } catch (error) {
@@ -162,6 +176,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
               doc: false,
               img: true,
             });
+            onDone();
           } else {
             await useSocket.sendMessage({
               uuid: activeChat.uuid,
@@ -169,6 +184,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
               doc: false,
               img: true,
             });
+            onDone();
           }
         }
       } catch (error) {
