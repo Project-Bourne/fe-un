@@ -57,7 +57,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     const user_name = userInfo.firstName + userInfo.lastName;
     const promises = selectedFiles.map(async (file) => {
       formData.append("files", file);
-      formData.append("userID", userInfo.uuid);
+      formData.append("userId", userInfo.uuid);
       formData.append("userName", user_name);
       console.log(file, "file");
       try {
@@ -136,7 +136,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     console.log("Files: ", selectedImgFiles);
     const user_name = userInfo.firstName + userInfo.lastName;
     const formData = new FormData();
-    formData.append("userID", userInfo.uuid);
+    formData.append("userId", userInfo.uuid);
     formData.append("userName", user_name);
     const promises = selectedImgFiles.map(async (el) => {
       formData.append("files", el);
