@@ -16,13 +16,13 @@ function NewChat({ closeModal }) {
   let users = useSelector((state: any) => state?.users?.allUsers);
   const [query, setQuery] = useState("");
   useEffect(() => {
-    dispatch(setUsers([]));
+    dispatch(setUsers({ allUsers: [] }));
   }, []);
   const debouncedSearch = debounce(async (query) => {
     try {
       const response = await AuthService.queryUser(query);
       console.log(response, "query");
-      dispatch(setUsers(response.data));
+      dispatch(setUsers({ allUsers: response.data }));
     } catch (error) {
       console.log(error);
     }

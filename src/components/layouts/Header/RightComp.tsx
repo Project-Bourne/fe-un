@@ -5,13 +5,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import notification from "../../../../public/icons/notification.svg";
-import dashboard from "../../../../public/icons/dashboard.svg";
-import down from "../../../../public/icons/down.svg";
 import { Cookies, useCookies } from "react-cookie";
 import DropdownItems from "./DropdownItems";
 import CustomModal from "@/components/ui/CustomModal";
 import { logout } from "@/redux/reducers/authReducer";
+
+const notification = require("../../../../public/icons/notification.svg");
+const dashboard = require("../../../../public/icons/dashboard.svg");
+const down = require("../../../../public/icons/down.svg");
 
 function RightComp() {
   const [, removeCookie] = useCookies(["deep-access", "uuid"]);
@@ -40,7 +41,10 @@ function RightComp() {
 
         removeCookie("deep-access", { path: "/" });
         removeCookie("uuid", { path: "/" });
-        router.replace("http://192.81.213.226:30/auth/login");
+        // router.replace("http://192.81.213.226:30/auth/login");
+        router.replace(
+          `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`,
+        );
 
         NotificationService.success({
           message: "Logout operation successful!",
@@ -132,7 +136,10 @@ function RightComp() {
         <div
           className="ml-3 bg-sirp-lightGrey w-full self-center hidden md:block"
           onClick={() => {
-            router.replace("http://192.81.213.226:30/settings/profile");
+            // router.replace("http://192.81.213.226:30/settings/profile");
+            router.replace(
+              `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/settings/profile`,
+            );
           }}
         >
           <h2 className="text-sirp-grey text-[13px] capitalize">

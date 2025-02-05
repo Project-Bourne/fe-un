@@ -11,10 +11,13 @@ export const requestHeader = {
   "deep-token": access,
 };
 
-const socketio = io("http://192.81.213.226:86/", {
-  autoConnect: false,
-  extraHeaders: requestHeader,
-  // path: "/86"
-});
+const socketio = io(
+  `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_COLLAB_API_PORT}/`,
+  {
+    autoConnect: false,
+    extraHeaders: requestHeader,
+    // path: "/86"
+  },
+);
 
 export default socketio;

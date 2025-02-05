@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import ImagesPreview from "./ImagesPreview";
-import docUpload from "../../../../public/icons/chat.doc-upload.svg";
-import imageUpload from "../../../../public/icons/chat.image-upload.svg";
+// import docUpload from "../../../../public/icons/chat.doc-upload.svg";
+// import imageUpload from "../../../../public/icons/chat.image-upload.svg";
 import SocketService from "../../../socket/chat.socket";
 import { useSelector } from "react-redux";
 import DocumentsPreview from "./DocumentsPreview";
@@ -12,6 +12,9 @@ import {
   updateChat,
 } from "@/redux/reducers/chat/chatReducer";
 import { useRouter } from "next/router";
+
+const imageUpload = require("../../../../public/icons/chat.image-upload.svg");
+const docUpload = require("../../../../public/icons/chat.doc-upload.svg");
 
 function AttachmentPopups({ showAttachment, setShowAttachment }) {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -73,10 +76,14 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
       formData.append("userName", user_name);
       console.log(file, "file");
       try {
-        const res = await fetch("http://192.81.213.226:81/89/api/v1/uploads", {
-          method: "POST",
-          body: formData,
-        });
+        const res = await fetch(
+          // "http://192.81.213.226:81/89/api/v1/uploads",
+          `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_FILE_UPLOAD_API_ROUTE}/api/v1/uploads`,
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
 
         const response = await res.json();
         if (response) {
@@ -155,10 +162,14 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
     const promises = selectedImgFiles.map(async (el) => {
       formData.append("files", el);
       try {
-        const res = await fetch("http://192.81.213.226:81/89/api/v1/uploads", {
-          method: "POST",
-          body: formData,
-        });
+        const res = await fetch(
+          // "http://192.81.213.226:81/89/api/v1/uploads",
+          `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_FILE_UPLOAD_API_ROUTE}/api/v1/uploads`,
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
         const response = await res.json();
         console.log(response, "pictures");
         if (response) {
