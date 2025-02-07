@@ -87,14 +87,17 @@ function MessagesDisplay() {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, (url) => {
       return ReactDOMServer.renderToString(
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sirp-primary underline"
-        >
-          {url}
-        </a>,
+        (
+          <a
+            key={url}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sirp-primary underline"
+          >
+            {url}
+          </a>
+        ) as any,
       );
     });
   };

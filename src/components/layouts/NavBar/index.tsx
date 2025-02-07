@@ -7,6 +7,10 @@ import { useRouter } from "next/router";
 
 const disclaimerIcon = "../../../../public/icons/toast.warn.svg";
 
+const COMPANY_INFO = {
+  copyright: `© ${new Date().getFullYear()} Powered by RIDU. All rights reserved.`,
+};
+
 function NavBar() {
   const router = useRouter();
   return (
@@ -55,6 +59,11 @@ function NavBar() {
             assess the output before making any consequential decisions. <br />
             Kindly be advised that the application's output may not
             comprehensively address individual needs and circumstances.
+            <br />
+            <br />
+          </p>
+          <p className="bg-sirp-primary text-white px-2 py-1 rounded-md">
+            {COMPANY_INFO.copyright}
           </p>
         </div>
       </div>
