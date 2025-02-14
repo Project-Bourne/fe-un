@@ -21,12 +21,14 @@ class NotificationService {
     document.body.appendChild(container);
 
     ReactDOM.render(
-      <CustomToast
-        type={type}
-        message={message}
-        addedText={addedText}
-        position={position}
-      />,
+      (
+        <CustomToast
+          type={type}
+          message={message}
+          addedText={addedText}
+          position={position}
+        />
+      ) as any,
       container,
     );
 

@@ -277,7 +277,7 @@ export default function TextEditor() {
       ); // Adjust the font size as needed
 
       // Append the Material-UI PrintIcon component to the print div
-      ReactDOM.render(printIcon, print);
+      ReactDOM.render(printIcon as any, print);
 
       wrapper.innerHTML = "";
       wrapper.appendChild(editor);
