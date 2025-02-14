@@ -12,6 +12,7 @@ interface ButtonModel {
 
 // Add the `disabled` prop to the ButtonModel interface:
 interface ButtonModelWithDisabled extends ButtonModel {
+  onClick?: () => Promise<void>;
   disabled?: boolean;
 }
 
@@ -34,7 +35,7 @@ function Button(props: ButtonModelWithDisabled) {
       }`}
       style={{ width: `${btnSize()}` }}
       type={type}
-      onClick={!disabled ? onClick : undefined}
+      onClick={!disabled ? onClick : onClick}
       disabled={disabled}
     >
       {value}

@@ -37,7 +37,7 @@ function WorkspaceDetails(props) {
 
   const handleSubmit = async (event) => {
     try {
-      event.preventDefault();
+      // event.preventDefault();
       // dispatch(setSpaceData(formData));
       const useSocket = SocketService;
       let workspaceData = {
@@ -109,6 +109,7 @@ function WorkspaceDetails(props) {
             disabled={isDisabled}
             background="bg-sirp-primary"
             type="submit"
+            onClick={() => handleSubmit(new Event("submit"))}
             value={
               <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
                 Add Workspace
