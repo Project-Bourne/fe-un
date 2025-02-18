@@ -19,7 +19,7 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     dispatch(setSingleDoc(data.data));
     console.log(data.data, "data");
     router.replace(`/documents/${data._id}`);
@@ -77,7 +77,7 @@ function OverviewCard({ backIcon, goBack, data }: Props) {
       <div className="w-full">
         <Button
           value="Open Document"
-          onClick={handleClick}
+          onClick={() => handleClick()}
           background="bg-sirp-primary"
           classNameStyle="text-white font-bold w-full py-3 flex items-center justify-center h-[50px]"
         />
