@@ -13,7 +13,7 @@ type HeaderProps = {
 function Header({ workspaceId }: HeaderProps) {
   const [modalType, setModalType] = useState(false);
   const { activeChat } = useSelector((state: any) => state.chats);
-  const handleModal = () => {
+  const handleModal = async () => {
     setModalType(true);
   };
 
@@ -29,7 +29,7 @@ function Header({ workspaceId }: HeaderProps) {
           {/* Button to open the Collaborate modal */}
           <Button
             classNameStyle="flex gap-x-1 items-center justify-center text-center"
-            onClick={() => handleModal}
+            onClick={() => handleModal()}
             size="md"
             background="bg-sirp-primary"
             value={
@@ -46,12 +46,12 @@ function Header({ workspaceId }: HeaderProps) {
                 <label className="text-white text-center">Add content</label>
               </div>
             }
-          /> 
+          />
           {/* Button to open the  modal */}
 
           <Button
             classNameStyle="flex gap-x-1 items-center justify-center text-center"
-            onClick={() => handleModal}
+            onClick={() => handleModal()}
             size="md"
             background="bg-sirp-primary"
             value={
@@ -74,7 +74,7 @@ function Header({ workspaceId }: HeaderProps) {
         </div>
       </div>
       {/* Render the Collaborate modal */}
-      {modalType &&  (
+      {modalType && (
         <CustomModal
           style="bg-white md:w-[50%] w-[90%] rounded-xl mx-auto pt-3 px-3 pb-5"
           closeModal={handleCloseModal}
