@@ -1,10 +1,4 @@
 export const NavBarContents = [
-  // {
-  //   name: "Dashboard",
-  //   icon: "dashboard.svg",
-  //   id: 1,
-  //   route: "/dashboard",
-  // },
   {
     name: "Chats",
     icon: "home.svg",
@@ -17,25 +11,6 @@ export const NavBarContents = [
     id: 4,
     route: "/documents",
   },
-
-  // {
-  //   name: "Workspaces",
-  //   icon: "starred.svg",
-  //   id: 3,
-  //   route: "/workspaces",
-  // },
-  // {
-  //   name: "Help",
-  //   icon: "training.svg",
-  //   id: 7,
-  //   route: "/help",
-  // },
-  // {
-  //   name: "Settings",
-  //   icon: "settings.svg",
-  //   id: 8,
-  //   route: "http://192.81.213.226:30/settings/profile",
-  // },
 ];
 
 export const HomeSubData = [
@@ -224,13 +199,6 @@ export const LogData = [
 ];
 
 export const TrainingData = [
-  // {
-  //   name: "All",
-  //   icon: "all.svg",
-  //   selectedIcon: "on.all.svg",
-  //   id: 1,
-  //   route: "/help/all",
-  // },
   {
     name: "Fact Checker",
     icon: "checker.svg",
