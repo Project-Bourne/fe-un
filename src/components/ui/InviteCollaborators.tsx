@@ -182,12 +182,12 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
 
         <div className="flex items-center border-t gap-5 justify-center mt-[2.2rem]  w-[100%] absolute bottom-0 bg-white z-[3000]">
           <Button
-            onClick={handleInvite}
+            onClick={() => handleInvite()}
             classNameStyle="flex gap-x-1 items-center text-center justify-center mt-2 hover:text-sirp-primary text-white text-sm hover:bg-sirp-primaryLess2 mb-1"
             size="lg"
             disabled={isDisabled}
             background="bg-sirp-primary"
-            type="submit"
+            // type="submit"
             value={
               <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
                 Add Collaborators
