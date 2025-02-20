@@ -14,6 +14,7 @@ import AuthService from "@/services/auth.service";
 import NotificationService from "@/services/notification.service";
 import { setUserInfo } from "@/redux/reducers/authReducer";
 import Head from "next/head";
+import Script from "next/script";
 import {
   setRecentChats,
   setSelectedChat,
@@ -36,9 +37,15 @@ import {
 function App({ Component, pageProps, ...appProps }) {
   return (
     <Provider store={store}>
-      <Head>
-        <script src="https://jitsi.deepsoul.pro/external_api.js"></script>
-      </Head>
+      {/* <Head>
+      </Head> */}
+      <Script
+        src="https://jitsi.deepsoul.pro/external_api.js"
+        strategy="beforeInteractive"
+        onLoad={() => {
+          console.log("Jitsi script loaded successfully");
+        }}
+      />
       <AppWrapper Component={Component} pageProps={pageProps} {...appProps} />
     </Provider>
   );
@@ -67,7 +74,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
   };
 
   useEffect(() => {
-    if (router.pathname === "/") {
+    if (router.pathname === "/" || router.pathname === "") {
       router.replace("/chats");
     }
   }, []);
