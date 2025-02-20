@@ -108,7 +108,7 @@ function WorkspaceDetails(props) {
             size="lg"
             disabled={isDisabled}
             background="bg-sirp-primary"
-            type="submit"
+            // type="submit"
             onClick={() => handleSubmit(new Event("submit"))}
             value={
               <div className="flex gap-3 text-[1rem] items-center justify-center py-5">
