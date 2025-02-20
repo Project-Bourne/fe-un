@@ -33,6 +33,7 @@ import {
   setCollaborators,
   setSingleDoc,
 } from "@/redux/reducers/documents/documentReducer";
+import "../polyfills";
 
 function App({ Component, pageProps, ...appProps }) {
   return (
