@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { loadJitsiScript } from "@/utils/jitsi";
+import { toast } from "react-toastify";
 
 const jitsiConfig = {
   disableVideoQualityLabel: true,
@@ -21,30 +23,85 @@ const jitsiConfig = {
 
 function VideoCall({ roomName }) {
   const containerRef = useRef();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { userInfo } = useSelector((state: any) => state?.auth);
+
   useEffect(() => {
-    // Check if we're running on the client-side
-    if (typeof window !== "undefined") {
-      const domain = "jitsi.deepsoul.pro";
-      const options = {
-        roomName: roomName,
-        width: "100%",
-        height: "100%",
-        parentNode: containerRef.current,
-        configOverwrite: jitsiConfig,
-        userInfo: {
-          displayName: userInfo?.email,
-        },
-      };
+    let api: any = null;
 
-      const api = new window.JitsiMeetExternalAPI(domain, options);
+    const initializeJitsi = async () => {
+      try {
+        await loadJitsiScript();
 
-      return () => {
+        if (!containerRef.current) return;
+
+        const domain = "jitsi.deepsoul.pro";
+        const options = {
+          roomName: roomName,
+          width: "100%",
+          height: "100%",
+          parentNode: containerRef.current,
+          configOverwrite: jitsiConfig,
+          userInfo: {
+            displayName: userInfo?.email,
+          },
+        };
+
+        api = new window.JitsiMeetExternalAPI(domain, options);
+        setIsLoading(false);
+
+        // Handle connection events
+        api.addEventListener("videoConferenceJoined", () => {
+          console.log("Joined video conference");
+          toast.success("Joined video conference");
+        });
+
+        api.addEventListener("videoConferenceLeft", () => {
+          console.log("Left video conference");
+          toast.info("Left video conference");
+        });
+
+        api.addEventListener("connectionFailed", () => {
+          console.error("Connection failed");
+          setError("Failed to connect to video conference");
+          toast.error("Failed to connect to video conference");
+        });
+      } catch (error) {
+        console.error("Error initializing Jitsi:", error);
+        setError("Failed to initialize video conference");
+        toast.error("Failed to initialize video conference");
+        setIsLoading(false);
+      }
+    };
+
+    initializeJitsi();
+
+    return () => {
+      if (api) {
         api.dispose();
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roomName]);
+      }
+    };
+  }, [roomName, userInfo?.email]);
+
+  if (error) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-black text-white">
+        <div className="text-center">
+          <h2 className="text-xl mb-4">Error</h2>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-black">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   return (
     <div

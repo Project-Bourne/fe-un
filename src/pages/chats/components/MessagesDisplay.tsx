@@ -30,20 +30,34 @@ function MessagesDisplay() {
     (state: any) => state?.auth,
   );
   const [senderData, setSenderData] = useState(null);
+
+  useEffect(() => {
+    // Update read status when messages are loaded
+    if (selectedChat?.length > 0 && userInfo?.uuid) {
+      const unreadMessages = selectedChat.filter(
+        (msg) => msg.message?.read === 0 && msg.sender !== userInfo.uuid,
+      );
+
+      if (unreadMessages.length > 0) {
+        const useSocket = new SocketService();
+        useSocket.readMsg({ senderId: userInfo.uuid });
+      }
+    }
+  }, [selectedChat, userInfo]);
+
   const scrollToBottom = () => {
     // Scroll to the bottom of the container
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
     }
   };
+
   const createDoc = async (event, text, name) => {
-    console.log(text, name, "scbdcbhdbcbdhbvhbd");
     event.preventDefault();
     try {
-      const useSocket = SocketService;
-      let docData = {
+      const useSocket = new SocketService();
+      const docData = {
         name: name,
-
         data: {
           ops: [{ insert: text }],
         },
@@ -55,9 +69,7 @@ function MessagesDisplay() {
       };
       await useSocket.createDoc(docData);
       socketio.on("load-doc", (res) => {
-        let data = JSON.parse(res);
-        console.log("load-doc", data);
-        // dispatch(setSingleDoc(data?.data?.data));
+        const data = JSON.parse(res);
         setId(data?.data?._id);
         toast("Document Created", {
           position: "bottom-right",
@@ -69,13 +81,10 @@ function MessagesDisplay() {
           progress: undefined,
           theme: "light",
         });
-        //
       });
-      // if(id){
-      //   router.replace(`documents/${id}`);
-      // }
     } catch (error) {
-      console.log(error);
+      console.error("Error creating document:", error);
+      toast.error("Failed to create document");
     }
   };
 
@@ -158,9 +167,50 @@ function MessagesDisplay() {
     );
   };
 
+  const formatDate = (dateString: string): string => {
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return "Invalid Date";
+      }
+
+      const now = new Date();
+      const diffInHours = Math.abs(now.getTime() - date.getTime()) / 36e5;
+
+      if (diffInHours < 24) {
+        // Today - show time only
+        return date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        });
+      } else if (diffInHours < 48) {
+        // Yesterday
+        return `Yesterday ${date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        })}`;
+      } else {
+        // Other dates
+        return date.toLocaleString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        });
+      }
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "Invalid Date";
+    }
+  };
+
   return (
     <div
-      className=" relative h-[65vh] md:h-[56.8vh] overflow-y-auto"
+      className="relative h-[65vh] md:h-[56.8vh] overflow-y-auto"
       ref={messagesEndRef}
     >
       {selectedChat.length < 1 ||
@@ -172,82 +222,78 @@ function MessagesDisplay() {
             <div className="grid gap-y-5 text-center">
               <div className="md:w-[20%] w-[100%] mx-auto grid gap-y-2">
                 <h3 className="text-[17px] font-semibold">Start chatting</h3>
-
-                {/* <p className="text-[15px] text-[#A1ADB5]">
-                  Send Messages Seemlessly
-                </p> */}
               </div>
             </div>
           </div>
         ))}
       <ul className="md:pb-[3rem] pb-[7rem]">
         {selectedChat?.map((message) => {
+          if (!message?.message?.text) return null;
+
+          const isOwnMessage = message?.sender?.id !== activeChat?.uuid;
+          const formattedDate = formatDate(
+            message?.updatedAt || message?.createdAt,
+          );
+
           return (
-            message?.message?.text && (
-              <div key={message._id}>
-                <li key={message._id}>
-                  {message?.message?.doc == 1 || message?.message?.img == 1 ? (
-                    documentView(message)
-                  ) : (
+            <div key={message._id}>
+              <li>
+                {message?.message?.doc == 1 || message?.message?.img == 1 ? (
+                  documentView(message)
+                ) : (
+                  <div
+                    className={`${
+                      isOwnMessage
+                        ? "float-right mr-3 rounded-l-xl rounded-tr-3xl bg-[#E9F1F9]"
+                        : "float-left ml-3 rounded-r-xl rounded-tl-3xl bg-sirp-dashbordb1"
+                    } text-sirp-grey shadow p-3 text-[16px] font-normal max-w-[400px] w-auto mt-[3rem]`}
+                  >
+                    {activeChat.spaceName && (
+                      <p className="text-[12.5px] font-semibold border-b mb-2 text-sirp-primary">
+                        {message?.sender?.name}
+                      </p>
+                    )}
                     <div
-                      className={`${
-                        message?.sender?.id !== activeChat?.uuid
-                          ? "float-right mr-3 rounded-l-xl rounded-tr-3xl bg-[#E9F1F9] "
-                          : "float-left ml-3 rounded-r-xl rounded-tl-3xl bg-sirp-dashbordb1 "
-                      }
-                 text-sirp-grey  shadow p-3 text-[16px] font-normal max-w-[400px] w-auto  mt-[3rem]`}
-                    >
-                      {activeChat.spaceName && (
-                        <p className="text-[12.5px] font-semibold border-b mb-2 text-sirp-primary">
-                          {message?.sender?.name}
-                        </p>
-                      )}
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: replaceURLsInText(message?.message?.text),
-                        }}
-                      />
-                      {/* <p>{replaceURLsInText(message?.message?.text)}</p> */}
-                    </div>
-                  )}
-                  <div className="clear-both table">
-                    {/*  */}
-                    <div
-                      className={`${
-                        message?.sender?.id !== activeChat?.uuid
-                          ? "absolute right-2"
-                          : "absolute left-2"
-                      } flex gap-x-2 p-2 items-center`}
-                    >
-                      <div className="text-[11px] font-light">
-                        {useCalculateTime(message?.updatedAt)}{" "}
-                      </div>
-                      {message?.sender?.id !== activeChat?.uuid && (
-                        <div>
-                          {message?.message?.read === 0 ? (
-                            <DoneIcon
-                              style={{
-                                color: "#4582C4",
-                                fontWeight: "100",
-                                fontSize: "18px",
-                              }}
-                            />
-                          ) : (
-                            <DoneAllIcon
-                              style={{
-                                color: "#4582C4",
-                                fontWeight: "100",
-                                fontSize: "18px",
-                              }}
-                            />
-                          )}
-                        </div>
-                      )}
-                    </div>
+                      dangerouslySetInnerHTML={{
+                        __html: replaceURLsInText(message?.message?.text),
+                      }}
+                    />
                   </div>
-                </li>
-              </div>
-            )
+                )}
+                <div className="clear-both table">
+                  <div
+                    className={`${
+                      isOwnMessage ? "absolute right-2" : "absolute left-2"
+                    } flex gap-x-2 p-2 items-center`}
+                  >
+                    <div className="text-[11px] font-light">
+                      {formattedDate}
+                    </div>
+                    {isOwnMessage && (
+                      <div>
+                        {message?.message?.read === 0 ? (
+                          <DoneIcon
+                            style={{
+                              color: "#4582C4",
+                              fontWeight: "100",
+                              fontSize: "18px",
+                            }}
+                          />
+                        ) : (
+                          <DoneAllIcon
+                            style={{
+                              color: "#4582C4",
+                              fontWeight: "100",
+                              fontSize: "18px",
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </li>
+            </div>
           );
         })}
       </ul>

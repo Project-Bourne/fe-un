@@ -1,19 +1,31 @@
-import React from "react";
-import "./style.css";
+import React, { ReactNode } from "react";
+import styles from "./style.module.css";
 import { Header, NavBar } from "@/components/layouts";
 
-function AppLayout({ children }) {
+interface AppLayoutProps {
+  children: ReactNode;
+}
+
+/**
+ * AppLayout component that provides the main application layout structure
+ * Includes the navigation bar, header, and main content area
+ *
+ * @param {ReactNode} children - The content to be rendered within the layout
+ * @returns {JSX.Element} The rendered layout component
+ */
+function AppLayout({ children }: AppLayoutProps): JSX.Element {
   return (
-    <div className="bg-white w-[100vw] h-[100vh] z-30 relative flex flex-row applayout">
-      {/* Nav Bar Component */}
+    <div className={styles.appLayout}>
+      {/* Navigation sidebar */}
       <NavBar />
 
-      <div className="bg-white w-full md:w-[80vw] ml-[15vw] md:ml-[20vw] h-full">
-        {/* Layout header */}
+      {/* Main content area */}
+      <div className={styles.mainContent}>
+        {/* Top header bar */}
         <Header />
 
-        {/* wrapper childer */}
-        <div className="mt-[100px]">{children}</div>
+        {/* Main content wrapper */}
+        <main className={styles.childrenWrapper}>{children}</main>
       </div>
     </div>
   );
