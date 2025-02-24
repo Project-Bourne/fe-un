@@ -16,6 +16,10 @@ import { setComments } from "@/redux/reducers/chat/chatReducer";
 import EditableText from "./components/EditText";
 import { Cookies } from "react-cookie";
 import NotificationService from "@/services/notification.service";
+import { extractContent } from "@/utils/documentHelpers";
+import Spinner from "@/components/Spinner";
+import { stripMarkdown } from "@/utils/stripMarkdown";
+import DocumentPreview from "@/components/DocumentPreview";
 
 const viewDocument = () => {
   const [selectedTab, setSelectedTab] = useState(null);
@@ -41,19 +45,19 @@ const viewDocument = () => {
     (state: any) => state?.auth,
   );
 
-  const createDoc = async (data) => {
+  const createDoc = async (markdownContent: string) => {
     try {
-      const useSocket = SocketService;
       let docData = {
-        name: useTruncate(data, 20),
+        name: useTruncate(stripMarkdown(markdownContent), 20),
         author: {
           id: userInfo?.uuid,
           name: userInfo?.email,
         },
         data: {
-          ops: [{ insert: data }],
+          ops: [{ insert: markdownContent }],
         },
       };
+      const useSocket = SocketService;
       await useSocket.createDoc(docData);
       socketio.once("load-doc", (res) => {
         let data = JSON.parse(res);
@@ -134,33 +138,45 @@ const viewDocument = () => {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data = await response?.json();
-          switch (routeName) {
-            case "translator":
-              createDoc(data?.data?.textTranslation);
-              break;
-            case "summarizer":
-              createDoc(data?.data?.summaryArray[0].summary);
-              break;
-            case "factcheck":
-              createDoc(data?.data?.confidence?.content5wh);
-              break;
-            case "irp":
-              createDoc(data?.data?.confidence?.content5wh);
-              break;
-            case "analyser":
-              createDoc(data?.data?.text);
-              break;
-            case "interrogator":
-              createDoc(data?.data?.answer);
-              break;
-            case "digest":
-              createDoc(data?.data?.report);
-              break;
-            case "collab":
-            case "deepchat":
-              break;
-            default:
-              break;
+          const rawContent = extractContent(routeName, data);
+          const isImportOperation = [
+            "translator",
+            "summarizer",
+            "factcheck",
+            "irp",
+            "analyser",
+            "interrogator",
+            "digest",
+          ].includes(routeName);
+
+          if (isImportOperation) {
+            if (singleDoc && singleDoc._id) {
+              const updatedDoc = await DocumentService.updateDocContent(
+                singleDoc._id,
+                rawContent,
+                headers,
+              );
+              dispatch(setSingleDoc(updatedDoc));
+              toast("Document Updated", {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+            } else {
+              createDoc(rawContent);
+            }
+          } else {
+            // For non-import operations like collab and deepchat, retain original behavior
+            if (routeName === "collab" || routeName === "deepchat") {
+              // Do nothing as per original implementation
+            } else {
+              createDoc(rawContent);
+            }
           }
           setLoading(false);
         } catch (error: any) {
@@ -237,16 +253,6 @@ const viewDocument = () => {
   useEffect(() => {
     if (singleDoc?.spaceId) {
       setDocumentsBar([
-        // {
-        //   name: "Share",
-        //   icon: "share.svg",
-        //   id: 1,
-        // },
-        // {
-        //   name: "Comment",
-        //   icon: "comments.svg",
-        //   id: 2,
-        // },
         {
           name: "Call",
           icon: "call.svg",
@@ -298,14 +304,21 @@ const viewDocument = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-full doc overflow-y-auto">
       <div className=" flex items-center  justify-between  border-b-[1px] border-b-gray-100 w-full px-5 py-3 docs">
         <div className="flex items-center">
-          {/* <span className="text-3xl text-[#1D2022] font-bold capitalize">
-            {useTruncate(singleDoc?.name, 20)}
-          </span> */}
-          <EditableText initialText={singleDoc?.name} />
+          <div className="text-3xl text-[#1D2022] font-bold capitalize">
+            {stripMarkdown(singleDoc?.name || "")}
+          </div>
         </div>
         <div>
           <ImageList users={users} stopImageCountAt={5} />
@@ -332,6 +345,7 @@ const viewDocument = () => {
           ))}
         </div>
       </div>
+      <DocumentPreview />
       <Docs
         showComments={showComments}
         setShowComments={setShowComments}
