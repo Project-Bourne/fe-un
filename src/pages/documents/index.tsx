@@ -21,8 +21,8 @@ function Documents() {
   const { allDocs } = useSelector((state: any) => state?.docs);
   useEffect(() => {
     const fetchHistory = async () => {
-      const useSocket = SocketService;
-      await useSocket.getDocHistory({ uuid: userInfo?.uuid });
+      const socketService = new SocketService();
+      await socketService.getDocHistory({ uuid: userInfo?.uuid });
     };
     fetchHistory();
   }, []);

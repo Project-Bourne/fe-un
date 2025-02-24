@@ -34,30 +34,56 @@ import {
   setSingleDoc,
 } from "@/redux/reducers/documents/documentReducer";
 import "../polyfills";
+import socketInstance from "../utils/socketInstance";
+import "@/styles/globals.css";
+import { Inter } from "next/font/google";
+import type { AppProps } from "next/app";
 
-function App({ Component, pageProps, ...appProps }) {
+const inter = Inter({ subsets: ["latin"] });
+
+/**
+ * Main App component that wraps the entire application
+ * Handles global providers, layout, and animations
+ */
+function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      {/* <Head>
-      </Head> */}
-      <Script
-        src="https://jitsi.deepsoul.pro/external_api.js"
-        strategy="beforeInteractive"
-        onLoad={() => {
-          console.log("Jitsi script loaded successfully");
-        }}
-      />
-      <AppWrapper Component={Component} pageProps={pageProps} {...appProps} />
-    </Provider>
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Script
+            src="https://jitsi.deepsoul.pro/external_api.js"
+            strategy="beforeInteractive"
+            onLoad={() => {
+              console.log("Jitsi script loaded successfully");
+            }}
+          />
+          <AppWrapper Component={Component} pageProps={pageProps} />
+          <ToastContainer />
+        </PersistGate>
+      </Provider>
+    </>
   );
 }
 
-// AppWrapper component created to enable the use of redux tools
-
-const AppWrapper = ({ Component, pageProps, ...appProps }) => {
+/**
+ * AppWrapper component that handles layout and page transitions
+ */
+const AppWrapper = ({
+  Component,
+  pageProps,
+}: {
+  Component: any;
+  pageProps: any;
+}) => {
   const router = useRouter();
   const { userInfo } = useSelector((state: any) => state?.auth);
   const dispatch = useDispatch();
+
   const pageAnimationVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -66,12 +92,11 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
 
   // initial user update using authenticated UUID on app mount
   const _constructor = async () => {
-    const useSocket = SocketService;
     const data = { uuid: userInfo?.uuid, country: userInfo?.country };
-    await useSocket.updateData(data);
-    await useSocket.getRecentChats({ uuid: userInfo?.uuid });
-    await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
-    await useSocket.readMsg({ senderId: userInfo?.uuid });
+    await socketInstance.updateData(data);
+    await socketInstance.getRecentChats({ uuid: userInfo?.uuid });
+    await socketInstance.allSpaceByUser({ uuid: userInfo?.uuid });
+    await socketInstance.readMsg({ senderId: userInfo?.uuid });
   };
 
   useEffect(() => {
@@ -158,7 +183,6 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
       let data = JSON.parse(res);
       console.log("space-created", data.data, data);
       if (data.data) {
-        const useSocket = SocketService;
         dispatch(setNewWorkSpace(data.data));
         toast("Work Space Created", {
           position: "bottom-right",
@@ -170,8 +194,8 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
           progress: undefined,
           theme: "light",
         });
-        await useSocket.getRecentChats({ uuid: userInfo?.uuid });
-        await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
+        await socketInstance.getRecentChats({ uuid: userInfo?.uuid });
+        await socketInstance.allSpaceByUser({ uuid: userInfo?.uuid });
       }
     });
 
@@ -192,8 +216,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
 
     socketio.on("msg-sent", async (res) => {
       console.log("msg-sent", res);
-      const useSocket = SocketService;
-      await useSocket.getSelectedMsg({
+      await socketInstance.getSelectedMsg({
         userId: userInfo?.uuid,
         uuid: res?.sender?.id,
       });
@@ -201,8 +224,7 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
 
     socketio.on("msg-sent-space", async (res) => {
       console.log("msg-sent-space", res);
-      const useSocket = SocketService;
-      await useSocket.getSelectedspace({
+      await socketInstance.getSelectedspace({
         spaceId: res?.space?.uuid,
         uuid: res?.userId,
       });
@@ -217,20 +239,19 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
 
     socketio.on("new-message", async (res) => {
       console.log("new-message", res);
-      const useSocket = SocketService;
       if (!userInfo) return;
       if (res?.space) {
-        await useSocket.getSelectedspace({
+        await socketInstance.getSelectedspace({
           spaceId: res?.space?.uuid,
           uuid: res?.sender.id,
         });
-        await useSocket.readMsg({ senderId: userInfo?.uuid });
+        await socketInstance.readMsg({ senderId: userInfo?.uuid });
       } else {
-        await useSocket.getSelectedMsg({
+        await socketInstance.getSelectedMsg({
           userId: userInfo?.uuid,
           uuid: res?.userId,
         });
-        await useSocket.readMsg({ senderId: userInfo?.uuid });
+        await socketInstance.readMsg({ senderId: userInfo?.uuid });
       }
     });
 
@@ -279,25 +300,24 @@ const AppWrapper = ({ Component, pageProps, ...appProps }) => {
     });
   }, [socketio]);
 
-  const isLayoutNeeded = appProps.router.pathname.includes("/auth");
+  // Check if we're on an auth page
+  const isAuthPage = router.pathname.startsWith("/auth");
 
-  const LayoutWrapper = !isLayoutNeeded ? AppLayout : React.Fragment;
+  // Use AppLayout for non-auth pages, Fragment for auth pages
+  const LayoutWrapper = !isAuthPage ? AppLayout : React.Fragment;
 
   return (
-    <PersistGate loading="" persistor={persistor}>
-      <LayoutWrapper>
-        <motion.div
-          key={appProps.router.route}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          variants={pageAnimationVariants}
-        >
-          <Component {...pageProps} />
-        </motion.div>
-        <ToastContainer />
-      </LayoutWrapper>
-    </PersistGate>
+    <LayoutWrapper>
+      <motion.div
+        key={router.route}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={pageAnimationVariants}
+      >
+        <Component {...pageProps} />
+      </motion.div>
+    </LayoutWrapper>
   );
 };
 

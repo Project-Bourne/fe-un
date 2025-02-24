@@ -5,9 +5,10 @@ import {
   setActivechat,
   setSelectedChat,
 } from "@/redux/reducers/chat/chatReducer";
-import SocketService from "../../../socket/chat.socket";
+import socketInstance from "@/utils/socketInstance";
 import { setNewWorkSpace } from "@/redux/reducers/workspaceReducer";
 import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
 
 function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
   const [isClicked, setIsClicked] = useState(false);
@@ -20,37 +21,35 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
   );
 
   const handleClick = async (data: any) => {
-    setIsActive(true);
-    setUuid(data.uuid);
-    setIsClicked(true);
-    dispatch(setSelectedChat([]));
-    dispatch(setActivechat(data));
-    console.log("active chat", {
-      data,
-      chatsData,
-    });
-    // setNewWorkSpace
-    const useSocket = SocketService;
-    console.log(
-      {
-        userId: userInfo?.uuid,
-        uuid: data?.uuid,
-      },
-      "ids",
-    );
-    if (activeChat?.spaceName) {
-      await useSocket.getSelectedspace({
-        spaceId: data?.uuid,
-        uuid: userInfo?.uuid,
-        page,
-      });
-      dispatch(setNewWorkSpace(data));
-    } else {
-      await useSocket.getSelectedMsg({
-        userId: userInfo?.uuid,
-        uuid: data.uuid,
-        page: 0,
-      });
+    try {
+      setIsActive(true);
+      setUuid(data.uuid);
+      setIsClicked(true);
+
+      // Clear current chat messages before loading new ones
+      dispatch(setSelectedChat([]));
+      // Set the active chat
+      dispatch(setActivechat(data));
+
+      if (data?.spaceName) {
+        // Handle workspace chat selection
+        await socketInstance.getSelectedspace({
+          spaceId: data.uuid,
+          uuid: userInfo?.uuid,
+          page: 0,
+        });
+        dispatch(setNewWorkSpace(data));
+      } else {
+        // Handle direct message chat selection
+        await socketInstance.getSelectedMsg({
+          userId: userInfo?.uuid,
+          uuid: data.uuid,
+          page: 0,
+        });
+      }
+    } catch (error) {
+      console.error("Error switching chats:", error);
+      toast.error("Failed to load chat messages");
     }
   };
 

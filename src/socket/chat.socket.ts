@@ -249,6 +249,33 @@ class SocketService {
       });
     }
   }
+
+  /**
+   * Retrieves previous chat messages.
+   * This is a dummy implementation that returns an empty array and should be replaced
+   * with an actual API call or socket event that fetches previous chat history.
+   *
+   * @returns {Promise<any[]>} A promise that resolves to an array of chat messages.
+   */
+  static async getPreviousChatMessages(): Promise<any[]> {
+    // TODO: Replace with actual implementation.
+    return Promise.resolve([]);
+  }
+
+  /**
+   * Sends a chat message via socket.
+   * This is a dummy implementation and should be replaced with actual socket emit logic.
+   *
+   * @param {any} message - The chat message object to be sent.
+   * @returns {Promise<void>} A promise that resolves when the message is sent.
+   */
+  static async sendMessage(message: any): Promise<void> {
+    // TODO: Replace with actual implementation using socket emit.
+    return Promise.resolve();
+  }
 }
 
-export default new SocketService();
+/**
+ * Export the SocketService class directly to allow static members to be accessed.
+ */
+export default SocketService;

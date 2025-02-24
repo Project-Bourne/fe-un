@@ -20,6 +20,8 @@ import { setUserInfo } from "@/redux/reducers/authReducer";
 import NotificationService from "@/services/notification.service";
 import { Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
+import SearchUsers from "@/components/SearchUsers";
+import SocketService from "@/socket/chat.socket";
 
 function Index() {
   const [listMobileDisplay, setListMobileDisplay] = useState("block");
@@ -48,6 +50,55 @@ function Index() {
     setModalType("");
   };
   const closeNewChatModal = () => setNewChat(false);
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { userInfo } = useSelector((state: any) => state?.auth);
+
+  const handleSearch = async (query: string) => {
+    if (query.length < 2) {
+      setSearchResults([]);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await AuthService.getusersbyId(query);
+      if (response.status) {
+        const filteredResults = response.data.filter(
+          (user) => user.uuid !== userInfo?.uuid,
+        );
+        setSearchResults(filteredResults);
+      }
+    } catch (error) {
+      toast.error("Failed to search users");
+      console.error("Search error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSelectUser = async (user) => {
+    try {
+      const socketService = new SocketService();
+      await socketService.sendMessage({
+        uuid: user.uuid,
+        data: `Chat started with ${user.firstName} ${user.lastName}`,
+        doc: false,
+        img: false,
+        timestamp: new Date().toISOString(),
+        sender: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+        },
+      });
+      toast.success(`Started chat with ${user.firstName} ${user.lastName}`);
+      closeNewChatModal();
+    } catch (error) {
+      toast.error("Failed to start chat");
+      console.error("Chat creation error:", error);
+    }
+  };
 
   return (
     <div>

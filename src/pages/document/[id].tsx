@@ -57,8 +57,8 @@ const viewDocument = () => {
           ops: [{ insert: markdownContent }],
         },
       };
-      const useSocket = SocketService;
-      await useSocket.createDoc(docData);
+      const socketService = new SocketService();
+      await socketService.createDoc(docData);
       socketio.once("load-doc", (res) => {
         let data = JSON.parse(res);
         console.log("load-doc", data.data);
@@ -219,9 +219,9 @@ const viewDocument = () => {
 
   useEffect(() => {
     const getComments = async () => {
-      const useSocket = SocketService;
+      const socketService = new SocketService();
       dispatch(setComments([]));
-      await useSocket.getComments({
+      await socketService.getComments({
         docId: singleDoc?._id,
         spaceId: singleDoc?.spaceId,
       });
@@ -232,8 +232,8 @@ const viewDocument = () => {
   useEffect(() => {
     socketio.on("receive-comment", async (res) => {
       console.log("receive-comment", res);
-      const useSocket = SocketService;
-      await useSocket.getComments({
+      const socketService = new SocketService();
+      await socketService.getComments({
         docId: res?.doc?.id,
         spaceId: res?.spaceId,
       });

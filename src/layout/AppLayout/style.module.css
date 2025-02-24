@@ -1,0 +1,15 @@
+.root {
+  @apply flex m-0 bg-red-600 h-full w-full fixed;
+}
+
+.appLayout {
+  @apply bg-white w-[100vw] h-[100vh] z-30 relative flex flex-row;
+}
+
+.mainContent {
+  @apply bg-white w-full md:w-[80vw] ml-[15vw] md:ml-[20vw] h-full;
+}
+
+.childrenWrapper {
+  @apply mt-[100px];
+}
