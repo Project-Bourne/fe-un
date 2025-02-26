@@ -70,14 +70,19 @@ export default function CollabModal({ users, setShowCollabModal }) {
     event.stopPropagation();
     if (pathname.includes("/documents/")) {
       console.log("REM: ", userId);
-      const useSocket = SocketService;
-      await useSocket.leaveDocument({ docId: singleDoc._id, collabId: userId });
+      // const useSocket = SocketService;
+      const socketService = new SocketService();
+      await socketService.leaveDocument({
+        docId: singleDoc._id,
+        collabId: userId,
+      });
 
       await socketio.once("collab-removed", (res) => {
         console.log(res, "load");
         let data = JSON.parse(res);
         console.log("collab-removed", data.data);
-        SocketService.getDoc({ id: data._id });
+        const socketService = new SocketService();
+        socketService.getDoc({ id: data._id });
         dispatch(setSingleDoc(data.data));
       });
 

@@ -35,6 +35,8 @@ export default function TextEditor() {
   const [quill, setQuill] = useState<Quill | null>(null);
   const dispatch = useDispatch();
 
+  const socketService = new SocketService();
+
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
     console.log(singleDoc, "singleDoc");
@@ -57,7 +59,7 @@ export default function TextEditor() {
       }
     });
 
-    SocketService.getDoc({ id: documentId });
+    socketService.getDoc({ id: documentId });
   }, [socketio, quill, documentId]);
 
   const SAVE_INTERVAL_MS = 3000;
@@ -137,7 +139,7 @@ export default function TextEditor() {
     const interval = setInterval(() => {
       const content = quill.getContents();
       console.log(content, "contentcontent");
-      SocketService.saveDoc(content);
+      socketService.saveDoc(content);
     }, SAVE_INTERVAL_MS);
 
     return () => {
@@ -155,7 +157,7 @@ export default function TextEditor() {
         console.log(selection, "selection");
         if (selection) {
           const { index, length } = selection;
-          SocketService.updateCursor({
+          socketService.updateCursor({
             user: { uuid: userInfo?.uuid, name: userInfo?.email },
             docId: documentId,
             cursorData: { index, length },
@@ -256,7 +258,7 @@ export default function TextEditor() {
     const handler = (delta, oldDelta, source) => {
       console.log(delta, "delta");
       if (source !== "user") return;
-      SocketService.updateChanges(delta);
+      socketService.updateChanges(delta);
     };
     quill.on("text-change", handler);
     return () => {

@@ -29,8 +29,8 @@ function DocCard({ docCardClick, data, isActive }: any) {
         theme: "light",
       });
       setshowDeleteModal(false);
-      const useSocket = SocketService;
-      await useSocket.getDocHistory({ uuid: userInfo?.uuid });
+      const socketService = new SocketService();
+      await socketService.getDocHistory({ uuid: userInfo?.uuid });
     } catch (error) {
       console.log(error);
     }

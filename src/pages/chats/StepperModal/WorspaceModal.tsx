@@ -68,7 +68,7 @@ export default function WorkspaceModal({ setModalType }) {
 
   const deleteSpace = async (e, id) => {
     e.stopPropagation();
-    const useSocket = SocketService;
+    //  const useSocket = SocketService;
     try {
       await CollabService.deleteSpace(id);
       toast("Deleted", {
@@ -81,7 +81,8 @@ export default function WorkspaceModal({ setModalType }) {
         progress: undefined,
         theme: "light",
       });
-      await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
+      const socketService = new SocketService();
+      await socketService.allSpaceByUser({ uuid: userInfo?.uuid });
       setModalType("");
     } catch (error) {
       console.log(error);

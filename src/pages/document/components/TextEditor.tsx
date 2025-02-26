@@ -59,7 +59,8 @@ export default function TextEditor() {
       }
     });
 
-    SocketService.getDoc({ id: documentId });
+    const socketService = new SocketService();
+    socketService.getDoc({ id: documentId });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketio, quill, documentId]);
@@ -68,7 +69,8 @@ export default function TextEditor() {
   useEffect(() => {
     if (!socketio || !quill) return;
     const interval = setInterval(() => {
-      SocketService.saveDoc(quill.getContents());
+      const socketService = new SocketService();
+      socketService.saveDoc(quill.getContents());
     }, SAVE_INTERVAL_MS);
 
     return () => {
@@ -98,7 +100,8 @@ export default function TextEditor() {
 
     const handler = (delta, oldDelta, source) => {
       if (source !== "user") return;
-      SocketService.updateChanges(delta);
+      const socketService = new SocketService();
+      socketService.updateChanges(delta);
     };
     quill.on("text-change", handler);
     return () => {

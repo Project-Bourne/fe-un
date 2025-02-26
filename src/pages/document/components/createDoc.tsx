@@ -37,7 +37,8 @@ function CreateDocument(setCreateDocModal) {
           name: userInfo?.email,
         },
       };
-      await useSocket.createDoc(docData);
+      const socketService = new SocketService();
+      await socketService.createDoc(docData);
       setCreateDocModal(false);
     } catch (error) {
       console.log(error);

@@ -94,9 +94,10 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
             uri: response.data[0].uri,
           };
           setSelectedFiles([]);
-          const useSocket = SocketService;
+          // const useSocket = SocketService;
+          const socketService = new SocketService();
           if (activeChat?.spaceName) {
-            await useSocket.sendMessageSpace({
+            await socketService.sendMessageSpace({
               spaceId: activeChat.uuid,
               data: newObj.text,
               doc: true,
@@ -104,7 +105,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
             });
             onDone();
           } else {
-            await useSocket.sendMessage({
+            await socketService.sendMessage({
               uuid: activeChat.uuid,
               data: newObj.text,
               doc: true,
@@ -179,9 +180,10 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
             uri: response.data[0].uri,
           };
           setSelectedImgFiles([]);
-          const useSocket = SocketService;
+          // const useSocket = SocketService;
+          const socketService = new SocketService();
           if (activeChat?.spaceName) {
-            await useSocket.sendMessageSpace({
+            await socketService.sendMessageSpace({
               spaceId: activeChat.uuid,
               data: newObj.text,
               doc: false,
@@ -189,7 +191,7 @@ function AttachmentPopups({ showAttachment, setShowAttachment }) {
             });
             onDone();
           } else {
-            await useSocket.sendMessage({
+            await socketService.sendMessage({
               uuid: activeChat.uuid,
               data: newObj.text,
               doc: false,

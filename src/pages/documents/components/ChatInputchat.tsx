@@ -39,8 +39,9 @@ function ChatInput(props) {
   const handleSendMessage = async () => {
     try {
       console.log({ uuid: activeChat.uuid, data: textValue }, "text");
-      const useSocket = SocketService;
-      await useSocket.sendComment({
+      // const useSocket = SocketService;
+      const socketService = new SocketService();
+      await socketService.sendComment({
         // spaceId: singleDoc.spaceId,
         data: textValue,
         docType: 0,

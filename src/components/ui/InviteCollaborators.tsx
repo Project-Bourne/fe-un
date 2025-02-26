@@ -53,7 +53,8 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
 
   // Handle the invite button click
   const handleInvite = async () => {
-    const useSocket = SocketService;
+    // const useSocket = SocketService;
+    const socketService = new SocketService();
     try {
       if (pathname.includes("/chats")) {
         Promise.all(
@@ -74,7 +75,7 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
               },
             };
             console.log(collabData, "collabData");
-            await useSocket.joinWorkspace(collabData);
+            await socketService.joinWorkspace(collabData);
           }),
         );
         setShowCollabModal(false);
@@ -94,7 +95,7 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
           docId: singleDoc?._id,
           collabs: newSuggestions,
         };
-        await useSocket.joinDocument(collabData);
+        await socketService.joinDocument(collabData);
         setShowCollabModal(false);
       }
     } catch (error) {

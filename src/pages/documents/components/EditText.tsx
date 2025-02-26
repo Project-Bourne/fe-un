@@ -26,8 +26,8 @@ function EditableText({ initialText }) {
         name: userInfo?.email,
       },
     };
-    const useSocket = SocketService;
-    await useSocket.updateDoc(docData);
+    const socketService = new SocketService();
+    await socketService.updateDoc(docData);
     setIsEditing(false);
   };
 
