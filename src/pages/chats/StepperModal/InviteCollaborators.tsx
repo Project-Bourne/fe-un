@@ -54,7 +54,8 @@ const InviteCollaborators = ({ setSowCollabModal }) => {
 
   // Handle the invite button click
   const handleInvite = async () => {
-    const useSocket = SocketService;
+    // const useSocket = SocketService;
+    const socketService = new SocketService();
     try {
       Promise.all(
         selectedSuggestions.map(async (suggestion) => {
@@ -75,7 +76,7 @@ const InviteCollaborators = ({ setSowCollabModal }) => {
               name: userInfo?.email,
             },
           };
-          await useSocket.joinWorkspace(collabData);
+          await socketService.joinWorkspace(collabData);
         }),
       );
       toast("Added Collaborators", {

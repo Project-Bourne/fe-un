@@ -39,7 +39,8 @@ function WorkspaceDetails(props) {
     try {
       // event.preventDefault();
       // dispatch(setSpaceData(formData));
-      const useSocket = SocketService;
+      // const useSocket = SocketService;
+      const socketService = new SocketService();
       let workspaceData = {
         spaceName: formData?.workName,
         description: formData?.workspaceDescription,
@@ -50,8 +51,8 @@ function WorkspaceDetails(props) {
         },
       };
       console.log(workspaceData);
-      await useSocket.createWorkspace(workspaceData);
-      await useSocket.allSpaceByUser({ uuid: userInfo?.uuid });
+      await socketService.createWorkspace(workspaceData);
+      await socketService.allSpaceByUser({ uuid: userInfo?.uuid });
       setModalType(null);
     } catch (error) {
       console.log(error);

@@ -1,6 +1,5 @@
 import { TrainingData } from "@/utils/constants";
 import React, { ReactNode } from "react";
-import "../../styles/global.css";
 import { useRouter } from "next/router";
 import TabComp from "@/pages/settings/components/TabComp";
 

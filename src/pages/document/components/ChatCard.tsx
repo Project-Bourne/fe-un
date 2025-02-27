@@ -24,8 +24,9 @@ function ChatCard({ chat, setIsClicked, isClicked }) {
       }),
     );
     console.log("active chat", data);
-    const useSocket = SocketService;
-    useSocket.getSelectedMsg({
+    // const useSocket = SocketService;
+    const socketService = new SocketService();
+    socketService.getSelectedMsg({
       userId: userInfo.uuid,
       uuid: chat?.uuid,
     });

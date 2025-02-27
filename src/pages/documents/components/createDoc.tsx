@@ -29,7 +29,6 @@ function CreateDocument(setCreateDocModal, handleCloseModal) {
     try {
       event.preventDefault();
       console.log("clicked1");
-      const useSocket = SocketService;
       let docData = {
         name: formData?.name,
         author: {
@@ -37,7 +36,8 @@ function CreateDocument(setCreateDocModal, handleCloseModal) {
           name: userInfo?.email,
         },
       };
-      await useSocket.createDoc(docData);
+      const socketService = new SocketService();
+      await socketService.createDoc(docData);
       socketio.on("load-doc", async (res) => {
         let data = JSON.parse(res);
         console.log("load-doc", data);
@@ -51,7 +51,8 @@ function CreateDocument(setCreateDocModal, handleCloseModal) {
           progress: undefined,
           theme: "light",
         });
-        await useSocket.getDocHistory({ uuid: userInfo?.uuid });
+        const socketService = new SocketService();
+        await socketService.getDocHistory({ uuid: userInfo?.uuid });
       });
       setCreateDocModal;
       handleCloseModal;
