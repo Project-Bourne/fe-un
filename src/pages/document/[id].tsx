@@ -73,7 +73,7 @@ const viewDocument = () => {
           progress: undefined,
           theme: "light",
         });
-        router.replace(`/documents/${data?.data?._id}`);
+        router.replace(`/documents/${data?.data?.id}`);
       });
     } catch (error) {
       console.log(error);
@@ -222,7 +222,7 @@ const viewDocument = () => {
       const socketService = new SocketService();
       dispatch(setComments([]));
       await socketService.getComments({
-        docId: singleDoc?._id,
+        docId: singleDoc?.id,
         spaceId: singleDoc?.spaceId,
       });
     };

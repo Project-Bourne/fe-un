@@ -34,9 +34,11 @@ function MessagesDisplay() {
   useEffect(() => {
     // Update read status when messages are loaded
     if (selectedChat?.length > 0 && userInfo?.uuid) {
-      const unreadMessages = selectedChat.filter(
-        (msg) => msg.message?.read === 0 && msg.sender !== userInfo.uuid,
-      );
+      const unreadMessages = selectedChat.filter((msg) => {
+        if (msg) {
+          return msg.message?.read === 0 && msg.sender !== userInfo.uuid;
+        }
+      });
 
       if (unreadMessages.length > 0) {
         const useSocket = new SocketService();

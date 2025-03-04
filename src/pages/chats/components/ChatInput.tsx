@@ -131,7 +131,7 @@ function ChatInput(props) {
               alt="attachment"
               width={35}
               height={35}
-              style={{ width: "auto", height: "auto" }}
+              style={{ width: "48px", height: "48px" }}
               className="py-2 px-2 hover:cursor-pointer"
               onClick={showUploadPopup}
               priority
@@ -166,7 +166,7 @@ function ChatInput(props) {
               alt="emoji"
               width={25}
               height={25}
-              style={{ width: "auto", height: "auto" }}
+              style={{ width: "48px", height: "48px" }}
               onClick={() => setToggleEmoji((prevState) => !prevState)}
               className="px-[0.15rem] hover:cursor-pointer"
               priority
@@ -185,7 +185,7 @@ function ChatInput(props) {
               alt="send"
               width={50}
               height={50}
-              style={{ width: "auto", height: "auto" }}
+              style={{ width: "48px", height: "48px" }}
               className={`${
                 !isTyping || isSending
                   ? "bg-[#B9C1C7] pointer-events-none"
