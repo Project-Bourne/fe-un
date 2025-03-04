@@ -33,6 +33,10 @@ class DocumentService {
   }
 
   static async getDoc(id) {
+    if (id.split("&")) {
+      id = id.split("&")[0];
+    }
+
     try {
       const response = await request(`doc/${id}`, "GET", true, false, false);
       return response.data;
