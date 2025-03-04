@@ -10,6 +10,13 @@ import SocketService from "../../../socket/chat.socket";
 import Stages from "../components/Stepper";
 import { userInfo } from "os";
 
+/**
+ * InviteCollaborators component for adding collaborators to workspaces
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.setSowCollabModal - Function to control visibility of the modal
+ * @returns {JSX.Element} The InviteCollaborators component
+ */
 const InviteCollaborators = ({ setSowCollabModal }) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -25,18 +32,52 @@ const InviteCollaborators = ({ setSowCollabModal }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestions, setSelectedSuggestions] = useState([]);
   const { newWorkspace } = useSelector((state: any) => state.workSpace);
-  useEffect(() => {
-    userService
-      .getUsers()
-      .then((data) => {
-        setSuggestions(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching users:", error);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
+  useEffect(() => {
+    // userService
+    //   .getUsers()
+    //   .then((data) => {
+    //     setSuggestions(data.filter((suggestion) => suggestion.uuid !== userInfo?.uuid));
+    //   })
+    //   .catch((error) => {
+    /**
+     * Fetches users and filters out current user and existing collaborators
+     */
+    const fetchAndFilterUsers = async () => {
+      try {
+        const data = await userService.getUsers();
+
+        // First filter out the current user
+        let filteredUsers = data.filter(
+          (suggestion) => suggestion.uuid !== userInfo?.uuid,
+        );
+
+        // If we have workspace data with collaborators, filter them out too
+        if (newWorkspace?.collaborators) {
+          const collaboratorIds = Array.isArray(newWorkspace.collaborators)
+            ? newWorkspace.collaborators.map((collab) => collab.id || collab)
+            : Object.keys(newWorkspace.collaborators);
+
+          filteredUsers = filteredUsers.filter(
+            (user) => !collaboratorIds.includes(user.uuid),
+          );
+        }
+
+        setSuggestions(filteredUsers);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchAndFilterUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newWorkspace]);
+
+  /**
+   * Handle checkbox selection for users
+   *
+   * @param {Object} selected - The selected user object
+   */
   const handleCheck = (selected) => {
     setSelectedSuggestions((prevSelected) => {
       // Toggle selection status
@@ -52,7 +93,10 @@ const InviteCollaborators = ({ setSowCollabModal }) => {
     console.log(selectedSuggestions);
   };
 
-  // Handle the invite button click
+  /**
+   * Handle the invite button click
+   * Sends invitations to selected users for workspace
+   */
   const handleInvite = async () => {
     // const useSocket = SocketService;
     const socketService = new SocketService();

@@ -14,6 +14,13 @@ import chatEmpty from "../../../public/icons/chat.empty.svg";
 import { setUsers } from "@/redux/reducers/users/userReducers";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 
+/**
+ * InviteCollaborators component for adding collaborators to workspaces or documents
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.setShowCollabModal - Function to control visibility of the modal
+ * @returns {JSX.Element} The InviteCollaborators component
+ */
 const InviteCollaborators = ({ setShowCollabModal }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const router = useRouter();
@@ -33,10 +40,32 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
   const [selectedSuggestions, setSelectedSuggestions] = useState([]);
   const { newWorkspace } = useSelector((state: any) => state?.workSpace);
   const { singleDoc } = useSelector((state: any) => state?.docs);
-  useEffect(() => {
-    setSuggestions(users);
-  }, [users]);
 
+  useEffect(() => {
+    // Filter out users who are already invited to the doc
+    let filteredUsers = users.filter(
+      (suggestion) => suggestion.uuid !== userInfo?.uuid,
+    );
+
+    if (pathname.includes("/documents/") && singleDoc?.collaborators) {
+      // If we're in a document context and have collaborators, filter them out
+      const collaboratorIds = Array.isArray(singleDoc.collaborators)
+        ? singleDoc.collaborators.map((collab) => collab.id || collab)
+        : Object.keys(singleDoc.collaborators);
+
+      filteredUsers = filteredUsers.filter(
+        (user) => !collaboratorIds.includes(user.uuid),
+      );
+    }
+
+    setSuggestions(filteredUsers);
+  }, [users, singleDoc]);
+
+  /**
+   * Handle checkbox selection for users
+   *
+   * @param {Object} selected - The selected user object
+   */
   const handleCheck = (selected) => {
     setSelectedSuggestions((prevSelected) => {
       if (prevSelected.includes(selected)) {
@@ -51,7 +80,10 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
     console.log(selectedSuggestions);
   };
 
-  // Handle the invite button click
+  /**
+   * Handle the invite button click
+   * Sends invitations to selected users for workspace or document
+   */
   const handleInvite = async () => {
     // const useSocket = SocketService;
     const socketService = new SocketService();
@@ -102,6 +134,12 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
       console.log(error);
     }
   };
+
+  /**
+   * Debounced function to search for users
+   *
+   * @param {string} query - The search query
+   */
   const debouncedSearch = debounce(async (query) => {
     try {
       const response = await AuthService.queryUser(query);
@@ -112,6 +150,11 @@ const InviteCollaborators = ({ setShowCollabModal }) => {
     }
   }, 300);
 
+  /**
+   * Handle input change for the search field
+   *
+   * @param {Event} e - The input change event
+   */
   const handleInputChange = (e) => {
     const value = e.target.value;
     setQuery(value);
