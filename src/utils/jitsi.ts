@@ -26,7 +26,7 @@ export const loadJitsiScript = (): Promise<void> => {
     }
 
     const script = document.createElement("script");
-    script.src = "https://jitsi.deepsoul.pro/external_api.js";
+    script.src = `http://${process.env.NEXT_PUBLIC_JITSI_URL}:${process.env.NEXT_PUBLIC_JITSI_PORT}/external_api.js`;
     script.async = true;
     script.onload = () => resolve();
     script.onerror = () => {

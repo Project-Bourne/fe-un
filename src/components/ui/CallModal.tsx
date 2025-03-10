@@ -322,7 +322,7 @@ const CallModal = ({ setShowCall }) => {
             <JitsiMeet
               roomName={meetingName}
               displayName="Your Name" // Set the user's name here
-              domain="jitsi.deepsoul.pro"
+              domain={`http://${process.env.NEXT_PUBLIC_JITSI_URL}:${process.env.NEXT_PUBLIC_JITSI_PORT}`}
               config={
                 {
                   // Optional Jitsi configuration

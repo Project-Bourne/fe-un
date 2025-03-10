@@ -237,8 +237,6 @@
 
 // export default CallModal;
 
-
-
 import React, { useState, useEffect } from "react";
 import JitsiMeet from "react-jitsi";
 import { toast } from "react-toastify";
@@ -307,9 +305,17 @@ const CallModal = ({ setShowCall }) => {
                   value={meetingName}
                   onChange={(e) => setMeetingName(e.target.value)}
                 />
-                <button onClick={handleStartMeeting} className="bg-sirp-primary p-5 text-white ">Start Meeting</button>
+                <button
+                  onClick={handleStartMeeting}
+                  className="bg-sirp-primary p-5 text-white "
+                >
+                  Start Meeting
+                </button>
                 {meetingName && (
-                  <button onClick={handleCopyLink} className="bg-white p-5 text-sirp-primary ml-5">
+                  <button
+                    onClick={handleCopyLink}
+                    className="bg-white p-5 text-sirp-primary ml-5"
+                  >
                     Copy Call Link
                   </button>
                 )}
@@ -324,10 +330,13 @@ const CallModal = ({ setShowCall }) => {
             <JitsiMeet
               roomName={meetingName}
               displayName="Your Name" // Set the user's name here
-              domain="jitsi.deepsoul.pro"
-              config={{ // Optional Jitsi configuration
-                // ...
-              }}
+              domain={`http://${process.env.NEXT_PUBLIC_JITSI_URL}:${process.env.NEXT_PUBLIC_JITSI_PORT}`}
+              config={
+                {
+                  // Optional Jitsi configuration
+                  // ...
+                }
+              }
             />
           </div>
         );
