@@ -15,6 +15,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import ReactDOM from "react-dom";
 import { Tooltip } from "@mui/material";
 import { setComments } from "@/redux/reducers/chat/chatReducer";
+import { stripMarkdown } from "@/utils/stripMarkdown";
 
 export default function TextEditor() {
   const ReactQuill = dynamic(() => import("quill"), {
@@ -23,25 +24,34 @@ export default function TextEditor() {
   const { userInfo, userAccessToken, refreshToken } = useSelector(
     (state: any) => state?.auth,
   );
-  useEffect(() => {
-    dispatch(setComments(null));
-    dispatch(setSingleDoc(null));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setComments(null));
+  //   dispatch(setSingleDoc(null));
+  // }, []);
   const [cursorData, setCursorData] = useState({ index: 0, length: 0 });
   const { singleDoc } = useSelector((state: any) => state?.docs);
-  const useSocket = SocketService;
   const router = useRouter();
   const { id: documentId } = router.query;
   const [quill, setQuill] = useState<Quill | null>(null);
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   socketService.getDoc({ id: documentId })
+  // }, [])
 
   const socketService = new SocketService();
 
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
     console.log(singleDoc, "singleDoc");
+
+    const socket = new SocketService();
+    // socket.getDoc({ id: singleDoc._id });
     socketio.once("load-doc", (document) => {
       let data = JSON.parse(document);
+
+      console.log("TextEditor: ", data);
+
       if (
         data &&
         data.data &&
@@ -49,17 +59,18 @@ export default function TextEditor() {
         data.data.data.ops &&
         data.data.data.ops.length > 0
       ) {
+        console.log("checking...");
         dispatch(setSingleDoc(data.data));
-        quill.setContents(data.data.data);
-        quill.enable();
-      } else {
-        dispatch(setSingleDoc(data.data));
-        quill.setContents(data.data.data);
-        quill.enable();
+        const copiedData = JSON.parse(JSON.stringify(data));
+        const insert = data.data.data.ops[0].insert;
+        copiedData.data.data.ops[0].insert = stripMarkdown(insert);
+        if (insert) {
+          console.log(insert, "document", data.data);
+          quill.setContents(copiedData.data.data);
+          quill.enable();
+        }
       }
     });
-
-    socketService.getDoc({ id: documentId });
   }, [socketio, quill, documentId]);
 
   const SAVE_INTERVAL_MS = 3000;

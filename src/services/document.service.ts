@@ -1,3 +1,4 @@
+import { stripMarkdown } from "@/utils/stripMarkdown";
 import { request } from "../hooks/api";
 
 class DocumentService {
@@ -67,7 +68,7 @@ class DocumentService {
         },
         body: JSON.stringify({
           data: {
-            ops: [{ insert: newContent }],
+            ops: [{ insert: stripMarkdown(newContent) }],
           },
         }),
       });

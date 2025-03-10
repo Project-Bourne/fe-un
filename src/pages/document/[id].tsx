@@ -59,7 +59,7 @@ const viewDocument = () => {
       };
       const socketService = new SocketService();
       await socketService.createDoc(docData);
-      socketio.once("load-doc", (res) => {
+      socketio.once("load-doc", async (res) => {
         let data = JSON.parse(res);
         console.log("load-doc", data.data);
         dispatch(setSingleDoc(data?.data?.data));
@@ -73,7 +73,10 @@ const viewDocument = () => {
           progress: undefined,
           theme: "light",
         });
-        router.replace(`/documents/${data?.data?.id}`);
+
+        // await socketService.updateDoc(data?.data)
+        // console.log("Doc: ", )
+        router.replace(`/documents/${data?.data?._id}`);
       });
     } catch (error) {
       console.log(error);
@@ -200,16 +203,19 @@ const viewDocument = () => {
         const document = await DocumentService.getDoc(id);
         dispatch(setSingleDoc(document));
         if (
-          singleDoc?.collaborators &&
-          Array.isArray(singleDoc.collaborators)
+          (singleDoc?.collaborators || document?.collaborators) &&
+          Array.isArray(singleDoc?.collaborators || document?.collaborators)
         ) {
-          const docCollabPromises = singleDoc.collaborators.map(async (el) => {
+          const docCollabPromises = (
+            singleDoc?.collaborators || document?.collaborators
+          ).map(async (el) => {
             console.log(el, "el chisommm");
             const user = await AuthService.getusersbyId(el.id);
             return user?.data;
           });
 
           const docCollaborators = await Promise.all(docCollabPromises);
+          dispatch(setSingleDoc(document));
           setUsers(docCollaborators);
         }
       }
