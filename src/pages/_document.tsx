@@ -12,7 +12,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <Script
-          src={`http://${process.env.NEXT_PUBLIC_JITSI_URL}:${process.env.NEXT_PUBLIC_JITSI_PORT}/external_api.js`}
+          src={`http://${process.env.NEXT_PUBLIC_JITSI_URL}:${process.env.NEXT_PUBLIC_JITSI_JS_PORT}/external_api.js`}
           strategy="afterInteractive"
           onLoad={() => {
             console.log("Jitsi script loaded successfully");
