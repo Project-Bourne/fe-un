@@ -186,6 +186,10 @@ class SocketService {
   //docs
   // send single message
   getDoc(data) {
+    if (data?.id?.split("&")) {
+      data = data?.id?.split("&")[0];
+    }
+    console.log("Doc to get: ", data);
     try {
       this.socket.emit("get-doc", data);
     } catch (err) {

@@ -81,7 +81,41 @@ const viewDocument = () => {
       }
     };
     fetchCollaborators();
-  }, [id]);
+
+    // Load document from socket using the id in query params
+    // useEffect(() => {
+    /**
+     * Loads the document from socket service using the document ID from URL params
+     * This ensures real-time synchronization of document data
+     */
+    const loadDocumentFromSocket = async () => {
+      if (!id) return;
+
+      try {
+        // Initialize socket connection for this document
+        const socketService = new SocketService();
+
+        // Request the document content from the server
+        await socketService.getDoc({
+          docId: id,
+        });
+
+        console.log("Document loaded via socket connection", id);
+      } catch (error) {
+        console.error("Error loading document from socket:", error);
+      }
+    };
+
+    loadDocumentFromSocket();
+
+    // Cleanup function to leave the document room when component unmounts
+    // return () => {
+    //   if (id && socketio) {
+    //     socketio.emit("leave-doc", { docId: id });
+    //   }
+    // };
+    // }, [id, socketio]);
+  }, [id, socketio]);
 
   useEffect(() => {
     const getComments = async () => {

@@ -9,6 +9,7 @@ import SocketService from "../../../socket/chat.socket";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleDoc } from "@/redux/reducers/documents/documentReducer";
 import { Console } from "console";
+import { stripMarkdown } from "@/utils/stripMarkdown";
 
 const SAVE_INTERVAL_MS = 500;
 const TOOLBAR_OPTIONS = [
@@ -50,10 +51,12 @@ export default function TextEditor() {
         data.data.data.ops.length > 0
       ) {
         dispatch(setSingleDoc(data.data));
+        const copiedData = JSON.parse(JSON.stringify(data));
         const insert = data.data.data.ops[0].insert;
+        copiedData.data.data.ops[0].insert = stripMarkdown(insert);
         if (insert) {
           console.log(insert, "document", data.data);
-          quill.setContents(data.data.data);
+          quill.setContents(copiedData.data.data);
           quill.enable();
         }
       }

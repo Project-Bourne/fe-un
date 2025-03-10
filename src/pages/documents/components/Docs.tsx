@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import TextEditor from "./TextEditor";
+// import TextEditor from "../components/TextEditor";
 import Chats from "./Chats";
 import { useDispatch, useSelector } from "react-redux";
 import { setComments } from "@/redux/reducers/chat/chatReducer";
