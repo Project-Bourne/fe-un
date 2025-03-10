@@ -58,7 +58,7 @@ function App({ Component, pageProps }: AppProps) {
         <PersistGate loading={null} persistor={persistor}>
           <Script
             src="https://jitsi.deepsoul.pro/external_api.js"
-            strategy="beforeInteractive"
+            strategy="afterInteractive"
             onLoad={() => {
               console.log("Jitsi script loaded successfully");
             }}

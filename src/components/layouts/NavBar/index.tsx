@@ -5,7 +5,7 @@ import { NavBarContents } from "../../../utils/constants";
 import { useRouter } from "next/router";
 // import disclaimerIcon from "../../../../public/icons/toast.warn.svg";
 
-const disclaimerIcon = "../../../../public/icons/toast.warn.svg";
+const disclaimerIcon = require("../../../../public/icons/toast.warn.svg");
 
 const COMPANY_INFO = {
   copyright: `© ${new Date().getFullYear()} Powered by RIDU. All rights reserved.`,

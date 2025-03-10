@@ -13,7 +13,7 @@ export default function Document() {
       <Head>
         <Script
           src="https://jitsi.deepsoul.pro/external_api.js"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           onLoad={() => {
             console.log("Jitsi script loaded successfully");
           }}

@@ -180,49 +180,192 @@ export default function TextEditor() {
 
   const renderCursor = (userId, username, index, length) => {
     console.log(userId, index, length, "renderCursor");
-    const cursorContainer = document.querySelector(".container") as HTMLElement;
-    cursorContainer.style.position = "relative";
 
-    if (cursorContainer) {
-      const existingCursor = cursorContainer.querySelector(`#cursor-${userId}`);
-      if (existingCursor) {
-        (existingCursor as HTMLElement).innerHTML = username;
-        (existingCursor as HTMLElement).style.background = "#E8F8FD";
-        (existingCursor as HTMLElement).style.padding = "2px 5px";
-        (existingCursor as HTMLElement).style.borderRadius = "5px";
-        (existingCursor as HTMLElement).style.position = "absolute";
+    // const cursorContainer = document.querySelector(".container") as HTMLElement;
+    // cursorContainer.style.position = "relative";
 
-        // Adjust the offsets for more accurate positioning
-        const xOffset = 5; // Adjust this value as needed
-        const yOffset = 90; // Adjust this value as needed
+    // if (cursorContainer) {
+    //   const existingCursor = cursorContainer.querySelector(`#cursor-${userId}`);
+    //   if (existingCursor) {
+    //     (existingCursor as HTMLElement).innerHTML = username;
+    //     (existingCursor as HTMLElement).style.background = "#E8F8FD";
+    //     (existingCursor as HTMLElement).style.padding = "2px 5px";
+    //     (existingCursor as HTMLElement).style.borderRadius = "5px";
+    //     (existingCursor as HTMLElement).style.position = "absolute";
 
-        (existingCursor as HTMLElement).style.left = `${
-          quill.getBounds(index, length).left + xOffset
-        }px`;
-        (existingCursor as HTMLElement).style.top = `${
-          quill.getBounds(index, length).top + yOffset
-        }px`;
-      } else {
-        const cursor = document.createElement("span");
-        cursor.id = `cursor-${userId}`;
-        (cursor as HTMLElement).style.background = "#E8F8FD";
-        (cursor as HTMLElement).innerHTML = username;
-        (cursor as HTMLElement).style.padding = "2px 5px";
-        (cursor as HTMLElement).style.borderRadius = "5px";
-        (cursor as HTMLElement).style.position = "absolute";
+    //     // Adjust the offsets for more accurate positioning
+    //     const xOffset = 5; // Adjust this value as needed
+    //     const yOffset = 90; // Adjust this value as needed
 
-        // Adjust the offsets for more accurate positioning
-        const xOffset = 5; // Adjust this value as needed
-        const yOffset = 90; // Adjust this value as needed
+    //     (existingCursor as HTMLElement).style.left = `${
+    //       quill.getBounds(index, length).left + xOffset
+    //     }px`;
+    //     (existingCursor as HTMLElement).style.top = `${
+    //       quill.getBounds(index, length).top + yOffset
+    //     }px`;
+    //   } else {
+    //     const cursor = document.createElement("span");
+    //     cursor.id = `cursor-${userId}`;
+    //     (cursor as HTMLElement).style.background = "#E8F8FD";
+    //     (cursor as HTMLElement).innerHTML = username;
+    //     (cursor as HTMLElement).style.padding = "2px 5px";
+    //     (cursor as HTMLElement).style.borderRadius = "5px";
+    //     (cursor as HTMLElement).style.position = "absolute";
 
-        (cursor as HTMLElement).style.left = `${
-          quill.getBounds(index, length).left + xOffset
-        }px`;
-        (cursor as HTMLElement).style.top = `${
-          quill.getBounds(index, length).top + yOffset
-        }px`;
-        cursorContainer.appendChild(cursor);
+    //     // Adjust the offsets for more accurate positioning
+    //     const xOffset = 5; // Adjust this value as needed
+    //     const yOffset = 90; // Adjust this value as needed
+
+    //     (cursor as HTMLElement).style.left = `${
+    //       quill.getBounds(index, length).left + xOffset
+    //     }px`;
+    //     (cursor as HTMLElement).style.top = `${
+    //       quill.getBounds(index, length).top + yOffset
+    //     }px`;
+    //     cursorContainer.appendChild(cursor);
+    //   }
+
+    // Find the Quill editor container within the wrapper div
+    const wrapperDiv = document.querySelector(
+      ".container.relative",
+    ) as HTMLElement;
+    if (!wrapperDiv || !quill) return;
+
+    // Find the Quill editor inside the wrapper
+    const editorContainer = wrapperDiv.querySelector(
+      ".ql-container",
+    ) as HTMLElement;
+    if (!editorContainer) return;
+
+    // Generate a consistent color based on userId
+    const getColorFromId = (id) => {
+      // List of pleasant, accessible colors for cursors
+      const colors = [
+        "#3498db", // blue
+        "#2ecc71", // green
+        "#e74c3c", // red
+        "#9b59b6", // purple
+        "#f39c12", // orange
+        "#1abc9c", // teal
+        "#d35400", // dark orange
+        "#8e44ad", // dark purple
+      ];
+
+      // Simple hash function to get consistent color for same user
+      const hash = id.split("").reduce((acc, char) => {
+        return char.charCodeAt(0) + ((acc << 5) - acc);
+      }, 0);
+
+      return colors[Math.abs(hash) % colors.length];
+    };
+
+    const userColor = getColorFromId(userId);
+
+    // Look for existing cursor within the wrapper div
+    const existingCursor = wrapperDiv.querySelector(
+      `#cursor-${userId}`,
+    ) as HTMLElement;
+
+    // Get bounds from Quill for positioning
+    const bounds = quill.getBounds(index, length);
+
+    // Create cursor blink keyframes if they don't exist
+    if (!document.getElementById("cursor-animations")) {
+      const styleSheet = document.createElement("style");
+      styleSheet.id = "cursor-animations";
+      styleSheet.textContent = `
+            @keyframes cursorBlink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+        `;
+      document.head.appendChild(styleSheet);
+    }
+
+    if (existingCursor) {
+      // Update existing cursor
+      const cursorLine = existingCursor.querySelector(
+        ".cursor-line",
+      ) as HTMLElement;
+      const cursorLabel = existingCursor.querySelector(
+        ".cursor-label",
+      ) as HTMLElement;
+
+      // Update position
+      existingCursor.style.left = `${bounds.left}px`;
+      existingCursor.style.top = `${bounds.top + editorContainer.offsetTop}px`;
+      existingCursor.style.height = `${bounds.height}px`;
+
+      // Update label text
+      if (cursorLabel) {
+        cursorLabel.textContent = username;
       }
+
+      // Reset animation if cursor line exists
+      if (cursorLine) {
+        cursorLine.style.animation = "none";
+        setTimeout(() => {
+          cursorLine.style.animation = "cursorBlink 1.5s infinite";
+        }, 10);
+      }
+    } else {
+      // Create new cursor elements
+      const cursorElement = document.createElement("div");
+      cursorElement.id = `cursor-${userId}`;
+
+      // Create cursor line (the actual cursor)
+      const cursorLine = document.createElement("div");
+      cursorLine.className = "cursor-line";
+
+      // Create label for username
+      const cursorLabel = document.createElement("div");
+      cursorLabel.className = "cursor-label";
+
+      // Style the cursor container
+      Object.assign(cursorElement.style, {
+        position: "absolute",
+        left: `${bounds.left}px`,
+        top: `${bounds.top + editorContainer.offsetTop}px`,
+        height: `${bounds.height}px`,
+        zIndex: "1000",
+        pointerEvents: "none",
+        transition: "all 0.1s ease",
+      });
+
+      // Style the cursor line
+      Object.assign(cursorLine.style, {
+        position: "absolute",
+        width: "2px",
+        height: "100%",
+        backgroundColor: userColor,
+        animation: "cursorBlink 1.5s infinite",
+      });
+
+      // Style the label
+      Object.assign(cursorLabel.style, {
+        position: "absolute",
+        top: "-22px",
+        left: "0",
+        padding: "2px 6px",
+        borderRadius: "3px",
+        fontSize: "12px",
+        fontWeight: "500",
+        color: "white",
+        backgroundColor: userColor,
+        whiteSpace: "nowrap",
+        opacity: "0.9",
+        transform: "translateX(-50%)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.12)",
+        transition: "opacity 0.2s ease",
+      });
+
+      // Set label text
+      cursorLabel.textContent = username;
+
+      // Add elements to DOM
+      cursorElement.appendChild(cursorLine);
+      cursorElement.appendChild(cursorLabel);
+      wrapperDiv.appendChild(cursorElement);
     }
   };
 
