@@ -200,7 +200,7 @@ const viewDocument = () => {
   useEffect(() => {
     const fetchCollaborators = async () => {
       if (id) {
-        const document = await DocumentService.getDoc(id);
+        const document: any = await DocumentService.getDoc(id);
         dispatch(setSingleDoc(document));
         if (
           (singleDoc?.collaborators || document?.collaborators) &&

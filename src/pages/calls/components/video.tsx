@@ -39,7 +39,7 @@ function VideoCall({ roomName }) {
         console.log("initializing Jitsii");
         if (!containerRef.current) return;
 
-        const domain = `${process.env.NEXT_PUBLIC_JITSI_URL}:8000`;
+        const domain = `${process.env.NEXT_PUBLIC_JITSI_URL}:8443`;
         const options = {
           roomName: roomName,
           width: "100%",
