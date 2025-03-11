@@ -170,6 +170,7 @@ const viewDocument = () => {
                 progress: undefined,
                 theme: "light",
               });
+              router.replace(`/documents/${updatedDoc._id}`);
             } else {
               createDoc(rawContent);
             }
