@@ -79,7 +79,7 @@ const viewDocument = () => {
         await new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve(true);
-          }, 1000);
+          }, 3000);
         });
 
         router.replace(`/documents/${data?.data?._id}`);
