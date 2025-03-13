@@ -46,8 +46,11 @@ export default function TextEditor() {
     console.log(singleDoc, "singleDoc");
 
     const socket = new SocketService();
-    // socket.getDoc({ id: singleDoc._id });
-    socketio.once("load-doc", (document) => {
+
+    // Actively fetch the document when quill is ready
+    socketService.getDoc({ id: documentId });
+
+    socketio.once("load-doc", async (document) => {
       let data = JSON.parse(document);
 
       console.log("TextEditor: ", data);
@@ -60,13 +63,14 @@ export default function TextEditor() {
         data.data.data.ops.length > 0
       ) {
         console.log("checking...");
+        // console.log(quill.setContent(), quill)
         dispatch(setSingleDoc(data.data));
         const copiedData = JSON.parse(JSON.stringify(data));
         const insert = data.data.data.ops[0].insert;
         copiedData.data.data.ops[0].insert = stripMarkdown(insert);
         if (insert) {
           console.log(insert, "document", data.data);
-          quill.setContents(copiedData.data.data);
+          await quill.setContents(copiedData.data.data);
           quill.enable();
         }
       }

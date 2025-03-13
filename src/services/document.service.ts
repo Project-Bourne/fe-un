@@ -61,8 +61,8 @@ class DocumentService {
     newContent: string,
     headers: Record<string, string>,
   ): Promise<any> {
-    const baseUrl = process.env.NEXT_PUBLIC_SERVER_API_URL || ""; // Base URL for the API
-    const url = `${baseUrl}/documents/${documentId}`;
+    const baseUrl = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS || ""; // Base URL for the API
+    const url = `http://${baseUrl}/${process.env.NEXT_PUBLIC_FILE_UPLOAD_API_ROUTE}/documents/${documentId}`;
     try {
       const response = await fetch(url, {
         method: "PATCH",

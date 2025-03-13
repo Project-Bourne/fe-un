@@ -160,12 +160,12 @@ const viewDocument = () => {
 
           if (isImportOperation) {
             if (singleDoc && singleDoc._id) {
-              const updatedDoc = await DocumentService.updateDocContent(
-                singleDoc._id,
-                rawContent,
-                headers,
-              );
-              dispatch(setSingleDoc(updatedDoc));
+              // const updatedDoc = await DocumentService.updateDocContent(
+              //   singleDoc._id,
+              //   rawContent,
+              //   headers,
+              // );
+              // dispatch(setSingleDoc(updatedDoc));
               toast("Document Updated", {
                 position: "bottom-right",
                 autoClose: 2000,
@@ -176,7 +176,7 @@ const viewDocument = () => {
                 progress: undefined,
                 theme: "light",
               });
-              router.push(`/documents/${updatedDoc._id}`);
+              router.push(`/documents/${singleDoc._id}`);
             } else {
               createDoc(rawContent);
             }
