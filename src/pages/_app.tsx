@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { AppLayout } from "../layout/index";
 import { motion } from "framer-motion";
@@ -39,6 +41,8 @@ import "@/styles/globals.css";
 import "@/styles/global.css";
 import { Inter } from "next/font/google";
 import type { AppProps } from "next/app";
+import { redirectToLogin } from "@/utils/auth";
+import { Cookies } from "react-cookie";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -84,6 +88,7 @@ const AppWrapper = ({
   const router = useRouter();
   const { userInfo } = useSelector((state: any) => state?.auth);
   const dispatch = useDispatch();
+  const cookies = new Cookies();
 
   const pageAnimationVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -105,6 +110,36 @@ const AppWrapper = ({
       router.replace("/chats");
     }
   }, []);
+
+  // Check for authentication cookie on route changes
+  useEffect(() => {
+    const handleRouteChange = () => {
+      // Skip auth check for auth pages to prevent redirect loops
+      if (router.pathname.startsWith("/auth")) {
+        return;
+      }
+
+      // Check for deep-access cookie
+      const hasDeepAccessCookie = cookies.get("deep-access");
+
+      if (!hasDeepAccessCookie) {
+        console.log("No deep-access cookie found, redirecting to login");
+        // Use our utility function to redirect
+        redirectToLogin();
+      }
+    };
+
+    // Add route change listeners
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    // Initial check on mount
+    handleRouteChange();
+
+    // Cleanup
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
 
   useEffect(() => {
     try {

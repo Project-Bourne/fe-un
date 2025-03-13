@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 import { loadJitsiScript } from "@/utils/jitsi";
 import { toast } from "react-toastify";
 
+/**
+ * Configuration for Jitsi Meet
+ */
 const jitsiConfig = {
   disableVideoQualityLabel: true,
   disableTileView: true,
@@ -21,25 +24,39 @@ const jitsiConfig = {
   },
 };
 
+/**
+ * Video call component using Jitsi Meet
+ * @param {Object} props - Component properties
+ * @param {string} props.roomName - The name of the room to join
+ * @returns {JSX.Element} VideoCall component
+ */
 function VideoCall({ roomName }) {
-  const containerRef = useRef();
+  const containerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [api, setApi] = useState<any>(null);
   const { userInfo } = useSelector((state: any) => state?.auth);
 
   useEffect(() => {
-    let api: any = null;
-
-    console.log("DETS: ", roomName, userInfo);
-
     const initializeJitsi = async () => {
       try {
-        // await loadJitsiScript();
+        // Load the Jitsi script first
+        await loadJitsiScript();
 
-        console.log("initializing Jitsii");
+        console.log("Initializing Jitsi");
         if (!containerRef.current) return;
 
-        const domain = `${process.env.NEXT_PUBLIC_JITSI_URL}:8443`;
+        // Make sure the script is loaded and JitsiMeetExternalAPI is available
+        if (!window.JitsiMeetExternalAPI) {
+          throw new Error("JitsiMeetExternalAPI not loaded");
+        }
+
+        const jitsiUrl = process.env.NEXT_PUBLIC_JITSI_URL || "localhost";
+        const jitsiPort = process.env.NEXT_PUBLIC_JITSI_PORT || "8443";
+        const domain = `${jitsiUrl}:${jitsiPort}`;
+
+        console.log(`Using Jitsi domain: ${domain}`);
+
         const options = {
           roomName: roomName,
           width: "100%",
@@ -47,34 +64,34 @@ function VideoCall({ roomName }) {
           parentNode: containerRef.current,
           configOverwrite: jitsiConfig,
           userInfo: {
-            displayName: userInfo?.email,
+            displayName: userInfo?.email || "Anonymous User",
           },
         };
 
-        api = new window.JitsiMeetExternalAPI(domain, options);
+        console.log("Creating Jitsi instance with options:", options);
+        const jitsiInstance = new window.JitsiMeetExternalAPI(domain, options);
+        setApi(jitsiInstance);
         setIsLoading(false);
 
-        console.log("API: ", api);
-
         // Handle connection events
-        api.addEventListener("videoConferenceJoined", () => {
+        jitsiInstance.addEventListener("videoConferenceJoined", () => {
           console.log("Joined video conference");
           toast.success("Joined video conference");
         });
 
-        api.addEventListener("videoConferenceLeft", () => {
+        jitsiInstance.addEventListener("videoConferenceLeft", () => {
           console.log("Left video conference");
           toast.info("Left video conference");
         });
 
-        api.addEventListener("connectionFailed", () => {
+        jitsiInstance.addEventListener("connectionFailed", () => {
           console.error("Connection failed");
           setError("Failed to connect to video conference");
           toast.error("Failed to connect to video conference");
         });
       } catch (error) {
         console.error("Error initializing Jitsi:", error);
-        setError("Failed to initialize video conference");
+        setError(`Failed to initialize video conference: ${error.message}`);
         toast.error("Failed to initialize video conference");
         setIsLoading(false);
       }
@@ -82,11 +99,12 @@ function VideoCall({ roomName }) {
 
     initializeJitsi();
 
-    // return () => {
-    //   if (api) {
-    //     api.dispose();
-    //   }
-    // };
+    // Cleanup function
+    return () => {
+      if (api) {
+        api.dispose();
+      }
+    };
   }, [roomName, userInfo?.email]);
 
   if (error) {
@@ -100,14 +118,6 @@ function VideoCall({ roomName }) {
     );
   }
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="w-full h-full flex items-center justify-center bg-black">
-  //       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
       <div
@@ -115,9 +125,11 @@ function VideoCall({ roomName }) {
         className="w-[100vw] h-[100vh] absolute top-0 right-0 left-0 bottom-0 bg-black z-[3000]"
       />
 
-      <div className="w-full h-full flex items-center justify-center bg-black">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
-      </div>
+      {isLoading && (
+        <div className="w-full h-full flex items-center justify-center bg-black absolute top-0 right-0 left-0 bottom-0 z-[3100]">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+        </div>
+      )}
     </>
   );
 }

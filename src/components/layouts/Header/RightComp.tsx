@@ -9,6 +9,7 @@ import { Cookies, useCookies } from "react-cookie";
 import DropdownItems from "./DropdownItems";
 import CustomModal from "@/components/ui/CustomModal";
 import { logout } from "@/redux/reducers/authReducer";
+import { redirectToLogin } from "@/utils/auth";
 
 const notification = require("../../../../public/icons/notification.svg");
 const dashboard = require("../../../../public/icons/dashboard.svg");
@@ -41,10 +42,8 @@ function RightComp() {
 
         removeCookie("deep-access", { path: "/" });
         removeCookie("uuid", { path: "/" });
-        // router.replace("http://192.81.213.226:30/auth/login");
-        router.replace(
-          `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`,
-        );
+
+        redirectToLogin();
 
         NotificationService.success({
           message: "Logout operation successful!",
@@ -150,10 +149,9 @@ function RightComp() {
         <div
           className="ml-3 bg-sirp-lightGrey w-full self-center hidden md:block"
           onClick={() => {
-            // router.replace("http://192.81.213.226:30/settings/profile");
-            router.replace(
-              `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/settings/profile`,
-            );
+            // Construct profile URL with environment variables for consistency
+            const profileUrl = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/settings/profile`;
+            router.replace(profileUrl);
           }}
         >
           <h2 className="text-sirp-grey text-[13px] capitalize">

@@ -21,15 +21,28 @@ export const loadJitsiScript = (): Promise<void> => {
 
     // Check if script is already loaded
     if (window.JitsiMeetExternalAPI) {
+      console.log("Jitsi script already loaded");
       resolve();
       return;
     }
 
+    // Create script element for loading Jitsi
     const script = document.createElement("script");
-    script.src = `http://${process.env.NEXT_PUBLIC_JITSI_URL}:${process.env.NEXT_PUBLIC_JITSI_PORT}/external_api.js`;
+
+    // Configure proper URL for Jitsi script
+    const jitsiUrl = process.env.NEXT_PUBLIC_JITSI_URL || "localhost";
+    const jitsiPort = process.env.NEXT_PUBLIC_JITSI_PORT || "8443";
+
+    script.src = `http://${jitsiUrl}:${jitsiPort}/external_api.js`;
+    console.log(`Loading Jitsi from: ${script.src}`);
+
     script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => {
+    script.onload = () => {
+      console.log("Jitsi script loaded successfully");
+      resolve();
+    };
+    script.onerror = (e) => {
+      console.error("Failed to load Jitsi script:", e);
       jitsiPromise = null;
       reject(new Error("Failed to load Jitsi script"));
     };

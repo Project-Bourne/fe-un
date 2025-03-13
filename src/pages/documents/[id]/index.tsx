@@ -92,14 +92,16 @@ const viewDocument = () => {
       }
     };
 
-    initializeDocument();
+    setTimeout(() => {
+      initializeDocument();
+    }, 1000);
 
     // Cleanup function
-    return () => {
-      if (id && socketio) {
-        socketio.emit("leave-doc", { docId: id });
-      }
-    };
+    // return () => {
+    //   if (id && socketio) {
+    //     socketio.emit("leave-doc", { docId: id });
+    //   }
+    // };
   }, [id]);
 
   // Cleanup document state when leaving the page

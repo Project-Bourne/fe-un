@@ -74,8 +74,14 @@ const viewDocument = () => {
           theme: "light",
         });
 
-        // await socketService.updateDoc(data?.data)
+        await socketService.updateDoc(data?.data);
         // console.log("Doc: ", )
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(true);
+          }, 1000);
+        });
+
         router.replace(`/documents/${data?.data?._id}`);
       });
     } catch (error) {
@@ -170,7 +176,7 @@ const viewDocument = () => {
                 progress: undefined,
                 theme: "light",
               });
-              router.replace(`/documents/${updatedDoc._id}`);
+              router.push(`/documents/${updatedDoc._id}`);
             } else {
               createDoc(rawContent);
             }

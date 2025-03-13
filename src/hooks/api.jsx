@@ -2,6 +2,8 @@
  * Object Request Header
  */
 import { Cookies } from "react-cookie";
+import { redirectToLogin } from "@/utils/auth";
+
 const cookies = new Cookies();
 let access = "";
 if (typeof window !== "undefined") {
@@ -43,11 +45,8 @@ export async function request(url, method, payload, token, text, form) {
           // Clear the cookie
           cookies.remove("deep-access");
 
-          // Redirect to the login page
-          // window.location.replace("http://192.81.213.226:30/auth/login")
-          window.location.replace(
-            `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`,
-          );
+          // Redirect to the login page using the utility function
+          redirectToLogin();
           return "Access forbidden. Redirecting to login page.";
         } else if (text === true) {
           return res.text();
@@ -69,11 +68,8 @@ export async function request(url, method, payload, token, text, form) {
         // Clear the cookie
         cookies.remove("deep-access");
 
-        // Redirect to the login page
-        // window.location.replace("http://192.81.213.226:30/auth/login")
-        window.location.replace(
-          `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`,
-        );
+        // Redirect to the login page using the utility function
+        redirectToLogin();
         return "Access forbidden. Redirecting to login page.";
       } else if (text === true) {
         return res.text();
@@ -102,11 +98,8 @@ export async function request2(url, method, payload, token, text, form) {
           // Clear the cookie
           cookies.remove("deep-access");
 
-          // Redirect to the login page
-          // window.location.replace("http://192.81.213.226:30/auth/login")
-          window.location.replace(
-            `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`,
-          );
+          // Redirect to the login page using the utility function
+          redirectToLogin();
           return "Access forbidden. Redirecting to login page.";
         } else if (text === true) {
           return res.text();
@@ -129,10 +122,8 @@ export async function request2(url, method, payload, token, text, form) {
           // Clear the cookie
           cookies.remove("deep-access");
 
-          // Redirect to the login page
-          window.location.replace(
-            `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`,
-          );
+          // Redirect to the login page using the utility function
+          redirectToLogin();
           return "Access forbidden. Redirecting to login page.";
         } else if (text === true) {
           return res.text();
