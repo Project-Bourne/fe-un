@@ -13,10 +13,17 @@ import {
 } from "@/redux/reducers/documents/documentReducer";
 import PrintIcon from "@mui/icons-material/Print";
 import ReactDOM from "react-dom";
-import { Tooltip } from "@mui/material";
+import { Tooltip, Button, CircularProgress } from "@mui/material";
 import { setComments } from "@/redux/reducers/chat/chatReducer";
 import { stripMarkdown } from "@/utils/stripMarkdown";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
+/**
+ * TextEditor Component
+ * A collaborative rich text editor component with real-time synchronization capabilities
+ * @component
+ * @returns {JSX.Element} The rendered TextEditor component
+ */
 export default function TextEditor() {
   const ReactQuill = dynamic(() => import("quill"), {
     ssr: false,
@@ -29,6 +36,7 @@ export default function TextEditor() {
   //   dispatch(setSingleDoc(null));
   // }, []);
   const [cursorData, setCursorData] = useState({ index: 0, length: 0 });
+  const [isLoading, setIsLoading] = useState(false);
   const { singleDoc } = useSelector((state: any) => state?.docs);
   const router = useRouter();
   const { id: documentId } = router.query;
@@ -40,6 +48,24 @@ export default function TextEditor() {
   // }, [])
 
   const socketService = new SocketService();
+
+  /**
+   * Handles manual fetching of document
+   * @async
+   * @function handleFetchDocument
+   */
+  const handleFetchDocument = async () => {
+    if (!documentId || isLoading) return;
+
+    setIsLoading(true);
+    try {
+      await socketService.getDoc({ id: documentId });
+    } catch (error) {
+      console.error("Error fetching document:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
@@ -454,5 +480,30 @@ export default function TextEditor() {
     });
   }, []);
 
-  return <div className="container relative" ref={wrapperRef}></div>;
+  return (
+    <div className="container relative">
+      {!singleDoc && documentId && (
+        <div className="flex justify-center items-center p-4 bg-gray-100 rounded-md mb-4">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleFetchDocument}
+            disabled={isLoading}
+            startIcon={
+              isLoading ? <CircularProgress size={20} /> : <RefreshIcon />
+            }
+            style={{
+              textTransform: "none",
+              backgroundColor: "#1976d2",
+              color: "white",
+              padding: "8px 16px",
+            }}
+          >
+            {isLoading ? "Fetching Document..." : "Load Document"}
+          </Button>
+        </div>
+      )}
+      <div ref={wrapperRef}></div>
+    </div>
+  );
 }
