@@ -431,6 +431,14 @@ export default function TextEditor() {
     const handler = (delta) => {
       console.log(delta, "delta");
       quill.updateContents(delta);
+      socketService.updateDoc({
+        docId: documentId,
+        delta: delta,
+        author: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+        },
+      });
     };
     // console.log(handler(), 'handler')
     socketio.on("updated-doc-changes", handler);

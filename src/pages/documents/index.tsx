@@ -51,7 +51,7 @@ function Documents() {
     };
 
     initializeDocuments();
-  }, []);
+  }, [allDocs, dispatch, userInfo?.uuid]);
 
   /**
    * Handle clicking on a document in the list

@@ -37,6 +37,9 @@ export default function TextEditor() {
   const { id: documentId } = router.query;
   const [quill, setQuill] = useState<Quill | null>(null);
   const dispatch = useDispatch();
+  const socketService = new SocketService();
+  const { userInfo } = useSelector((state: any) => state?.auth);
+
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
     console.log(singleDoc, "singleDoc");
@@ -77,7 +80,6 @@ export default function TextEditor() {
   useEffect(() => {
     if (!socketio || !quill) return;
     const interval = setInterval(() => {
-      const socketService = new SocketService();
       socketService.saveDoc(quill.getContents());
     }, SAVE_INTERVAL_MS);
 
@@ -93,6 +95,14 @@ export default function TextEditor() {
     const handler = (delta) => {
       console.log(delta, "delta");
       quill.updateContents(delta);
+      socketService.updateDoc({
+        docId: documentId,
+        delta: delta,
+        author: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+        },
+      });
     };
     // console.log(handler(), 'handler')
     socketio.on("updated-doc-changes", handler);

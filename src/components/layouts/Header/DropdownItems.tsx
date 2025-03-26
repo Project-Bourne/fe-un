@@ -13,14 +13,14 @@ import Image from "next/image";
 
 const BASE_URL = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}`;
 
-const interrogator = "../../../../public/icons/interrogator.svg";
-const summarizer = "../../../../public/icons/summarizer.svg";
-const irp = "../../../../public/icons/irp.svg";
-const translator = "../../../../public/icons/translator.svg";
-const collab = "../../../../public/icons/collab.svg";
-const fact_checker = "../../../../public/icons/checker.svg";
-const deep_chat = "../../../../public/icons/deep.svg";
-const admin = "../../../../public/icons/admin.svg";
+const interrogator = require("../../../../public/icons/interrogator.svg");
+const summarizer = require("../../../../public/icons/summarizer.svg");
+const irp = require("../../../../public/icons/irp.svg");
+const translator = require("../../../../public/icons/translator.svg");
+const collab = require("../../../../public/icons/collab.svg");
+const fact_checker = require("../../../../public/icons/checker.svg");
+const deep_chat = require("../../../../public/icons/deep.svg");
+const admin = require("../../../../public/icons/admin.svg");
 
 const dropdownItems = [
   {

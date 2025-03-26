@@ -87,7 +87,7 @@ function ChatList({ chatsData, listMobileDisplay, setIsActive }) {
                   }`}
                 >
                   <img
-                    src={chat?.image}
+                    src={chat?.image || "DS"}
                     alt={"user"}
                     className="rounded-full border-[2px] border-white md:h-[43px] h-[30px] md:w-[43px] w-[30px]"
                   />
