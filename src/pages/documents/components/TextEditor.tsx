@@ -442,18 +442,25 @@ export default function TextEditor() {
 
   // this is the update document functionality
   useEffect(() => {
-    if (socketio == null || quill == null) return;
+    if (socketio == null || quill == null || !documentId) return;
 
     const handler = (delta, oldDelta, source) => {
       console.log(delta, "delta");
       if (source !== "user") return;
-      socketService.updateChanges(delta);
+      socketService.updateChanges({
+        docId: documentId,
+        delta: delta,
+        author: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+        },
+      });
     };
     quill.on("text-change", handler);
     return () => {
       quill.off("text-change", handler);
     };
-  }, [socketio, quill]);
+  }, [socketio, quill, documentId, userInfo]);
 
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper == null) return;
