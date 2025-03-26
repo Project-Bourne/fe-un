@@ -236,10 +236,9 @@ class SocketService {
     }
   }
   updateDoc(data) {
+    console.log("updateDoc", data);
     try {
-      if (!data || data == null) {
-        this.socket.emit("update-doc", data);
-      }
+      this.socket.emit("update-doc", data);
     } catch (err) {
       NotificationService.error({
         message: err?.error?.message,
