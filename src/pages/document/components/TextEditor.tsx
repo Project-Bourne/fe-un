@@ -40,6 +40,11 @@ export default function TextEditor() {
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
     console.log(singleDoc, "singleDoc");
+
+    if (singleDoc) {
+      quill.setContents(singleDoc.data);
+      quill.enable();
+    }
     socketio.once("load-doc", (document) => {
       let data = JSON.parse(document);
 

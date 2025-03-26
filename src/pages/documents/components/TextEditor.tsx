@@ -71,6 +71,11 @@ export default function TextEditor() {
     if (!socketio || !quill || !documentId) return;
     console.log(singleDoc, "singleDoc");
 
+    if (singleDoc) {
+      quill.setContents(singleDoc.data);
+      quill.enable();
+    }
+
     const socket = new SocketService();
 
     // Actively fetch the document when quill is ready
