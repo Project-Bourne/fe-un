@@ -17,6 +17,8 @@ import { Tooltip, Button, CircularProgress } from "@mui/material";
 import { setComments } from "@/redux/reducers/chat/chatReducer";
 import { stripMarkdown } from "@/utils/stripMarkdown";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import DocumentService from "@/services/document.service";
+import { Cookies } from "react-cookie";
 
 /**
  * TextEditor Component
@@ -108,12 +110,12 @@ export default function TextEditor() {
         //   await quill.setContents(copiedData.data.data);
         //   // quill.enable();
         // }
-        // for (let index = 1; index < copiedData.data.data.ops.length; index++) {
-        //   const op = copiedData.data.data.ops[index];
-        //   console.log('OP', op)
-        //   await quill.updateContents(op)
-        //   // quill.enable()
-        // }
+        for (let index = 1; index < copiedData.data.data.ops.length; index++) {
+          const op = copiedData.data.data.ops[index];
+          console.log("OP", op);
+          await quill.updateContents(op);
+          // quill.enable()
+        }
         quill.enable();
       }
     });
@@ -246,15 +248,26 @@ export default function TextEditor() {
       // Get the complete document content after local change
       const content = quill.getContents();
 
+      console.log("CONTENT", content);
+
       // Save the complete document
       socketService.saveDoc({
         docId: documentId,
-        content: JSON.stringify(content),
+        content,
         author: {
           id: userInfo?.uuid,
           name: userInfo?.email,
         },
       });
+
+      quill.updateContents(content);
+      // const cookies = new Cookies();
+      // const token = cookies.get("deep-access");
+      // const headers = {
+      //   "deep-token": token,
+      // };
+
+      // DocumentService.updateDocContent(documentId.toString(), content, headers)
 
       // Update Redux with the latest content
       if (singleDoc) {
@@ -284,7 +297,7 @@ export default function TextEditor() {
     console.log("Initializing editor with content:", singleDoc.data);
 
     // First, set the initial content
-    quill.setContents(singleDoc.data.data, "api");
+    quill.setContents(singleDoc.data.data.ops);
 
     // Then enable the editor
     quill.enable();
