@@ -192,41 +192,6 @@ export default function TextEditor() {
     }
   }, [quill]);
 
-  // react to the update events
-  useEffect(() => {
-    if (socketio == null || quill == null) return;
-
-    const handler = (delta) => {
-      console.log("Received remote delta:", delta);
-
-      // Properly apply the delta to the editor
-      quill.updateContents(delta, "api");
-
-      // Get the complete document content after applying delta
-      const content = quill.getContents();
-
-      // Update Redux with the latest content
-      if (singleDoc) {
-        dispatch(
-          setSingleDoc({
-            ...singleDoc,
-            data: {
-              data: {
-                ops: content.ops,
-              },
-            },
-          }),
-        );
-      }
-    };
-
-    socketio.on("updated-doc-changes", handler);
-
-    return () => {
-      socketio.off("updated-doc-changes", handler);
-    };
-  }, [socketio, quill, singleDoc]);
-
   // this is the update document functionality for local changes
   useEffect(() => {
     if (socketio == null || quill == null || !documentId) return;
@@ -234,6 +199,9 @@ export default function TextEditor() {
     const handler = (delta, oldContents, source) => {
       if (source !== "user") return;
       console.log("Local delta:", delta);
+
+      // Store current selection before any operations
+      const currentSelection = quill.getSelection();
 
       // Send delta to other users for real-time collaboration
       socketService.updateChanges({
@@ -260,14 +228,53 @@ export default function TextEditor() {
         },
       });
 
-      quill.updateContents(content);
-      // const cookies = new Cookies();
-      // const token = cookies.get("deep-access");
-      // const headers = {
-      //   "deep-token": token,
-      // };
+      // Update Redux with the latest content
+      if (singleDoc) {
+        dispatch(
+          setSingleDoc({
+            ...singleDoc,
+            data: {
+              data: {
+                ops: content.ops,
+              },
+            },
+          }),
+        );
+      }
 
-      // DocumentService.updateDocContent(documentId.toString(), content, headers)
+      // Restore selection after all operations
+      if (currentSelection) {
+        setTimeout(() => {
+          quill.setSelection(
+            currentSelection.index,
+            currentSelection.length,
+            "api",
+          );
+        }, 0);
+      }
+    };
+
+    quill.on("text-change", handler);
+    return () => {
+      quill.off("text-change", handler);
+    };
+  }, [socketio, quill, documentId, userInfo, singleDoc]);
+
+  // react to the update events
+  useEffect(() => {
+    if (socketio == null || quill == null) return;
+
+    const handler = (delta) => {
+      console.log("Received remote delta:", delta);
+
+      // Store current selection
+      const currentSelection = quill.getSelection();
+
+      // Properly apply the delta to the editor
+      quill.updateContents(delta, "api");
+
+      // Get the complete document content after applying delta
+      const content = quill.getContents();
 
       // Update Redux with the latest content
       if (singleDoc) {
@@ -282,13 +289,25 @@ export default function TextEditor() {
           }),
         );
       }
+
+      // Restore selection after update
+      if (currentSelection) {
+        setTimeout(() => {
+          quill.setSelection(
+            currentSelection.index,
+            currentSelection.length,
+            "api",
+          );
+        }, 0);
+      }
     };
 
-    quill.on("text-change", handler);
+    socketio.on("updated-doc-changes", handler);
+
     return () => {
-      quill.off("text-change", handler);
+      socketio.off("updated-doc-changes", handler);
     };
-  }, [socketio, quill, documentId, userInfo, singleDoc]);
+  }, [socketio, quill, singleDoc]);
 
   // Initialize quill content when document is loaded
   useEffect(() => {
