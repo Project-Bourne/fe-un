@@ -53,6 +53,7 @@ function CreateDocument(setCreateDocModal, handleCloseModal) {
         });
         const socketService = new SocketService();
         await socketService.getDocHistory({ uuid: userInfo?.uuid });
+        setCreateDocModal(false);
       });
       setCreateDocModal;
       handleCloseModal;

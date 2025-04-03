@@ -246,8 +246,9 @@ class SocketService {
     }
   }
   updateChanges(data) {
+    console.log("updaetChanges", data);
     try {
-      this.socket.emit("doc-update-changes", data);
+      this.socket.emit("update-doc", data);
     } catch (err) {
       NotificationService.error({
         message: err?.error?.message,

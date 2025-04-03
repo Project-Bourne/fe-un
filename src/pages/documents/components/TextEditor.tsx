@@ -59,7 +59,7 @@ export default function TextEditor() {
 
     setIsLoading(true);
     try {
-      await socketService.getDoc({ id: documentId });
+      await socketService.getDoc({ id: documentId.toString() });
     } catch (error) {
       console.error("Error fetching document:", error);
     } finally {
@@ -71,17 +71,17 @@ export default function TextEditor() {
     if (!socketio || !quill || !documentId) return;
     console.log(singleDoc, "singleDoc");
 
-    if (singleDoc) {
-      quill.setContents(singleDoc.data);
-      quill.enable();
-    }
+    // if (singleDoc) {
+    //   quill.setContents(singleDoc.data);
+    //   quill.enable();
+    // }
 
     const socket = new SocketService();
 
     // Actively fetch the document when quill is ready
-    socketService.getDoc({ id: documentId });
+    socketService.getDoc({ id: documentId.toString() });
 
-    socketio.once("load-doc", async (document) => {
+    socketio.on("load-doc", async (document) => {
       let data = JSON.parse(document);
 
       console.log("TextEditor: ", data);
@@ -99,11 +99,22 @@ export default function TextEditor() {
         const copiedData = JSON.parse(JSON.stringify(data));
         const insert = data.data.data.ops[0].insert;
         copiedData.data.data.ops[0].insert = stripMarkdown(insert);
-        if (insert) {
-          console.log(insert, "document", data.data);
-          await quill.setContents(copiedData.data.data);
-          quill.enable();
-        }
+
+        await quill.setContents(copiedData.data.data);
+        // .updateContents(copiedData.data.data.ops)
+        // await quill.updateContents(copiedData.data.data.ops[1])
+        // if (insert) {
+        //   console.log(insert, "document", data.data);
+        //   await quill.setContents(copiedData.data.data);
+        //   // quill.enable();
+        // }
+        // for (let index = 1; index < copiedData.data.data.ops.length; index++) {
+        //   const op = copiedData.data.data.ops[index];
+        //   console.log('OP', op)
+        //   await quill.updateContents(op)
+        //   // quill.enable()
+        // }
+        quill.enable();
       }
     });
   }, [socketio, quill, documentId]);
@@ -179,19 +190,105 @@ export default function TextEditor() {
     }
   }, [quill]);
 
-  // save document changes at interval
+  // react to the update events
   useEffect(() => {
-    if (!socketio || !quill) return;
-    const interval = setInterval(() => {
+    if (socketio == null || quill == null) return;
+
+    const handler = (delta) => {
+      console.log("Received remote delta:", delta);
+
+      // Properly apply the delta to the editor
+      quill.updateContents(delta, "api");
+
+      // Get the complete document content after applying delta
       const content = quill.getContents();
-      console.log(content, "contentcontent");
-      socketService.saveDoc(content);
-    }, SAVE_INTERVAL_MS);
+
+      // Update Redux with the latest content
+      if (singleDoc) {
+        dispatch(
+          setSingleDoc({
+            ...singleDoc,
+            data: {
+              data: {
+                ops: content.ops,
+              },
+            },
+          }),
+        );
+      }
+    };
+
+    socketio.on("updated-doc-changes", handler);
 
     return () => {
-      clearInterval(interval);
+      socketio.off("updated-doc-changes", handler);
     };
-  }, [socketio, quill]);
+  }, [socketio, quill, singleDoc]);
+
+  // this is the update document functionality for local changes
+  useEffect(() => {
+    if (socketio == null || quill == null || !documentId) return;
+
+    const handler = (delta, oldContents, source) => {
+      if (source !== "user") return;
+      console.log("Local delta:", delta);
+
+      // Send delta to other users for real-time collaboration
+      socketService.updateChanges({
+        docId: documentId,
+        delta: delta,
+        author: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+        },
+      });
+
+      // Get the complete document content after local change
+      const content = quill.getContents();
+
+      // Save the complete document
+      socketService.saveDoc({
+        docId: documentId,
+        content: JSON.stringify(content),
+        author: {
+          id: userInfo?.uuid,
+          name: userInfo?.email,
+        },
+      });
+
+      // Update Redux with the latest content
+      if (singleDoc) {
+        dispatch(
+          setSingleDoc({
+            ...singleDoc,
+            data: {
+              data: {
+                ops: content.ops,
+              },
+            },
+          }),
+        );
+      }
+    };
+
+    quill.on("text-change", handler);
+    return () => {
+      quill.off("text-change", handler);
+    };
+  }, [socketio, quill, documentId, userInfo, singleDoc]);
+
+  // Initialize quill content when document is loaded
+  useEffect(() => {
+    if (!quill || !singleDoc?.data?.data?.ops) return;
+
+    console.log("Initializing editor with content:", singleDoc.data);
+
+    // First, set the initial content
+    quill.setContents(singleDoc.data.data, "api");
+
+    // Then enable the editor
+    quill.enable();
+  }, [quill, singleDoc]);
 
   useEffect(() => {
     if (!socketio || !quill || !documentId) return;
@@ -424,51 +521,6 @@ export default function TextEditor() {
   //     cursorContainer.removeChild(cursorToRemove);
   //   }
   // };
-  // react to the update events
-  useEffect(() => {
-    if (socketio == null || quill == null) return;
-
-    const handler = (delta) => {
-      console.log(delta, "delta");
-      quill.updateContents(delta);
-      socketService.updateDoc({
-        docId: documentId,
-        delta: delta,
-        author: {
-          id: userInfo?.uuid,
-          name: userInfo?.email,
-        },
-      });
-    };
-    // console.log(handler(), 'handler')
-    socketio.on("updated-doc-changes", handler);
-
-    return () => {
-      socketio.off("updated-doc-changes", handler);
-    };
-  }, [socketio, quill]);
-
-  // this is the update document functionality
-  useEffect(() => {
-    if (socketio == null || quill == null || !documentId) return;
-
-    const handler = (delta, oldDelta, source) => {
-      console.log(delta, "delta");
-      if (source !== "user") return;
-      socketService.updateChanges({
-        docId: documentId,
-        delta: delta,
-        author: {
-          id: userInfo?.uuid,
-          name: userInfo?.email,
-        },
-      });
-    };
-    quill.on("text-change", handler);
-    return () => {
-      quill.off("text-change", handler);
-    };
-  }, [socketio, quill, documentId, userInfo]);
 
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper == null) return;
@@ -494,6 +546,11 @@ export default function TextEditor() {
           toolbar: TOOLBAR_OPTIONS,
         },
       });
+
+      // if(singleDoc) {
+      //   q.setContents(singleDoc.data)
+      //   q.enable()
+      // }
 
       q.disable();
       setQuill(q);

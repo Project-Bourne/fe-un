@@ -78,7 +78,7 @@ const viewDocument = () => {
 
         // Initialize socket connection
         const socketService = new SocketService();
-        await socketService.getDoc({ docId: id });
+        await socketService.getDoc({ docId: id.toString() });
         await socketService.getComments({
           docId: id,
           spaceId: singleDoc?.spaceId,

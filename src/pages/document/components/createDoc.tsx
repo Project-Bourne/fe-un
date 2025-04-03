@@ -29,7 +29,6 @@ function CreateDocument(setCreateDocModal) {
     try {
       event.preventDefault();
       console.log("clicked1");
-      const useSocket = SocketService;
       let docData = {
         name: formData?.name,
         author: {
